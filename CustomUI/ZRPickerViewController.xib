@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZRPickerViewController" customModule="CustomUI" customModuleProvider="target">
+            <connections>
+                <outlet property="pickerView" destination="8Kb-lP-DCB" id="Xqp-9h-N2R"/>
+                <outlet property="selectOriginalButton" destination="Xr7-49-L4T" id="Npw-Gi-aVO"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x7X-e2-LQX">
+                    <rect key="frame" x="0.0" y="518" width="375" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="w6r-gV-q2o"/>
+                    </constraints>
+                    <items>
+                        <barButtonItem enabled="NO" title="Current" id="Xr7-49-L4T">
+                            <connections>
+                                <action selector="selectOriginal" destination="-1" id="Er2-d1-HGM"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Ybm-86-VPW"/>
+                        <barButtonItem title="Done" id="guO-mU-9zp">
+                            <connections>
+                                <action selector="completeSelection" destination="-1" id="Pol-vT-WRT"/>
+                            </connections>
+                        </barButtonItem>
+                    </items>
+                </toolbar>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aSf-S0-ktx">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="518"/>
+                    <gestureRecognizers/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="3kY-aN-zyu" appends="YES" id="wdK-gS-Wmc"/>
+                    </connections>
+                </view>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ILt-6V-L7b">
+                    <rect key="frame" x="0.0" y="562" width="375" height="250"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="fql-NY-lHQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Kb-lP-DCB">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="216"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="8Kb-lP-DCB" secondAttribute="height" multiplier="125:72" id="hjC-cW-ab9"/>
+                                </constraints>
+                            </pickerView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="8Kb-lP-DCB" secondAttribute="trailing" id="0Mf-dP-opg"/>
+                            <constraint firstItem="8Kb-lP-DCB" firstAttribute="top" secondItem="fql-NY-lHQ" secondAttribute="top" id="eWG-fR-aCQ"/>
+                            <constraint firstItem="8Kb-lP-DCB" firstAttribute="leading" secondItem="fql-NY-lHQ" secondAttribute="leading" id="ldQ-mO-CqG"/>
+                        </constraints>
+                    </view>
+                    <blurEffect style="extraLight"/>
+                </visualEffectView>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.69929577464788728" colorSpace="custom" customColorSpace="sRGB"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="x7X-e2-LQX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="5hr-Le-4dJ"/>
+                <constraint firstItem="aSf-S0-ktx" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Ayy-up-V9U"/>
+                <constraint firstItem="aSf-S0-ktx" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="CUo-cD-1Jm"/>
+                <constraint firstItem="ILt-6V-L7b" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Fhu-N7-P7f"/>
+                <constraint firstItem="ILt-6V-L7b" firstAttribute="top" secondItem="x7X-e2-LQX" secondAttribute="bottom" id="K7C-zV-xff"/>
+                <constraint firstItem="x7X-e2-LQX" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="ZDk-7q-aY7"/>
+                <constraint firstItem="ILt-6V-L7b" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="dhK-3i-v1U"/>
+                <constraint firstItem="ILt-6V-L7b" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="gLT-xe-m8G"/>
+                <constraint firstItem="8Kb-lP-DCB" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="guN-GF-4wE"/>
+                <constraint firstItem="aSf-S0-ktx" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="lxU-n6-KNl"/>
+                <constraint firstItem="x7X-e2-LQX" firstAttribute="top" secondItem="aSf-S0-ktx" secondAttribute="bottom" id="rqY-Mv-baw"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="34.5" y="54.5"/>
+        </view>
+        <tapGestureRecognizer id="3kY-aN-zyu">
+            <connections>
+                <action selector="emptyAreaTapped:" destination="-1" id="WuP-Vn-dxT"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+</document>

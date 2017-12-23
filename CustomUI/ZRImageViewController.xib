@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZRImageViewController" customModule="CustomUI" customModuleProvider="target">
+            <connections>
+                <outlet property="closeButton" destination="QL8-lG-vK8" id="F1J-uQ-uw2"/>
+                <outlet property="imageView" destination="qKM-IM-taJ" id="uOg-Sg-c5h"/>
+                <outlet property="scrollView" destination="lEo-y0-vVh" id="Aul-yX-KBb"/>
+                <outlet property="shareButton" destination="MSW-fk-Axt" id="efg-I9-7SI"/>
+                <outlet property="view" destination="iN0-l3-epB" id="n0x-TH-Bh7"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="3" translatesAutoresizingMaskIntoConstraints="NO" id="lEo-y0-vVh">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="qKM-IM-taJ">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        </imageView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="qKM-IM-taJ" firstAttribute="centerX" secondItem="lEo-y0-vVh" secondAttribute="centerX" id="Fet-cF-NMc"/>
+                        <constraint firstItem="qKM-IM-taJ" firstAttribute="centerY" secondItem="lEo-y0-vVh" secondAttribute="centerY" id="Izm-RJ-9zO"/>
+                        <constraint firstItem="qKM-IM-taJ" firstAttribute="leading" secondItem="lEo-y0-vVh" secondAttribute="leading" id="cO2-on-3Ne"/>
+                        <constraint firstAttribute="trailing" secondItem="qKM-IM-taJ" secondAttribute="trailing" id="vDC-hs-u3h"/>
+                        <constraint firstAttribute="bottom" secondItem="qKM-IM-taJ" secondAttribute="bottom" id="vvv-Yi-A87"/>
+                        <constraint firstItem="qKM-IM-taJ" firstAttribute="top" secondItem="lEo-y0-vVh" secondAttribute="top" id="y8y-gE-0lb"/>
+                    </constraints>
+                </scrollView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MSW-fk-Axt">
+                    <rect key="frame" x="324" y="16" width="35" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="CT1-UZ-esb"/>
+                        <constraint firstAttribute="width" constant="35" id="V2w-Yy-SxL"/>
+                    </constraints>
+                    <state key="normal" image="ic_share"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QL8-lG-vK8">
+                    <rect key="frame" x="16" y="16" width="35" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="RxL-UG-B5a"/>
+                        <constraint firstAttribute="width" constant="35" id="u3A-tV-J9D"/>
+                    </constraints>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" image="ic_close"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="QL8-lG-vK8" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="HDB-Xx-CTd"/>
+                <constraint firstItem="lEo-y0-vVh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Mse-cT-6Bx"/>
+                <constraint firstItem="lEo-y0-vVh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Pdd-jP-UrA"/>
+                <constraint firstAttribute="trailing" secondItem="lEo-y0-vVh" secondAttribute="trailing" id="cDb-C2-3sR"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="MSW-fk-Axt" secondAttribute="trailing" constant="16" id="cy2-87-SzU"/>
+                <constraint firstItem="QL8-lG-vK8" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="lqb-sU-no2"/>
+                <constraint firstItem="lEo-y0-vVh" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="uQB-2n-2Z2"/>
+                <constraint firstItem="MSW-fk-Axt" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="ybx-ja-Qp3"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="33.5" y="54"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="cover_placeholder" width="150" height="225"/>
+        <image name="ic_close" width="48" height="48"/>
+        <image name="ic_share" width="48" height="48"/>
+    </resources>
+</document>
