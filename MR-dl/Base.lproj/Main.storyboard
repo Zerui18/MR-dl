@@ -10,6 +10,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="HiraginoKakuGothic.ttc">
+            <string>HiraginoSans-W6</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Library-->
         <scene sceneID="jog-lL-xn4">
@@ -170,11 +175,43 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="405-2x-qui">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="807"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="856"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3fT-17-56f">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="809"/>
                                         <subviews>
+                                            <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zXa-dQ-tgo">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="zXa-dQ-tgo" secondAttribute="height" multiplier="25:12" id="lCM-h6-atq"/>
+                                                </constraints>
+                                            </view>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="rhu-5b-K5u" customClass="ZRImageView" customModule="CustomUI">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="rhu-5b-K5u" secondAttribute="height" multiplier="25:12" id="xjr-kQ-U9Q"/>
+                                                </constraints>
+                                            </imageView>
+                                            <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uIu-KE-xuR" customClass="ZRGradientOverlayView" customModule="CustomUI">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="outerColor">
+                                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="innerRadiusFraction">
+                                                        <real key="value" value="0.29999999999999999"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="centerYOffset">
+                                                        <real key="value" value="80"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="outerRadius">
+                                                        <real key="value" value="200"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="horizontalStretchingFactor">
+                                                        <real key="value" value="3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ma-Mf-9a2">
                                                 <rect key="frame" x="0.0" y="188" width="375" height="190"/>
                                                 <subviews>
@@ -398,54 +435,28 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                                                     <constraint firstAttribute="trailing" secondItem="qKP-lx-fo7" secondAttribute="trailing" constant="5" id="uAh-hV-Zz8"/>
                                                 </constraints>
                                             </view>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="rhu-5b-K5u" customClass="ZRImageView" customModule="CustomUI">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="rhu-5b-K5u" secondAttribute="height" multiplier="25:12" id="xjr-kQ-U9Q"/>
-                                                </constraints>
-                                            </imageView>
-                                            <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zXa-dQ-tgo" customClass="ZRGradientOverlayView" customModule="CustomUI">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="zXa-dQ-tgo" secondAttribute="height" multiplier="25:12" id="lCM-h6-atq"/>
-                                                </constraints>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="outerColor">
-                                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="innerRadiusFraction">
-                                                        <real key="value" value="0.29999999999999999"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="centerYOffset">
-                                                        <real key="value" value="80"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="outerRadius">
-                                                        <real key="value" value="200"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="horizontalStretchingFactor">
-                                                        <real key="value" value="3"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="rhu-5b-K5u" firstAttribute="top" secondItem="3fT-17-56f" secondAttribute="top" id="0GS-qb-UN4"/>
                                             <constraint firstItem="3ma-Mf-9a2" firstAttribute="leading" secondItem="3fT-17-56f" secondAttribute="leading" id="0N0-U5-4Fe"/>
+                                            <constraint firstItem="uIu-KE-xuR" firstAttribute="trailing" secondItem="rhu-5b-K5u" secondAttribute="trailing" id="1Re-QZ-60M"/>
                                             <constraint firstAttribute="bottom" secondItem="qBo-6P-XJb" secondAttribute="bottom" constant="8" id="2Wk-a5-seD"/>
+                                            <constraint firstItem="rhu-5b-K5u" firstAttribute="bottom" secondItem="zXa-dQ-tgo" secondAttribute="bottom" id="2Z0-ze-Igy"/>
                                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="RW9-tF-Fej" secondAttribute="bottom" constant="8" id="38n-9z-Wtu"/>
                                             <constraint firstAttribute="trailing" secondItem="qBo-6P-XJb" secondAttribute="trailing" constant="10" id="TAq-hy-ZtX"/>
                                             <constraint firstItem="zXa-dQ-tgo" firstAttribute="leading" secondItem="3fT-17-56f" secondAttribute="leading" id="V6W-Cw-tdh"/>
-                                            <constraint firstItem="3ma-Mf-9a2" firstAttribute="top" secondItem="rhu-5b-K5u" secondAttribute="bottom" constant="8" id="Vry-w3-6IJ"/>
                                             <constraint firstItem="qBo-6P-XJb" firstAttribute="top" secondItem="d9h-Wx-RHh" secondAttribute="bottom" constant="8" id="Xt7-wK-AMn"/>
                                             <constraint firstAttribute="trailing" secondItem="3ma-Mf-9a2" secondAttribute="trailing" id="YEb-nO-kdX"/>
-                                            <constraint firstAttribute="trailing" secondItem="zXa-dQ-tgo" secondAttribute="trailing" id="alO-su-Sv7"/>
-                                            <constraint firstItem="zXa-dQ-tgo" firstAttribute="top" secondItem="3fT-17-56f" secondAttribute="top" id="biV-17-PjP"/>
+                                            <constraint firstItem="uIu-KE-xuR" firstAttribute="leading" secondItem="rhu-5b-K5u" secondAttribute="leading" id="ZCO-tB-JQx"/>
+                                            <constraint firstItem="zXa-dQ-tgo" firstAttribute="top" secondItem="3fT-17-56f" secondAttribute="top" priority="998" id="Zan-gd-Qsy"/>
+                                            <constraint firstItem="uIu-KE-xuR" firstAttribute="top" secondItem="rhu-5b-K5u" secondAttribute="top" id="cFa-Zk-k0d"/>
+                                            <constraint firstItem="uIu-KE-xuR" firstAttribute="bottom" secondItem="rhu-5b-K5u" secondAttribute="bottom" id="ezP-rd-Pao"/>
+                                            <constraint firstItem="rhu-5b-K5u" firstAttribute="height" relation="greaterThanOrEqual" secondItem="zXa-dQ-tgo" secondAttribute="height" id="f1B-1v-8EE"/>
                                             <constraint firstItem="qBo-6P-XJb" firstAttribute="leading" secondItem="3fT-17-56f" secondAttribute="leading" constant="10" id="nYZ-bO-iKQ"/>
                                             <constraint firstItem="d9h-Wx-RHh" firstAttribute="leading" secondItem="3fT-17-56f" secondAttribute="leading" constant="50" id="rau-79-aqE"/>
-                                            <constraint firstItem="rhu-5b-K5u" firstAttribute="leading" secondItem="3fT-17-56f" secondAttribute="leading" id="v92-u3-Co3"/>
-                                            <constraint firstAttribute="trailing" secondItem="rhu-5b-K5u" secondAttribute="trailing" id="ven-WA-s8D"/>
+                                            <constraint firstAttribute="trailing" secondItem="zXa-dQ-tgo" secondAttribute="trailing" id="v6s-k8-Kmp"/>
                                             <constraint firstItem="d9h-Wx-RHh" firstAttribute="top" secondItem="3ma-Mf-9a2" secondAttribute="bottom" constant="7" id="ydV-WI-ZkV"/>
+                                            <constraint firstItem="3ma-Mf-9a2" firstAttribute="top" secondItem="zXa-dQ-tgo" secondAttribute="bottom" constant="8" id="zeA-5Z-r3y"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -464,7 +475,9 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                             <constraint firstItem="d9h-Wx-RHh" firstAttribute="centerX" secondItem="fy3-fK-MCw" secondAttribute="centerX" id="Bag-cN-GOI"/>
                             <constraint firstItem="405-2x-qui" firstAttribute="leading" secondItem="fy3-fK-MCw" secondAttribute="leading" id="CzB-VI-QPy"/>
                             <constraint firstItem="fy3-fK-MCw" firstAttribute="bottom" secondItem="405-2x-qui" secondAttribute="bottom" id="JB0-FQ-sv6"/>
+                            <constraint firstItem="rhu-5b-K5u" firstAttribute="centerX" secondItem="fy3-fK-MCw" secondAttribute="centerX" id="ovQ-Ii-smB"/>
                             <constraint firstItem="405-2x-qui" firstAttribute="top" secondItem="yUU-BC-3TH" secondAttribute="top" id="vYB-GC-uQV"/>
+                            <constraint firstItem="fy3-fK-MCw" firstAttribute="top" secondItem="rhu-5b-K5u" secondAttribute="top" priority="800" constant="88" id="x16-yJ-1Rs"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fy3-fK-MCw"/>
                     </view>
@@ -474,7 +487,7 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <size key="freeformSize" width="375" height="890"/>
                     <connections>
                         <outlet property="artworksCollectionView" destination="YYF-bf-U3C" id="bzz-4j-UTc"/>
@@ -488,6 +501,7 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                         <outlet property="detailsBox" destination="qBo-6P-XJb" id="1Nc-Y3-7Fd"/>
                         <outlet property="firstSeperatorView" destination="d9h-Wx-RHh" id="Zza-Yx-h3s"/>
                         <outlet property="readButton" destination="5Cz-qz-xU7" id="IUX-ct-7UT"/>
+                        <outlet property="scrollView" destination="405-2x-qui" id="7l1-Ka-bhx"/>
                         <outlet property="statusLabel" destination="jNu-ke-JS8" id="WQn-R7-ZXX"/>
                         <outlet property="thumbnailImageView" destination="NgT-Oy-6Mi" id="1da-hT-17q"/>
                         <outlet property="titleLabel" destination="lwx-gt-dMS" id="h5m-fu-cIy"/>
@@ -499,7 +513,7 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
             </objects>
             <point key="canvasLocation" x="1807" y="1524"/>
         </scene>
-        <!--Chapters-->
+        <!--70 Chapters-->
         <scene sceneID="41c-Dy-cls">
             <objects>
                 <tableViewController storyboardIdentifier="chaptersTableCtr" id="npt-yM-0bH" customClass="ChaptersTableViewController" customModule="MR_dl" customModuleProvider="target" sceneMemberID="viewController">
@@ -516,15 +530,14 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chapter 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.90000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="MOR-WM-9HA">
-                                            <rect key="frame" x="10" y="18" width="356" height="30"/>
+                                            <rect key="frame" x="16" y="18" width="344" height="31"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12 Dec 2017" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zNr-V6-ljD">
-                                            <rect key="frame" x="272" y="0.0" width="94" height="18"/>
+                                            <rect key="frame" x="280.66666666666669" y="0.0" width="79.333333333333314" height="18"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="94" id="41o-8n-ejK"/>
                                                 <constraint firstAttribute="height" constant="18" id="yZo-02-4TZ"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -533,12 +546,12 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="MOR-WM-9HA" firstAttribute="leading" secondItem="yKn-uW-Q99" secondAttribute="leadingMargin" constant="-6" id="5zZ-Ti-Aej"/>
+                                        <constraint firstItem="MOR-WM-9HA" firstAttribute="leading" secondItem="yKn-uW-Q99" secondAttribute="leadingMargin" id="5zZ-Ti-Aej"/>
+                                        <constraint firstItem="zNr-V6-ljD" firstAttribute="trailing" secondItem="MOR-WM-9HA" secondAttribute="trailing" id="6NL-jO-nTF"/>
                                         <constraint firstItem="MOR-WM-9HA" firstAttribute="top" secondItem="zNr-V6-ljD" secondAttribute="bottom" id="EIS-qu-cI5"/>
-                                        <constraint firstItem="MOR-WM-9HA" firstAttribute="centerX" secondItem="yKn-uW-Q99" secondAttribute="centerX" id="HNo-zw-A0p"/>
-                                        <constraint firstItem="zNr-V6-ljD" firstAttribute="trailing" secondItem="MOR-WM-9HA" secondAttribute="trailing" id="bJZ-gz-3jC"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="MOR-WM-9HA" secondAttribute="bottom" constant="1" id="cPA-4e-swn"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="MOR-WM-9HA" secondAttribute="bottom" id="cPA-4e-swn"/>
                                         <constraint firstItem="zNr-V6-ljD" firstAttribute="top" secondItem="yKn-uW-Q99" secondAttribute="top" id="hYl-Zw-kQG"/>
+                                        <constraint firstAttribute="trailing" secondItem="MOR-WM-9HA" secondAttribute="trailing" constant="15" id="ldD-iD-rXO"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -552,7 +565,7 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                             <outlet property="delegate" destination="npt-yM-0bH" id="NzS-hC-wMe"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Chapters" largeTitleDisplayMode="never" id="sDF-n5-DX4"/>
+                    <navigationItem key="navigationItem" title="70 Chapters" largeTitleDisplayMode="never" id="sDF-n5-DX4"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
@@ -576,28 +589,63 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                                     </imageView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="7Ga-0I-2ro" firstAttribute="centerX" secondItem="Qzd-g2-NhB" secondAttribute="centerX" id="0Ch-uw-aPb"/>
-                                    <constraint firstItem="7Ga-0I-2ro" firstAttribute="leading" secondItem="Qzd-g2-NhB" secondAttribute="leading" id="8xs-Qu-bHm"/>
-                                    <constraint firstItem="7Ga-0I-2ro" firstAttribute="top" secondItem="Qzd-g2-NhB" secondAttribute="top" id="Mkn-ey-d5r"/>
-                                    <constraint firstItem="7Ga-0I-2ro" firstAttribute="centerY" secondItem="Qzd-g2-NhB" secondAttribute="centerY" id="OkY-3X-3nV"/>
-                                    <constraint firstAttribute="trailing" secondItem="7Ga-0I-2ro" secondAttribute="trailing" id="Yda-Ia-oKd"/>
-                                    <constraint firstAttribute="bottom" secondItem="7Ga-0I-2ro" secondAttribute="bottom" id="cDc-RY-mdL"/>
+                                    <constraint firstItem="7Ga-0I-2ro" firstAttribute="centerY" secondItem="Qzd-g2-NhB" secondAttribute="centerY" id="KMf-2L-jxy"/>
+                                    <constraint firstItem="7Ga-0I-2ro" firstAttribute="centerX" secondItem="Qzd-g2-NhB" secondAttribute="centerX" id="LqB-tg-jgg"/>
+                                    <constraint firstItem="7Ga-0I-2ro" firstAttribute="leading" secondItem="Qzd-g2-NhB" secondAttribute="leading" id="S3a-rq-Bsx"/>
+                                    <constraint firstAttribute="bottom" secondItem="7Ga-0I-2ro" secondAttribute="bottom" id="S5a-yk-HHv"/>
+                                    <constraint firstAttribute="trailing" secondItem="7Ga-0I-2ro" secondAttribute="trailing" id="aA4-rw-anb"/>
+                                    <constraint firstItem="7Ga-0I-2ro" firstAttribute="top" secondItem="Qzd-g2-NhB" secondAttribute="top" id="geP-cw-hAq"/>
                                 </constraints>
                             </scrollView>
+                            <button opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="stB-G3-0Km" customClass="ZRBorderedButton" customModule="CustomUI">
+                                <rect key="frame" x="150" y="436" width="75" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="AOx-AA-HOb"/>
+                                    <constraint firstAttribute="width" constant="75" id="AWb-Rw-njJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <state key="normal" title="Reload"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" red="0.0" green="0.47856086489999999" blue="0.99943608049999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Failed to load image" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ije-dY-cH0">
+                                <rect key="frame" x="90" y="396" width="195" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="XqG-OT-P3H"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W6" family="Hiragino Sans" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Qzd-g2-NhB" firstAttribute="bottom" secondItem="BeM-iH-G38" secondAttribute="bottom" id="3in-8k-fym"/>
-                            <constraint firstAttribute="trailing" secondItem="Qzd-g2-NhB" secondAttribute="trailing" id="6bz-ab-I5P"/>
-                            <constraint firstItem="Qzd-g2-NhB" firstAttribute="top" secondItem="BeM-iH-G38" secondAttribute="top" id="Ukb-nR-hqX"/>
-                            <constraint firstItem="Qzd-g2-NhB" firstAttribute="leading" secondItem="93t-yd-dwA" secondAttribute="leading" id="mMG-d8-Won"/>
+                            <constraint firstItem="Qzd-g2-NhB" firstAttribute="leading" secondItem="BeM-iH-G38" secondAttribute="leading" id="2uc-aR-ldp"/>
+                            <constraint firstItem="Qzd-g2-NhB" firstAttribute="trailing" secondItem="BeM-iH-G38" secondAttribute="trailing" id="7AU-Dr-774"/>
+                            <constraint firstItem="stB-G3-0Km" firstAttribute="top" secondItem="Ije-dY-cH0" secondAttribute="bottom" constant="15" id="Acq-O0-5dE"/>
+                            <constraint firstItem="stB-G3-0Km" firstAttribute="centerX" secondItem="BeM-iH-G38" secondAttribute="centerX" id="Dra-LA-1o8"/>
+                            <constraint firstItem="Ije-dY-cH0" firstAttribute="centerX" secondItem="BeM-iH-G38" secondAttribute="centerX" id="IK5-Cm-nGJ"/>
+                            <constraint firstItem="Qzd-g2-NhB" firstAttribute="bottom" secondItem="BeM-iH-G38" secondAttribute="bottom" id="blY-ON-m1Z"/>
+                            <constraint firstItem="Qzd-g2-NhB" firstAttribute="top" secondItem="BeM-iH-G38" secondAttribute="top" id="hHd-yf-tKf"/>
+                            <constraint firstItem="Ije-dY-cH0" firstAttribute="centerY" secondItem="BeM-iH-G38" secondAttribute="centerY" id="sTV-wT-0Rh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BeM-iH-G38"/>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="errorLabel" destination="Ije-dY-cH0" id="tl7-tp-MUs"/>
                         <outlet property="imageView" destination="7Ga-0I-2ro" id="cx4-Wx-Xm9"/>
+                        <outlet property="reloadButton" destination="stB-G3-0Km" id="OJT-TQ-NER"/>
                         <outlet property="scrollView" destination="Qzd-g2-NhB" id="904-AA-FfT"/>
                     </connections>
                 </viewController>

@@ -23,51 +23,61 @@ class ChapterImageViewController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var reloadButton: ZRBorderedButton!
     
     var chapterIndex: Int!
     var pageIndex: Int!
-    var chapterURL: URL!{
+    var chapterURL: URL!
+    
+    //Reactive: image for the current-displaying page
+    var image: UIImage?{
         didSet{
-            Manager.shared.loadImage(with: chapterURL) {[weak self] (result) in
-                guard let weakSelf = self else{
-                    return
-                }
-                weakSelf.image = result.value
-                if weakSelf.imageView != nil{
-                    DispatchQueue.main.async {
-                        weakSelf.imageView.image = result.value
-                        weakSelf.loadingIndicator.stopAnimating()
-                        weakSelf.imageView.addGestureRecognizer(UILongPressGestureRecognizer(target: weakSelf, action: #selector(weakSelf.didHoldImageView(_:))))
-                    }
-                }
+            if imageView != nil{
+                loadingFinished()
             }
         }
     }
-    
-    var image: UIImage?
     
     let loadingIndicator = NVActivityIndicatorView(frame: .zero, type: .circles, color: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1))
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        startLoadingImage()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         ChapterImagesPageViewController.shared?.currentPageIndex = pageIndex
+        view.backgroundColor = ChapterImagesPageViewController.shared!.isFocused ? .black:.white
+    }
+    
+    private func startLoadingImage(){
+        loadingIndicator.startAnimating()
+        Manager.shared.loadImage(with: chapterURL, into: imageView) {[weak self] (result, _) in
+            guard let weakSelf = self else{
+                return
+            }
+            if let error = result.error{
+                print("MRImage Loading Error: ", error)
+                UIView.animate(withDuration: defaultAnimationDuration){
+                    weakSelf.errorLabel.alpha = 1
+                    weakSelf.reloadButton.alpha = 1
+                    weakSelf.reloadButton.isUserInteractionEnabled = true
+                }
+            }
+            else{
+                weakSelf.image = result.value
+            }
+        }
     }
     
     private func setupUI(){
         view.backgroundColor = .white
         scrollView.delegate = self
-        if image != nil{
-            imageView.image = image
-            imageView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didHoldImageView(_:))))
-        }
-        else{
-            setupLoadingIndicator()
-        }
+        setupLoadingIndicator()
+        reloadButton.addTarget(self, action: #selector(triggerImageReload), for: .touchUpInside)
     }
     
     private func setupLoadingIndicator(){
@@ -77,7 +87,22 @@ class ChapterImageViewController: UIViewController {
         loadingIndicator.heightAnchor.constraint(equalToConstant: 50).isActive = true
         loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        loadingIndicator.startAnimating()
+    }
+    
+    @objc private func triggerImageReload(){
+        errorLabel.alpha = 0
+        reloadButton.isUserInteractionEnabled = false
+        reloadButton.alpha = 0
+        startLoadingImage()
+    }
+    
+    // called after setting self.image to a non-nil value
+    private func loadingFinished(){
+        if imageView != nil{
+            imageView.image = image
+            loadingIndicator.stopAnimating()
+            imageView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didHoldImageView(_:))))
+        }
     }
     
     @objc private func didHoldImageView(_ sender: UILongPressGestureRecognizer){

@@ -6,5 +6,5 @@
 //  Copyright © 2017 Chen Zerui. All rights reserved.
 //
 
-#import "webp/encode.h"
+
 #import "webp/decode.h"

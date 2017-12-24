@@ -11,6 +11,8 @@ import CustomUI
 import MRImageLoader
 import MRClient
 
+let defaultAnimationDuration: TimeInterval = 0.2
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -28,11 +30,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return nil
     }
     
-    let storyBoard = UIStoryboard(name: "Main", bundle: Bundle.main)
-
+    var storyBoard: UIStoryboard!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         AppDelegate.shared = self
+        storyBoard = window!.rootViewController!.storyboard!
         Loader.shared = Loader(loader: DataLoader(), decoder: MRIDataDecoder(decryptFunction: {
             MRImageDataDecryptor.decrypt(data: $0)
         }, decodeFunction: {

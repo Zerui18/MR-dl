@@ -22,6 +22,7 @@ class ChaptersTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
+        navigationItem.title = "\(serieMeta.chapters.count) Chapters"
     }
 
 

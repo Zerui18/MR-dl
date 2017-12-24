@@ -109,7 +109,7 @@ public final class Manager: Loading {
 
     // MARK: Memory Cache Helpers
 
-    private func cachedImage(for request: Request) -> Image? {
+    public func cachedImage(for request: Request) -> Image? {
         return try? cache.object(ofType: ImageWrapper.self, forKey: request.urlRequest.url!.absoluteString).image
     }
 

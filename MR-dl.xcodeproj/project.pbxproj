@@ -47,6 +47,11 @@
 		0191295B1FEB3A7700AF890E /* ZRMarginedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0191295A1FEB3A7700AF890E /* ZRMarginedLabel.swift */; };
 		0191295D1FEB5E8000AF890E /* SerieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0191295C1FEB5E8000AF890E /* SerieDetailsViewController.swift */; };
 		0191295F1FEB5E9D00AF890E /* ArtworkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0191295E1FEB5E9D00AF890E /* ArtworkCollectionViewCell.swift */; };
+		01A34A831FEF929C0022E670 /* HapticsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A34A821FEF929C0022E670 /* HapticsController.swift */; };
+		01A34A851FEFA7590022E670 /* MRChapterDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A34A841FEFA7590022E670 /* MRChapterDownloader.swift */; };
+		01A34A861FEFA9DD0022E670 /* MRChapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC2C361FE9EFFE005F4407 /* MRChapter.swift */; };
+		01A34A871FEFAB040022E670 /* MRSerie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC2C341FE9EF4F005F4407 /* MRSerie.swift */; };
+		01A34A891FEFADAA0022E670 /* MRPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A34A881FEFADAA0022E670 /* MRPage.swift */; };
 		01B6D6C31FED362F00D8A273 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01B6D6C21FED362F00D8A273 /* Assets.xcassets */; };
 		01B6D6C51FED4E7400D8A273 /* ThumbnailLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D6C41FED4E7300D8A273 /* ThumbnailLoader.swift */; };
 		01B6D6CF1FED4E9C00D8A273 /* MRImageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 01B6D6CD1FED4E9C00D8A273 /* MRImageLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -185,6 +190,9 @@
 		0191295A1FEB3A7700AF890E /* ZRMarginedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZRMarginedLabel.swift; sourceTree = "<group>"; };
 		0191295C1FEB5E8000AF890E /* SerieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerieDetailsViewController.swift; sourceTree = "<group>"; };
 		0191295E1FEB5E9D00AF890E /* ArtworkCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkCollectionViewCell.swift; sourceTree = "<group>"; };
+		01A34A821FEF929C0022E670 /* HapticsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsController.swift; sourceTree = "<group>"; };
+		01A34A841FEFA7590022E670 /* MRChapterDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRChapterDownloader.swift; sourceTree = "<group>"; };
+		01A34A881FEFADAA0022E670 /* MRPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRPage.swift; sourceTree = "<group>"; };
 		01B6D6C21FED362F00D8A273 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		01B6D6C41FED4E7300D8A273 /* ThumbnailLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailLoader.swift; sourceTree = "<group>"; };
 		01B6D6CB1FED4E9C00D8A273 /* MRImageLoader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MRImageLoader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -237,8 +245,8 @@
 		224F489C1FE95B6E005F5A94 /* MRImageDataDecryptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRImageDataDecryptor.swift; sourceTree = "<group>"; };
 		22740E711FE94BB600B04454 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		22DC2C2E1FE9E512005F4407 /* MangaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaCollectionViewCell.swift; sourceTree = "<group>"; };
-		22DC2C341FE9EF4F005F4407 /* MRSerie+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MRSerie+Extensions.swift"; sourceTree = "<group>"; };
-		22DC2C361FE9EFFE005F4407 /* MRChapter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MRChapter+Extensions.swift"; sourceTree = "<group>"; };
+		22DC2C341FE9EF4F005F4407 /* MRSerie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRSerie.swift; sourceTree = "<group>"; };
+		22DC2C361FE9EFFE005F4407 /* MRChapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRChapter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -320,9 +328,11 @@
 		017648861FEA030C00B2B7F9 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
+				01A34A841FEFA7590022E670 /* MRChapterDownloader.swift */,
 				01B6D6C41FED4E7300D8A273 /* ThumbnailLoader.swift */,
-				22DC2C341FE9EF4F005F4407 /* MRSerie+Extensions.swift */,
-				22DC2C361FE9EFFE005F4407 /* MRChapter+Extensions.swift */,
+				22DC2C341FE9EF4F005F4407 /* MRSerie.swift */,
+				22DC2C361FE9EFFE005F4407 /* MRChapter.swift */,
+				01A34A881FEFADAA0022E670 /* MRPage.swift */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -488,6 +498,7 @@
 			children = (
 				014AD9CC1FEE274100B3C1E0 /* UIImage+WebP.swift */,
 				016A78001FEBC2B9009BB0D5 /* String+Extensions.swift */,
+				01A34A821FEF929C0022E670 /* HapticsController.swift */,
 				22740E711FE94BB600B04454 /* Bridging-Header.h */,
 				222574321FE94523005D8865 /* Assets.xcassets */,
 				222574341FE94523005D8865 /* LaunchScreen.storyboard */,
@@ -804,16 +815,21 @@
 			files = (
 				015C5B491FECEB2A00415F1B /* ChapterImageViewController.swift in Sources */,
 				2225742B1FE94523005D8865 /* MangaCollectionViewController.swift in Sources */,
+				01A34A831FEF929C0022E670 /* HapticsController.swift in Sources */,
 				015C5B401FECD7E100415F1B /* ChapterTableViewCell.swift in Sources */,
+				01A34A871FEFAB040022E670 /* MRSerie.swift in Sources */,
 				222574291FE94523005D8865 /* AppDelegate.swift in Sources */,
 				014AD9CD1FEE274100B3C1E0 /* UIImage+WebP.swift in Sources */,
 				22DC2C2F1FE9E512005F4407 /* MangaCollectionViewCell.swift in Sources */,
 				01B6D6C51FED4E7400D8A273 /* ThumbnailLoader.swift in Sources */,
+				01A34A851FEFA7590022E670 /* MRChapterDownloader.swift in Sources */,
 				0191295F1FEB5E9D00AF890E /* ArtworkCollectionViewCell.swift in Sources */,
+				01A34A891FEFADAA0022E670 /* MRPage.swift in Sources */,
 				016A78011FEBC2B9009BB0D5 /* String+Extensions.swift in Sources */,
 				0191295D1FEB5E8000AF890E /* SerieDetailsViewController.swift in Sources */,
 				222574311FE94523005D8865 /* MR_dl.xcdatamodeld in Sources */,
 				0176488A1FEA038400B2B7F9 /* SerieTableViewCell.swift in Sources */,
+				01A34A861FEFA9DD0022E670 /* MRChapter.swift in Sources */,
 				017648881FEA033200B2B7F9 /* MangaSearchViewController.swift in Sources */,
 				015C5B3E1FECD7CB00415F1B /* ChaptersTableViewController.swift in Sources */,
 				015C5B471FECEB1000415F1B /* ChapterImagesPageViewController.swift in Sources */,

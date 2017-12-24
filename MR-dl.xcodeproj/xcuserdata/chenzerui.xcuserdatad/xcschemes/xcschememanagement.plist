@@ -12,7 +12,7 @@
 		<key>CustomUI.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>1</integer>
 		</dict>
 		<key>MR-dl.xcscheme</key>
 		<dict>
@@ -22,7 +22,7 @@
 		<key>MRClient.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 		<key>MRImageLoader.xcscheme</key>
 		<dict>
@@ -32,6 +32,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>01B6D6CA1FED4E9C00D8A273</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>222574241FE94523005D8865</key>
 		<dict>
 			<key>primary</key>

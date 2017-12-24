@@ -47,7 +47,7 @@ class MangaSearchViewController: UITableViewController{
     var query = ""
     var resultUpdateTimer = Timer()
     
-    lazy var searchActiveIndicator = NVActivityIndicatorView(frame: CGRect(x: 150, y: 200, width: 60, height: 60), type: .balls, color:  #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1))
+    lazy var searchActiveIndicator = NVActivityIndicatorView(frame: CGRect(x: 150, y: 200, width: 55, height: 55), type: .balls, color:  #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1))
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,8 +64,10 @@ class MangaSearchViewController: UITableViewController{
         
         tableView.tableFooterView = UIView()
         tableView.backgroundView = UIView()
-        tableView.backgroundView!.addSubview(searchActiveIndicator)
+
         searchActiveIndicator.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundView!.addSubview(searchActiveIndicator)
+        
         searchActiveIndicator.centerXAnchor.constraint(equalTo: tableView.backgroundView!.centerXAnchor).isActive = true
         searchActiveIndicator.topAnchor.constraint(equalTo: tableView.contentLayoutGuide.topAnchor, constant: 30).isActive = true
         
@@ -125,10 +127,10 @@ extension MangaSearchViewController: UISearchResultsUpdating, UISearchBarDelegat
         self.query = query
         searchActiveIndicator.startAnimating()
         MRClient.quickSearch(forQuery: query) { (error, response) in
-            if self.query == query{
+            if self.query == query, let response = response{
                 DispatchQueue.main.async {
                     self.searchActiveIndicator.stopAnimating()
-                    self.serieSearchResults = response!.data["series"] ?? []
+                    self.serieSearchResults = response.data["series"] ?? []
                 }
             }
         }

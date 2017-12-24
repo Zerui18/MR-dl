@@ -14,6 +14,7 @@ class SerieDetailsViewController: UIViewController{
     
     static let storyboardID = "serieDetailsCtr"
     
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var firstSeperatorView: UIView!
     
@@ -47,6 +48,7 @@ class SerieDetailsViewController: UIViewController{
             self.statusBarStyle = .lightContent
             self.isNavBarTransparent = true
             self.navBarItemsTintColor = .white
+            self.tabBarController?.tabBar.isHidden = true
         })
         self.statusBarStyle = .lightContent
         self.isNavBarTransparent = true
@@ -59,6 +61,7 @@ class SerieDetailsViewController: UIViewController{
             self.statusBarStyle = .default
             self.isNavBarTransparent = false
             self.navBarItemsTintColor = #colorLiteral(red: 0.1058823529, green: 0.6784313725, blue: 0.9725490196, alpha: 1)
+            self.tabBarController?.tabBar.isHidden = false
         })
         self.statusBarStyle = .default
         self.isNavBarTransparent = false
@@ -66,6 +69,7 @@ class SerieDetailsViewController: UIViewController{
     }
     
     private func setupUI(){
+        scrollView.delegate = self
         thumbnailImageView.image = nil
         coverImageView.image = nil
         titleLabel.text = nil
@@ -128,7 +132,7 @@ class SerieDetailsViewController: UIViewController{
     }
     
     @objc private func toggleCollapse(){
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: defaultAnimationDuration) {
             if self.descriptionHeightConstraint.isActive{
                 self.toggleCollapseButton.transform = CGAffineTransform(rotationAngle: -.pi)
                 self.descriptionHeightConstraint.isActive = false
@@ -167,6 +171,26 @@ extension SerieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         let cell = tableView.cellForRow(at: indexPath)
         cell?.textLabel?.text = serieMeta!.chapters[indexPath.row].name
         return cell!
+    }
+    
+}
+
+extension SerieDetailsViewController: UIScrollViewDelegate{
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let isCoverShown = coverImageView.frame.maxY <= scrollView.contentOffset.y
+        if let val = shouldHideStatusBar{
+            if isCoverShown && val{
+                UIView.animate(withDuration: defaultAnimationDuration, animations: {
+                    self.shouldHideStatusBar = false
+                })
+            }
+            else if !isCoverShown && !val{
+                UIView.animate(withDuration: defaultAnimationDuration, animations: {
+                    self.shouldHideStatusBar = true
+                })
+            }
+        }
     }
     
 }

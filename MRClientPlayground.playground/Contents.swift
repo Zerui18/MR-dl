@@ -1,13 +1,9 @@
 //: Playground - noun: a place where people can play
 
+import UIKit
 import MRClient
-import PlaygroundSupport
-PlaygroundPage.current.needsIndefiniteExecution = true
+//import PlaygroundSupport
+//PlaygroundPage.current.needsIndefiniteExecution = true
 
 
-let data = try! Data(contentsOf: URL(string: "")!)
-
-let decrpted = MRImageDataDecryptor.decrypt(data: data)
-
-
-
+UINavigationControllerHideShowBarDuration

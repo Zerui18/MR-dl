@@ -9,7 +9,7 @@
 import MRClient
 import CoreData
 
-extension MRSerie{
+@objc class MRSerie: NSManagedObject{
     
     convenience init(fromMeta meta: MRSerieMeta, context: NSManagedObjectContext) {
         self.init(context: context)

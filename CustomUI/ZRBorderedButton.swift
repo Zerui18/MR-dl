@@ -10,7 +10,7 @@ import UIKit
 
 @IBDesignable
 public class ZRBorderedButton: UIButton {
-
+    
     @IBInspectable public var borderColor: UIColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1){
         didSet{
             layer.borderColor = borderColor.cgColor
@@ -29,4 +29,9 @@ public class ZRBorderedButton: UIButton {
         }
     }
 
+    override public var isHighlighted: Bool{
+        didSet{
+            self.layer.borderColor = isHighlighted ? titleColor(for: .highlighted)!.cgColor:self.borderColor.cgColor
+        }
+    }
 }

@@ -70,6 +70,7 @@ public extension UIViewController{
             (navigationController as? ZRNavigationController)?.isNavigationBarTransparent = newValue!
         }
     }
+   
     
     public var navBarItemsTintColor: UIColor?{
         get{
