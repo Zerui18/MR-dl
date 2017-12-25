@@ -71,7 +71,7 @@
         <!--Search-->
         <scene sceneID="47K-fx-g97">
             <objects>
-                <tableViewController id="1HX-pd-d3n" customClass="MangaSearchViewController" customModule="MR_dl" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="1HX-pd-d3n" customClass="SerieSearchViewController" customModule="MR_dl" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="132" sectionHeaderHeight="40" sectionFooterHeight="1" id="BZa-K9-4yi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -84,7 +84,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="131.66666666666666"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="eur-lf-bwk" customClass="ZRImageView" customModule="CustomUI">
+                                        <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="eur-lf-bwk" customClass="ZRReactiveImageView" customModule="CustomUI">
                                             <rect key="frame" x="16" y="11" width="73" height="110"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="eur-lf-bwk" secondAttribute="height" multiplier="1:1.5" id="Ze0-2A-fXF"/>
@@ -112,7 +112,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ongoing: 70 chapters" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xGY-E4-zsB">
-                                            <rect key="frame" x="102" y="11" width="111.33333333333331" height="13.333333333333336"/>
+                                            <rect key="frame" x="102" y="11" width="111.66666666666669" height="13.666666666666664"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="13" id="jn0-hB-i9l"/>
                                             </constraints>
@@ -121,7 +121,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12 Dec 2017" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z0l-Yk-Giq">
-                                            <rect key="frame" x="294.66666666666669" y="11" width="64.333333333333314" height="13.333333333333336"/>
+                                            <rect key="frame" x="294.66666666666669" y="11" width="64.333333333333314" height="13.666666666666664"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -147,10 +147,10 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="coverImageView" destination="eur-lf-bwk" id="6Fu-wF-rS0"/>
                                     <outlet property="lastUpdatedLabel" destination="Z0l-Yk-Giq" id="O5Q-rq-Odz"/>
                                     <outlet property="shortDescriptionLabel" destination="WrS-U4-tyK" id="fYW-pm-7r8"/>
                                     <outlet property="statusLabel" destination="xGY-E4-zsB" id="uPH-Dc-H2Z"/>
+                                    <outlet property="thumbnailImageView" destination="eur-lf-bwk" id="6Fu-wF-rS0"/>
                                     <outlet property="titleLabel" destination="9d5-ms-8UD" id="SwC-Sy-rYQ"/>
                                 </connections>
                             </tableViewCell>
@@ -186,7 +186,7 @@
                                                     <constraint firstAttribute="width" secondItem="zXa-dQ-tgo" secondAttribute="height" multiplier="25:12" id="lCM-h6-atq"/>
                                                 </constraints>
                                             </view>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="rhu-5b-K5u" customClass="ZRImageView" customModule="CustomUI">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="rhu-5b-K5u" customClass="ZRReactiveImageView" customModule="CustomUI">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="rhu-5b-K5u" secondAttribute="height" multiplier="25:12" id="xjr-kQ-U9Q"/>
@@ -215,8 +215,8 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ma-Mf-9a2">
                                                 <rect key="frame" x="0.0" y="188" width="375" height="190"/>
                                                 <subviews>
-                                                    <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="NgT-Oy-6Mi" customClass="ZRImageView" customModule="CustomUI">
-                                                        <rect key="frame" x="11.999999999999993" y="8" width="118.33333333333331" height="177"/>
+                                                    <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="NgT-Oy-6Mi" customClass="ZRReactiveImageView" customModule="CustomUI">
+                                                        <rect key="frame" x="12.000000000000007" y="8" width="118.66666666666669" height="177"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="NgT-Oy-6Mi" secondAttribute="height" multiplier="2:3" id="cOy-OU-WVT"/>
                                                         </constraints>
@@ -227,14 +227,14 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </imageView>
                                                     <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Akame ga Kill!" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lwx-gt-dMS">
-                                                        <rect key="frame" x="145.33333333333337" y="8" width="221.66666666666663" height="25"/>
+                                                        <rect key="frame" x="145.66666666666663" y="8" width="221.33333333333337" height="25"/>
                                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="陈泽瑞" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jyd-DZ-csh">
-                                                        <rect key="frame" x="145.33333333333337" y="34" width="221.66666666666663" height="25"/>
+                                                        <rect key="frame" x="145.66666666666663" y="34" width="221.33333333333337" height="25"/>
                                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="25" id="Lj6-Vy-GvZ"/>
@@ -244,7 +244,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12 Dec 2017" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f3u-da-OLh">
-                                                        <rect key="frame" x="145.33333333333334" y="167" width="84" height="18"/>
+                                                        <rect key="frame" x="145.66666666666666" y="167" width="84" height="18"/>
                                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <nil key="textColor"/>
@@ -271,7 +271,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </button>
                                                     <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ongoing, 70 chapters" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jNu-ke-JS8">
-                                                        <rect key="frame" x="145.33333333333337" y="126" width="134.66666666666663" height="36"/>
+                                                        <rect key="frame" x="145.66666666666663" y="126" width="134.33333333333337" height="36"/>
                                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <nil key="textColor"/>
@@ -390,7 +390,7 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                                                                     <rect key="frame" x="0.0" y="0.0" width="86" height="129"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                     <subviews>
-                                                                        <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="artwork_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="2rM-zO-1dX" customClass="ZRImageView" customModule="CustomUI">
+                                                                        <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="artwork_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="2rM-zO-1dX" customClass="ZRReactiveImageView" customModule="CustomUI">
                                                                             <rect key="frame" x="0.0" y="0.0" width="86" height="129"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" secondItem="2rM-zO-1dX" secondAttribute="height" multiplier="2:3" id="dFF-R9-dSR"/>
@@ -500,6 +500,8 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                         <outlet property="descriptionLabel" destination="RW9-tF-Fej" id="cBo-Cl-WC7"/>
                         <outlet property="detailsBox" destination="qBo-6P-XJb" id="1Nc-Y3-7Fd"/>
                         <outlet property="firstSeperatorView" destination="d9h-Wx-RHh" id="Zza-Yx-h3s"/>
+                        <outlet property="placeholderView" destination="zXa-dQ-tgo" id="4Jb-T1-bY0"/>
+                        <outlet property="placeholderViewAspectRatioConstraint" destination="lCM-h6-atq" id="ITX-T5-hEF"/>
                         <outlet property="readButton" destination="5Cz-qz-xU7" id="IUX-ct-7UT"/>
                         <outlet property="scrollView" destination="405-2x-qui" id="7l1-Ka-bhx"/>
                         <outlet property="statusLabel" destination="jNu-ke-JS8" id="WQn-R7-ZXX"/>
@@ -692,7 +694,7 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                                     <rect key="frame" x="0.0" y="0.0" width="130" height="234"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="9pO-qc-uu4" customClass="ZRImageView" customModule="CustomUI">
+                                        <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="9pO-qc-uu4" customClass="ZRReactiveImageView" customModule="CustomUI">
                                             <rect key="frame" x="0.0" y="0.0" width="130" height="195"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">

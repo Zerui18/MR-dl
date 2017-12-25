@@ -8,7 +8,7 @@ import Cache
 /// Loads images into the given targets.
 public final class Manager: Loading {
     public let loader: Loading
-    public let cache: Storage
+    public let cache: StorageAware?
 
     /// Shared `Manager` instance.
     ///
@@ -16,7 +16,7 @@ public final class Manager: Loading {
     public static let shared = Manager(loader: Loader.shared, cache: try! Storage(diskConfig: DiskConfig(name: "TempMRImageCache", expiry: .never, maxSize: 1024*1024*300), memoryConfig: MemoryConfig(expiry: .never, countLimit: 40, totalCostLimit: 0)))
 
     /// Initializes the `Manager` with the image loader and the memory cache.
-    public init(loader: Loading, cache: Storage) {
+    public init(loader: Loading, cache: StorageAware?) {
         self.loader = loader
         self.cache = cache
     }
@@ -110,11 +110,16 @@ public final class Manager: Loading {
     // MARK: Memory Cache Helpers
 
     public func cachedImage(for request: Request) -> Image? {
-        return try? cache.object(ofType: ImageWrapper.self, forKey: request.urlRequest.url!.absoluteString).image
+        if let cache = cache{
+            return try? cache.object(ofType: ImageWrapper.self, forKey: request.urlRequest.url!.absoluteString).image
+        }
+        return nil
     }
 
     private func store(image: Image, for request: Request) {
-        try? cache.setObject(ImageWrapper(image: image), forKey: request.urlRequest.url!.absoluteString)
+        if let cache = cache{
+            try? cache.setObject(ImageWrapper(image: image), forKey: request.urlRequest.url!.absoluteString, expiry: .never)
+        }
     }
 
     // MARK: Managing Context

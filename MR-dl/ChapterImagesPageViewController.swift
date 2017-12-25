@@ -9,11 +9,11 @@
 import UIKit
 import CustomUI
 import MRClient
-import MRImageLoader
+import ImageLoader
 
 class ChapterImagesPageViewController: UIPageViewController {
     
-    let imagePreheater = Preheater(manager: .shared, maxConcurrentRequestCount: 2)
+    let imagePreheater = Preheater(manager: .shared, maxConcurrentRequestCount: 4)
     
     static func `init`(forSerie serieMeta: MRSerieMeta, atChapter chapterIndex: Int)-> ChapterImagesPageViewController{
         let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: "chapterImagesCtr") as! ChapterImagesPageViewController
@@ -35,7 +35,7 @@ class ChapterImagesPageViewController: UIPageViewController {
         didSet{
             UIView.animate(withDuration: defaultAnimationDuration) {
                 self.shouldHideStatusBar = self.isFocused
-                self.viewControllers?[0].view.backgroundColor = self.isFocused ? .black:.white
+                self.viewControllers?.first?.view.backgroundColor = self.isFocused ? .black:.white
             }
             navigationController?.setNavigationBarHidden(isFocused, animated: true)
         }
@@ -133,7 +133,9 @@ class ChapterImagesPageViewController: UIPageViewController {
     @objc private func showPagesSelector(){
         let pickerController = ZRPickerViewController(options: [Int](1...chapterImageURLs!.count).map{"page \($0)"}, selected: currentPageIndex)
         pickerController.onSelection = {selectedIndex in
-            self.goto(pageIndex: selectedIndex)
+            if selectedIndex != self.currentPageIndex{
+                self.goto(pageIndex: selectedIndex)
+            }
         }
         AppDelegate.shared.window?.rootViewController?.present(pickerController, animated: true)
     }

@@ -76,7 +76,7 @@ private final class SessionDelegate: NSObject, URLSessionDataDelegate {
     private var handlers = [URLSessionTask: SessionTaskHandler]()
 
     override init() {
-        queue.maxConcurrentOperationCount = 1
+        queue.maxConcurrentOperationCount = 4
     }
 
     func register(_ handler: SessionTaskHandler, for task: URLSessionTask) {

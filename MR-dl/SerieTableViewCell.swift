@@ -14,7 +14,7 @@ class SerieTableViewCell: UITableViewCell {
 
     static let identifier = "serieCell"
 
-    @IBOutlet weak var coverImageView: ZRImageView!
+    @IBOutlet weak var thumbnailImageView: ZRReactiveImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var lastUpdatedLabel: UILabel!
@@ -22,7 +22,7 @@ class SerieTableViewCell: UITableViewCell {
     
     var oid: String = "placeholder"{
         didSet{
-            coverImageView.image = nil
+            thumbnailImageView.image = nil
             titleLabel.text = nil
             statusLabel.text = nil
             lastUpdatedLabel.text = nil
@@ -46,9 +46,7 @@ class SerieTableViewCell: UITableViewCell {
         didSet{
             if let meta = shortMeta{
                 titleLabel.text = meta.name
-                ThumbnailLoader.shared.loadImage(meta.thumbnailURL!, intoTarget: coverImageView, verificationCriteria: {[weak self] in
-                    meta.thumbnailURL == self?.shortMeta?.thumbnailURL
-                })
+                thumbnailImageView.loadImage(withLoader: ThumbnailLoader.shared, fromURL: meta.thumbnailURL!)
             }
         }
     }

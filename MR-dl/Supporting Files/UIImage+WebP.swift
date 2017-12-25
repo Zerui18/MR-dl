@@ -9,7 +9,7 @@
 
 
 import UIKit
-
+import MRClient
 
 //Let's free some memory
 private func freeWebPData(info: UnsafeMutableRawPointer?, data: UnsafeRawPointer, size: Int) -> Void {
@@ -27,8 +27,11 @@ extension UIImage{
         self.init(cgImage: decodedImage)
     }
     
+    convenience init?(mriData: Data){
+        self.init(webPData: MRImageDataDecryptor.decrypt(data: mriData))
+    }
+    
     //MARK: WebP Decoder
-    //Let's the magic begin
     class private func webPDataToCGImage(data: Data) -> CGImage? {
         
         var w: CInt = 0, h: CInt = 0

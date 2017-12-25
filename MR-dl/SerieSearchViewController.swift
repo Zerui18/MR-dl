@@ -10,7 +10,7 @@ import UIKit
 import CustomUI
 import MRClient
 
-class MangaSearchViewController: UITableViewController{
+class SerieSearchViewController: UITableViewController{
     
     var shortMetas: [String:MRShortMeta] = [:]
     
@@ -52,6 +52,17 @@ class MangaSearchViewController: UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        transitionCoordinator?.animate(alongsideTransition: { (_) in
+            self.isNavBarTransparent = false
+            self.navBarItemsTintColor = #colorLiteral(red: 0.1058823529, green: 0.6784313725, blue: 0.9725490196, alpha: 1)
+            self.tabBarController?.tabBar.isHidden = false
+        })
+        self.isNavBarTransparent = false
+        self.navBarItemsTintColor = #colorLiteral(red: 0.1058823529, green: 0.6784313725, blue: 0.9725490196, alpha: 1)
     }
 
     private func setupUI(){
@@ -101,7 +112,7 @@ class MangaSearchViewController: UITableViewController{
     
 }
 
-extension MangaSearchViewController: UISearchResultsUpdating, UISearchBarDelegate{
+extension SerieSearchViewController: UISearchResultsUpdating, UISearchBarDelegate{
     
     func updateSearchResults(for searchController: UISearchController) {
         resultUpdateTimer.invalidate()

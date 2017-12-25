@@ -8,7 +8,7 @@
 
 import UIKit
 import CustomUI
-import MRImageLoader
+import ImageLoader
 import MRClient
 
 let defaultAnimationDuration: TimeInterval = 0.2
@@ -41,21 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UIImage(webPData: $0)
         }))
         return true
-    }
-
-    func applicationWillResignActive(_ application: UIApplication) {
-    }
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-    }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-    }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-    }
-
-    func applicationWillTerminate(_ application: UIApplication) {
     }
     
     func reportError(error: Error, ofCategory category: String){

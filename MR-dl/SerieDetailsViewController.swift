@@ -6,7 +6,7 @@
 //  Copyright © 2017 Chen Zerui. All rights reserved.
 //
 
-import UIKit
+import ImageLoader
 import CustomUI
 import MRClient
 
@@ -18,9 +18,11 @@ class SerieDetailsViewController: UIViewController{
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var firstSeperatorView: UIView!
     
-    @IBOutlet weak var coverImageView: ZRImageView!
+    @IBOutlet weak var placeholderView: UIView!
+    @IBOutlet weak var placeholderViewAspectRatioConstraint: NSLayoutConstraint!
+    @IBOutlet weak var coverImageView: ZRReactiveImageView!
     @IBOutlet weak var coverImageAspectRatioConstraint: NSLayoutConstraint!
-    @IBOutlet weak var thumbnailImageView: ZRImageView!
+    @IBOutlet weak var thumbnailImageView: ZRReactiveImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
@@ -33,6 +35,7 @@ class SerieDetailsViewController: UIViewController{
     @IBOutlet weak var artworksLabel: UILabel!
     @IBOutlet weak var artworksCollectionView: UICollectionView!
     
+    let artworksPreheater = Preheater(manager: ThumbnailLoader.shared.imageLoaderManager, maxConcurrentRequestCount: 3)
     
     var shortMeta: MRShortMeta!
     var serieMeta: MRSerieMeta?
@@ -44,29 +47,28 @@ class SerieDetailsViewController: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        UIApplication.shared.isStatusBarHidden = true
         transitionCoordinator?.animate(alongsideTransition: { (_) in
-            self.statusBarStyle = .lightContent
             self.isNavBarTransparent = true
             self.navBarItemsTintColor = .white
             self.tabBarController?.tabBar.isHidden = true
         })
-        self.statusBarStyle = .lightContent
         self.isNavBarTransparent = true
         self.navBarItemsTintColor = .white
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let urls = serieMeta?.artworkURLs{
+            artworksPreheater.startPreheating(with: urls.map{Request(url: $0)})
+        }
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        transitionCoordinator?.animate(alongsideTransition: { (_) in
-            self.statusBarStyle = .default
-            self.isNavBarTransparent = false
-            self.navBarItemsTintColor = #colorLiteral(red: 0.1058823529, green: 0.6784313725, blue: 0.9725490196, alpha: 1)
-            self.tabBarController?.tabBar.isHidden = false
-        })
-        self.statusBarStyle = .default
-        self.isNavBarTransparent = false
-        self.navBarItemsTintColor = #colorLiteral(red: 0.1058823529, green: 0.6784313725, blue: 0.9725490196, alpha: 1)
+        artworksPreheater.stopPreheating()
     }
+    
     
     private func setupUI(){
         scrollView.delegate = self
@@ -81,7 +83,7 @@ class SerieDetailsViewController: UIViewController{
         toggleCollapseButton.addTarget(self, action: #selector(toggleCollapse), for: .touchUpInside)
         
         titleLabel.text = shortMeta.name
-        ThumbnailLoader.shared.loadImage(shortMeta.thumbnailURL!, intoTarget: thumbnailImageView)
+        thumbnailImageView.loadImage(withLoader: ThumbnailLoader.shared, fromURL: shortMeta.thumbnailURL!)
         artworksCollectionView.dataSource = self
         
         if serieMeta == nil{
@@ -113,15 +115,21 @@ class SerieDetailsViewController: UIViewController{
         readButton.isEnabled = true
         
         if !serieMeta!.artworkURLs.isEmpty{
+            if navigationController?.visibleViewController == self{
+                artworksPreheater.startPreheating(with: serieMeta!.artworkURLs.map{Request(url: $0)})
+            }
             artworksCollectionView.reloadData()
         }
         else{
             artworksLabel.removeFromSuperview()
             artworksCollectionView.removeFromSuperview()
         }
-        ThumbnailLoader.shared.loadImage(serieMeta!.coverURL, intoTarget: coverImageView){image in
+        coverImageView.loadImage(withLoader: ThumbnailLoader.shared, fromURL: serieMeta!.coverURL) { (image) in
             self.coverImageAspectRatioConstraint.isActive = false
-            self.coverImageView.widthAnchor.constraint(equalTo: self.coverImageView.heightAnchor, multiplier: image.size.width/image.size.height).isActive =  true
+            self.placeholderViewAspectRatioConstraint.isActive = false
+            let widthToHeight = image.size.width / image.size.height
+            self.coverImageView.widthAnchor.constraint(equalTo: self.coverImageView.heightAnchor, multiplier: widthToHeight).isActive =  true
+            self.placeholderView.widthAnchor.constraint(equalTo: self.placeholderView.heightAnchor, multiplier: widthToHeight).isActive = true
             self.view.layoutIfNeeded()
         }
     }
@@ -172,24 +180,19 @@ extension SerieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         cell?.textLabel?.text = serieMeta!.chapters[indexPath.row].name
         return cell!
     }
+
     
 }
 
 extension SerieDetailsViewController: UIScrollViewDelegate{
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let isCoverShown = coverImageView.frame.maxY <= scrollView.contentOffset.y
-        if let val = shouldHideStatusBar{
-            if isCoverShown && val{
-                UIView.animate(withDuration: defaultAnimationDuration, animations: {
-                    self.shouldHideStatusBar = false
-                })
-            }
-            else if !isCoverShown && !val{
-                UIView.animate(withDuration: defaultAnimationDuration, animations: {
-                    self.shouldHideStatusBar = true
-                })
-            }
+        let shouldShowNavigationBar = view.convert(coverImageView.frame, from: coverImageView).maxY > 95
+        if shouldShowNavigationBar && navigationController!.isNavigationBarHidden{
+            navigationController?.setNavigationBarHidden(false, animated: true)
+        }
+        else if !shouldShowNavigationBar && !navigationController!.isNavigationBarHidden{
+            navigationController?.setNavigationBarHidden(true, animated: true)
         }
     }
     

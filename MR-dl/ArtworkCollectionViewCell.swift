@@ -13,15 +13,12 @@ class ArtworkCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "artworkItem"
     
-    @IBOutlet weak var imageView: ZRImageView!
+    @IBOutlet weak var imageView: ZRReactiveImageView!
     
     var artworkURL: URL!{
         didSet{
             imageView.image = nil
-            let currentURL = artworkURL!
-            ThumbnailLoader.shared.loadImage(currentURL, intoTarget: imageView, verificationCriteria: {[weak self] in
-                currentURL == self?.artworkURL
-            })
+            imageView.loadImage(withLoader: ThumbnailLoader.shared, fromURL: artworkURL)
         }
     }
     

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MRImageLoader
+import ImageLoader
 import CustomUI
 
 class ChapterImageViewController: UIViewController {
@@ -59,8 +59,8 @@ class ChapterImageViewController: UIViewController {
             guard let weakSelf = self else{
                 return
             }
-            if let error = result.error{
-                print("MRImage Loading Error: ", error)
+            if result.error != nil{
+                weakSelf.loadingIndicator.stopAnimating()
                 UIView.animate(withDuration: defaultAnimationDuration){
                     weakSelf.errorLabel.alpha = 1
                     weakSelf.reloadButton.alpha = 1

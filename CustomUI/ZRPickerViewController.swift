@@ -43,6 +43,7 @@ public class ZRPickerViewController: UIViewController{
     
     @IBAction func selectOriginal() {
         pickerView.selectRow(originalSelection, inComponent: 0, animated: true)
+        selectedIndex = originalSelection
     }
     
     @IBAction func completeSelection() {
