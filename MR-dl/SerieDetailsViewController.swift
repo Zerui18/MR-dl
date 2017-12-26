@@ -35,7 +35,7 @@ class SerieDetailsViewController: UIViewController{
     @IBOutlet weak var artworksLabel: UILabel!
     @IBOutlet weak var artworksCollectionView: UICollectionView!
     
-    let artworksPreheater = Preheater(manager: ThumbnailLoader.shared.imageLoaderManager, maxConcurrentRequestCount: 3)
+    let artworksPreheater = Preheater(manager: ThumbnailLoader.shared.imageLoaderManager, maxConcurrentRequestCount: 4)
     
     var shortMeta: MRShortMeta!
     var serieMeta: MRSerieMeta?
@@ -47,14 +47,15 @@ class SerieDetailsViewController: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.isStatusBarHidden = true
         transitionCoordinator?.animate(alongsideTransition: { (_) in
             self.isNavBarTransparent = true
             self.navBarItemsTintColor = .white
-            self.tabBarController?.tabBar.isHidden = true
+            self.statusBarStyle = .lightContent
         })
         self.isNavBarTransparent = true
         self.navBarItemsTintColor = .white
+        self.statusBarStyle = .lightContent
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -187,7 +188,7 @@ extension SerieDetailsViewController: UITableViewDataSource, UITableViewDelegate
 extension SerieDetailsViewController: UIScrollViewDelegate{
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let shouldShowNavigationBar = view.convert(coverImageView.frame, from: coverImageView).maxY > 95
+        let shouldShowNavigationBar = scrollView.contentOffset.y < 50
         if shouldShowNavigationBar && navigationController!.isNavigationBarHidden{
             navigationController?.setNavigationBarHidden(false, animated: true)
         }
