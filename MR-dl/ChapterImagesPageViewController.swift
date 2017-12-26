@@ -13,12 +13,18 @@ import ImageLoader
 
 class ChapterImagesPageViewController: UIPageViewController {
     
-    let imagePreheater = Preheater(manager: .shared, maxConcurrentRequestCount: 4)
+    var imagePreheater: Preheater?
     
-    static func `init`(forSerie serieMeta: MRSerieMeta, atChapter chapterIndex: Int)-> ChapterImagesPageViewController{
+    static func `init`(forSerie serieMeta: MRSerieMeta, atChapter chapterIndex: Int, localSource: Manager?)-> ChapterImagesPageViewController{
         let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: "chapterImagesCtr") as! ChapterImagesPageViewController
         ctr.serieMeta = serieMeta
         ctr.chapterIndex = chapterIndex
+        if localSource != nil{
+            
+        }
+        else{
+            ctr.imagePreheater = Preheater(manager: .shared, maxConcurrentRequestCount: 4)
+        }
         return ctr
     }
     
@@ -49,10 +55,12 @@ class ChapterImagesPageViewController: UIPageViewController {
     //Reactive: chapterImageURLs for current-diplaying chapter
     var chapterImageURLs: [URL]?{
         didSet{
-            let requests = chapterImageURLs!.map{Request(url: $0)}
-            imagePreheater.stopPreheating()
-            imagePreheater.startPreheating(with: shouldLoadReversed ? requests.reversed():requests)
-            goto(pageIndex: shouldLoadReversed ? requests.count-1:0)
+            if let preheater = imagePreheater{
+                let requests = chapterImageURLs!.map{Request(url: $0)}
+                imagePreheater?.stopPreheating()
+                imagePreheater?.startPreheating(with: shouldLoadReversed ? requests.reversed():requests)
+            }
+            goto(pageIndex: shouldLoadReversed ? chapterImageURLs!.count-1:0)
             chapterIndexButon.isEnabled = true
         }
     }
@@ -91,7 +99,7 @@ class ChapterImagesPageViewController: UIPageViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        imagePreheater.stopPreheating()
+        imagePreheater?.stopPreheating()
     }
     
     let focusGesturePlaceholderView = UIView(frame: .zero)
