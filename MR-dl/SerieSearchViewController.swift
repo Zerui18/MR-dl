@@ -59,10 +59,11 @@ class SerieSearchViewController: UITableViewController{
         transitionCoordinator?.animate(alongsideTransition: { (_) in
             self.isNavBarTransparent = false
             self.navBarItemsTintColor = #colorLiteral(red: 0.1058823529, green: 0.6784313725, blue: 0.9725490196, alpha: 1)
-            self.tabBarController?.tabBar.isHidden = false
+            self.statusBarStyle = .default
         })
         self.isNavBarTransparent = false
         self.navBarItemsTintColor = #colorLiteral(red: 0.1058823529, green: 0.6784313725, blue: 0.9725490196, alpha: 1)
+        self.statusBarStyle = .default
     }
 
     private func setupUI(){
@@ -103,9 +104,7 @@ class SerieSearchViewController: UITableViewController{
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! SerieTableViewCell
-        let detailsCtr = storyboard!.instantiateViewController(withIdentifier: SerieDetailsViewController.storyboardID) as! SerieDetailsViewController
-        detailsCtr.shortMeta = cell.shortMeta
-        detailsCtr.serieMeta = cell.serieMeta
+        let detailsCtr = SerieDetailsViewController.init(shortMeta: cell.shortMeta!, serieMeta: cell.serieMeta)
         navigationItem.searchController?.isActive = false
         navigationController!.pushViewController(detailsCtr, animated: true)
     }

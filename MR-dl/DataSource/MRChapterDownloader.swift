@@ -26,6 +26,8 @@ class MRChapterDownloader: NSObject{
     var activeDownloads: [URL:URLSessionDownloadTask] = [:]
     var urlToIndex: [URL:Int] = [:]
     
+    var progress: Progress?
+    
     init(chapter: MRChapter, maxConcurrentDownload: Int, delegate: MRChapterDownloaderDelegate){
         self.chapter = chapter
         self.delegate = delegate
@@ -34,8 +36,11 @@ class MRChapterDownloader: NSObject{
     }
     
     // convenience function for starting download for the chapter
-    func beginDownload(forChapter chapter: MRChapter){
-        if chapter.imageURLs != nil{
+    func beginDownload(){
+        if progress != nil{
+            return
+        }
+        if chapter.remoteImageURLs != nil{
             _beginDownload()
         }
         else{
@@ -44,7 +49,7 @@ class MRChapterDownloader: NSObject{
                     return
                 }
                 if let urls = response?.data{
-                    weakSelf.chapter.imageURLs = urls
+                    weakSelf.chapter.remoteImageURLs = urls
                     weakSelf._beginDownload()
                 }
                 weakSelf.delegate?.downloaderDidInitiateDownload(forChapter: weakSelf.chapter, withError: error)
@@ -53,10 +58,11 @@ class MRChapterDownloader: NSObject{
     }
     
     private func _beginDownload(){
+        progress = Progress(totalUnitCount: Int64(chapter.remoteImageURLs!.count))
         if urlSession == nil{
             urlSession = URLSession(configuration: .background(withIdentifier: "mrchapterdownloader-"+chapter.oid!), delegate: self, delegateQueue: nil)
         }
-        let imageURLs = chapter.imageURLs!
+        let imageURLs = chapter.remoteImageURLs!
         urlToIndex = Dictionary(uniqueKeysWithValues: imageURLs.enumerated().map{($0.1, $0.0)})
         var urlsToDownload = [URL]()
         let activeDownloads = self.activeDownloads.keys
@@ -89,9 +95,10 @@ class MRChapterDownloader: NSObject{
         downloadTask.resume()
     }
     
-    // convenience function for cancelling download for a chapter
-    func cancelDownload(forChapter chapter: MRChapter){
-        
+    // convenience function for cancelling download for the chapter
+    func cancelDownload(){
+        urlSession.invalidateAndCancel()
+        urlSession = nil
     }
 
 }

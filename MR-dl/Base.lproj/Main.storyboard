@@ -169,7 +169,7 @@
         <!--Serie Details View Controller-->
         <scene sceneID="GhL-29-zJc">
             <objects>
-                <viewController storyboardIdentifier="serieDetailsCtr" automaticallyAdjustsScrollViewInsets="NO" id="i1O-Wp-GjH" customClass="SerieDetailsViewController" customModule="MR_dl" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="serieDetailsCtr" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="i1O-Wp-GjH" customClass="SerieDetailsViewController" customModule="MR_dl" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yUU-BC-3TH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="890"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -503,6 +503,7 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                         <outlet property="placeholderView" destination="zXa-dQ-tgo" id="4Jb-T1-bY0"/>
                         <outlet property="placeholderViewAspectRatioConstraint" destination="lCM-h6-atq" id="ITX-T5-hEF"/>
                         <outlet property="readButton" destination="5Cz-qz-xU7" id="IUX-ct-7UT"/>
+                        <outlet property="saveBarButton" destination="leb-Jo-jUa" id="myV-y5-GkM"/>
                         <outlet property="scrollView" destination="405-2x-qui" id="7l1-Ka-bhx"/>
                         <outlet property="statusLabel" destination="jNu-ke-JS8" id="WQn-R7-ZXX"/>
                         <outlet property="thumbnailImageView" destination="NgT-Oy-6Mi" id="1da-hT-17q"/>
@@ -538,11 +539,11 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12 Dec 2017" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zNr-V6-ljD">
-                                            <rect key="frame" x="280.66666666666669" y="0.0" width="79.333333333333314" height="18"/>
+                                            <rect key="frame" x="285.66666666666669" y="0.0" width="74.333333333333314" height="18"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="18" id="yZo-02-4TZ"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>

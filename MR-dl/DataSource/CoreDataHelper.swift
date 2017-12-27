@@ -49,7 +49,7 @@ class CoreDataHelper{
 
 extension NSManagedObjectContext{
     
-    static var shared: NSManagedObjectContext{
+    static var main: NSManagedObjectContext{
         return CoreDataHelper.shared.mainMOC
     }
     

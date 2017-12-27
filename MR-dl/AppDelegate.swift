@@ -35,12 +35,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         AppDelegate.shared = self
         storyBoard = window!.rootViewController!.storyboard!
-        Loader.shared = Loader(loader: DataLoader(), decoder: MRIDataDecoder(decryptFunction: {
+        Loader.sharedMRILoader = Loader(loader: DataLoader(), decoder: MRIDataDecoder(decryptFunction: {
             MRImageDataDecryptor.decrypt(data: $0)
         }, decodeFunction: {
             UIImage(webPData: $0)
         }))
         return true
+    }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        CoreDataHelper.shared.tryToSave()
     }
     
     func reportError(error: Error, ofCategory category: String){

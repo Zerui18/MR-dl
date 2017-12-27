@@ -16,6 +16,19 @@ class SerieCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        transitionCoordinator?.animate(alongsideTransition: { (_) in
+            self.isNavBarTransparent = false
+            self.navBarItemsTintColor = #colorLiteral(red: 0.1058823529, green: 0.6784313725, blue: 0.9725490196, alpha: 1)
+            self.statusBarStyle = .default
+        })
+        self.isNavBarTransparent = false
+        self.navBarItemsTintColor = #colorLiteral(red: 0.1058823529, green: 0.6784313725, blue: 0.9725490196, alpha: 1)
+        self.statusBarStyle = .default
+        self.tabBarController?.tabBar.isHidden = false
+    }
 
 }
 
@@ -27,8 +40,14 @@ extension SerieCollectionViewController{
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SerieCollectionViewCell.identifier, for: indexPath) as! SerieCollectionViewCell
-        
+        cell.serie = LocalMangaDataSource.shared.series[indexPath.item]
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let serie = (collectionView.cellForItem(at: indexPath) as! SerieCollectionViewCell).serie!
+        let ctr = SerieDetailsViewController(localSerie: serie)
+        navigationController!.pushViewController(ctr, animated: true)
     }
     
 }

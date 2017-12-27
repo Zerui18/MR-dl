@@ -21,7 +21,7 @@ public final class Preheater {
     /// Initializes the `Preheater` instance.
     /// - parameter manager: `Manager.shared` by default.
     /// - parameter `maxConcurrentRequestCount`: 2 by default.
-    public init(manager: Manager = .shared, maxConcurrentRequestCount: Int = 2) {
+    public init(manager: Manager = .sharedMRImageManager, maxConcurrentRequestCount: Int = 2) {
         self.manager = manager
         self.preheatQueue = TaskQueue(maxConcurrentTaskCount: maxConcurrentRequestCount)
     }

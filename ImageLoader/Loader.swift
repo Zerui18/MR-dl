@@ -64,12 +64,12 @@ public final class Loader: Loading {
     /// Shared `Loading` object.
     ///
     /// Shared loader is created with `DataLoader()`.
-    public static var shared: Loading!
+    public static var sharedMRILoader: Loading!
 
     /// Some nitty-gritty options which can be used to customize loader.
     public struct Options {
         /// The maximum number of concurrent data loading tasks. `6` by default.
-        public var maxConcurrentDataLoadingTaskCount: Int = 12
+        public var maxConcurrentDataLoadingTaskCount: Int = 8
 
         /// The maximum number of concurrent image processing tasks. `2` by default.
         ///

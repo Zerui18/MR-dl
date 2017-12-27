@@ -15,11 +15,25 @@ let seriesDirectory = documentsDirectory.appendingPathComponent("Series")
 fileprivate let jsonDecoder = JSONDecoder()
 fileprivate let jsonEncoder = JSONEncoder()
 
+let dateFormatter: DateFormatter = {
+    let f = DateFormatter()
+    f.dateFormat = "dd MMM yyyy"
+    return f
+}()
+
 @objc class MRSerie: NSManagedObject{
     
+    var statusDescription: String{
+        return (completed ? "Completed, ":"Ongoing, ") + "\(chapters!.count) chapters"
+    }
+    
+    var lastUpdatedDescription: String{
+        return dateFormatter.string(from: lastUpdated!)
+    }
+    
     // copy meta infos, initialize empty chapters & directory
-    convenience init(fromMeta meta: MRSerieMeta, context: NSManagedObjectContext = .shared)throws {
-        self.init(context: context)
+    convenience init(fromMeta meta: MRSerieMeta, context: NSManagedObjectContext = .main)throws {
+        self.init(entity: NSEntityDescription.entity(forEntityName: "MRSerie", in: context)!, insertInto: context)
         self.name = meta.name
         self.thumbnailURL = meta.thumbnailURL
         self.oid = meta.oid
@@ -64,6 +78,16 @@ fileprivate let jsonEncoder = JSONEncoder()
         let newChapterMetas = meta.chapters.suffix(from: startIndex)
         for meta in newChapterMetas{
             _ = MRChapter(fromMeta: meta, serie: self)
+        }
+    }
+    
+    func chaptersToDownload()-> [MRChapter]{
+        return (chapters!.array as! [MRChapter]).filter{$0.downloadState != .downloaded}
+    }
+    
+    func downloadChapterImages(){
+        chaptersToDownload().forEach{
+            $0.downloader?.beginDownload()
         }
     }
     

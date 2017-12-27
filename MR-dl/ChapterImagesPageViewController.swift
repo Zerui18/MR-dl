@@ -15,16 +15,18 @@ class ChapterImagesPageViewController: UIPageViewController {
     
     var imagePreheater: Preheater?
     
-    static func `init`(forSerie serieMeta: MRSerieMeta, atChapter chapterIndex: Int, localSource: Manager?)-> ChapterImagesPageViewController{
+    static func `init`(forSerie serieMeta: MRSerieMeta, atChapter chapterIndex: Int)-> ChapterImagesPageViewController{
         let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: "chapterImagesCtr") as! ChapterImagesPageViewController
         ctr.serieMeta = serieMeta
         ctr.chapterIndex = chapterIndex
-        if localSource != nil{
-            
-        }
-        else{
-            ctr.imagePreheater = Preheater(manager: .shared, maxConcurrentRequestCount: 4)
-        }
+        ctr.imagePreheater = Preheater(manager: .sharedMRImageManager, maxConcurrentRequestCount: 4)
+        return ctr
+    }
+    
+    static func `init`(forLocalSerie serie: MRSerie, atChapter chapterIndex: Int)-> ChapterImagesPageViewController{
+        let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: "chapterImagesCtr") as! ChapterImagesPageViewController
+        ctr.localSerie = serie
+        ctr.chapterIndex = chapterIndex
         return ctr
     }
     
@@ -49,6 +51,7 @@ class ChapterImagesPageViewController: UIPageViewController {
     
     // current-displaying serie-meta
     var serieMeta: MRSerieMeta!
+    var localSerie: MRSerie?
     
     var shouldLoadReversed = false
     
@@ -57,8 +60,8 @@ class ChapterImagesPageViewController: UIPageViewController {
         didSet{
             if let preheater = imagePreheater{
                 let requests = chapterImageURLs!.map{Request(url: $0)}
-                imagePreheater?.stopPreheating()
-                imagePreheater?.startPreheating(with: shouldLoadReversed ? requests.reversed():requests)
+                preheater.stopPreheating()
+                preheater.startPreheating(with: shouldLoadReversed ? requests.reversed():requests)
             }
             goto(pageIndex: shouldLoadReversed ? chapterImageURLs!.count-1:0)
             chapterIndexButon.isEnabled = true
@@ -68,13 +71,16 @@ class ChapterImagesPageViewController: UIPageViewController {
     //Reactive: current-displaying chapter index
     var chapterIndex: Int!{
         didSet{
-            navigationItem.title = chapter.name
+            navigationItem.title = chapterMeta.name
         }
     }
     
     // current-displaying chapter
-    var chapter: MRSerieMeta.ChapterMeta{
+    var chapterMeta: MRSerieMeta.ChapterMeta{
         return serieMeta.chapters[chapterIndex]
+    }
+    var localChapter: MRChapter?{
+        return localSerie?.chapters?[chapterIndex] as? MRChapter
     }
     
     //Reactive: current-displaying page index, 0-indexed
@@ -82,6 +88,10 @@ class ChapterImagesPageViewController: UIPageViewController {
         didSet{
             chapterIndexButon.title = "\(currentPageIndex+1)/\(chapterImageURLs!.count)"
         }
+    }
+    
+    var isLocalSource: Bool{
+        return localSerie != nil
     }
     
     override func viewDidLoad() {
@@ -102,51 +112,45 @@ class ChapterImagesPageViewController: UIPageViewController {
         imagePreheater?.stopPreheating()
     }
     
-    let focusGesturePlaceholderView = UIView(frame: .zero)
-    lazy var contentView: UIView = {
-       return value(forKey: "_contentView") as! UIView
-    }()
     
     private func setupUI(){
-
-        navigationItem.title = chapter.name
+        navigationItem.title = chapterMeta.name
         dataSource = self
         delegate = self
         
         chapterIndexButon.target = self
         chapterIndexButon.action = #selector(showPagesSelector)
         
-        focusGesturePlaceholderView.translatesAutoresizingMaskIntoConstraints = false
-        
-        contentView.addSubview(focusGesturePlaceholderView)
-        focusGesturePlaceholderView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor).isActive = true
-        focusGesturePlaceholderView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        focusGesturePlaceholderView.centerXAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        focusGesturePlaceholderView.widthAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.widthAnchor, multiplier: 0.4).isActive = true
-        focusGesturePlaceholderView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleFocus)))
     }
     
-    @objc private func toggleFocus(){
+    @objc func toggleFocus(){
         isFocused = !isFocused
     }
     
     // fetch image urls for current chapter
     private func fetchImageURLs(forChapterIndex index: Int){
-        chapterIndexButon.isEnabled = false
-        let blockingAlert = UIAlertController(title: "Loading Chapter \(chapterIndex+1)", message: "", preferredStyle: .alert)
-        present(blockingAlert, animated: false)
-        MRClient.getChapterImageURLs(forOid: chapter.oid) {(error, response) in
-            DispatchQueue.main.async {
-                self.presentedViewController?.dismiss(animated: true)
-                if let imageURLs = response?.data{
-                    self.chapterIndex = index
-                    self.chapterImageURLs = imageURLs
-                }
-                else{
-                    blockingAlert.title = "Network Error"
-                    blockingAlert.message = "Failed to load image-urls for chapter, please check your network connectivity."
-                    Timer.scheduledTimer(withTimeInterval: 2, repeats: false){_ in
-                        blockingAlert.dismiss(animated: true)
+        let oldIndex = chapterIndex
+        chapterIndex = index
+        if isLocalSource{
+            chapterImageURLs = localChapter!.sortedLocalImageURLs()!
+        }
+        else{
+            chapterIndexButon.isEnabled = false
+            let blockingAlert = UIAlertController(title: "Loading Chapter \(chapterIndex+1)", message: "", preferredStyle: .alert)
+            present(blockingAlert, animated: false)
+            MRClient.getChapterImageURLs(forOid: chapterMeta.oid) {(error, response) in
+                DispatchQueue.main.async {
+                    self.presentedViewController?.dismiss(animated: true)
+                    if let imageURLs = response?.data{
+                        self.chapterImageURLs = imageURLs
+                    }
+                    else{
+                        self.chapterIndex = oldIndex
+                        blockingAlert.title = "Network Error"
+                        blockingAlert.message = "Failed to load image-urls for chapter, please check your network connectivity."
+                        Timer.scheduledTimer(withTimeInterval: 2, repeats: false){_ in
+                            blockingAlert.dismiss(animated: true)
+                        }
                     }
                 }
             }
@@ -179,9 +183,7 @@ class ChapterImagesPageViewController: UIPageViewController {
         else if pageIndex == urls.count-1{
             reversedDirection = .forward
         }
-        setViewControllers([ChapterImageViewController(imageURL: urls[pageIndex], pageIndex: pageIndex, chapterIndex: chapterIndex)], direction: reversedDirection, animated: true){_ in
-            self.contentView.bringSubview(toFront: self.focusGesturePlaceholderView)
-        }
+        setViewControllers([ChapterImageViewController(imageURL: urls[pageIndex], pageIndex: pageIndex, chapterIndex: chapterIndex)], direction: reversedDirection, animated: true)
     }
 
 }
@@ -200,7 +202,7 @@ extension ChapterImagesPageViewController: UIPageViewControllerDataSource, UIPag
             let sourceIndex = (viewController as! ChapterImageViewController).pageIndex!
             if sourceIndex+1 >= chapterImageURLs!.count{
                 // load next chapter if exists
-                if chapterIndex+1 < serieMeta.chaptersCount{
+                if chapterIndex+1 < (isLocalSource ? localSerie!.chapters!.count:serieMeta.chaptersCount){
                     shouldLoadReversed = false
                     fetchImageURLs(forChapterIndex: chapterIndex+1)
                 }
@@ -244,10 +246,6 @@ extension ChapterImagesPageViewController: UIPageViewControllerDataSource, UIPag
         if !isFocused{
             isFocused = true
         }
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        contentView.bringSubview(toFront: focusGesturePlaceholderView)
     }
     
 }

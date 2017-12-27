@@ -13,6 +13,7 @@
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="chaptersCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="completed" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="coverURL" optional="YES" attributeType="URI" syncable="YES"/>
         <attribute name="encodedArtworkURLs" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="lastUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -23,6 +24,6 @@
     </entity>
     <elements>
         <element name="MRChapter" positionX="-54" positionY="18" width="128" height="150"/>
-        <element name="MRSerie" positionX="-63" positionY="-18" width="128" height="195"/>
+        <element name="MRSerie" positionX="-63" positionY="-18" width="128" height="210"/>
     </elements>
 </model>

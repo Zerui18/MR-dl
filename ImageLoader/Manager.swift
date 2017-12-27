@@ -13,7 +13,7 @@ public final class Manager: Loading {
     /// Shared `Manager` instance.
     ///
     /// Shared manager is created with `Loader.shared` and `Cache`.
-    public static let shared = Manager(loader: Loader.shared, cache: try! Storage(diskConfig: DiskConfig(name: "TempMRImageCache", expiry: .never, maxSize: 1024*1024*300), memoryConfig: MemoryConfig(expiry: .never, countLimit: 40, totalCostLimit: 0)))
+    public static let sharedMRImageManager = Manager(loader: Loader.sharedMRILoader, cache: try! Storage(diskConfig: DiskConfig(name: "TempMRImageCache", expiry: .never, maxSize: 1024*1024*300), memoryConfig: MemoryConfig(expiry: .never, countLimit: 40, totalCostLimit: 0)))
 
     /// Initializes the `Manager` with the image loader and the memory cache.
     public init(loader: Loading, cache: StorageAware?) {

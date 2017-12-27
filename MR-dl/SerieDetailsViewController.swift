@@ -14,6 +14,21 @@ class SerieDetailsViewController: UIViewController{
     
     static let storyboardID = "serieDetailsCtr"
     
+    static func `init`(shortMeta: MRShortMeta, serieMeta: MRSerieMeta?)-> SerieDetailsViewController{
+        let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: storyboardID) as! SerieDetailsViewController
+        ctr.shortMeta = shortMeta
+        ctr.serieMeta = serieMeta
+        return ctr
+    }
+    
+    static func `init`(localSerie: MRSerie)-> SerieDetailsViewController{
+        let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: storyboardID) as! SerieDetailsViewController
+        ctr.localSerie = localSerie
+        return ctr
+    }
+    
+    
+    @IBOutlet weak var saveBarButton: UIBarButtonItem!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var firstSeperatorView: UIView!
@@ -40,6 +55,12 @@ class SerieDetailsViewController: UIViewController{
     var shortMeta: MRShortMeta!
     var serieMeta: MRSerieMeta?
     
+    var localSerie: MRSerie?
+    
+    var isLocalSource: Bool{
+        return localSerie != nil
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -55,13 +76,15 @@ class SerieDetailsViewController: UIViewController{
         self.isNavBarTransparent = true
         self.navBarItemsTintColor = .white
         self.statusBarStyle = .lightContent
-        self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if let urls = serieMeta?.artworkURLs{
-            artworksPreheater.startPreheating(with: urls.map{Request(url: $0)})
+        if isLocalSource{
+            artworksPreheater.startPreheating(with: localSerie!.artworkURLs!.map(Request.init))
+        }
+        else if let urls = serieMeta?.artworkURLs{
+            artworksPreheater.startPreheating(with: urls.map(Request.init))
         }
     }
     
@@ -75,23 +98,30 @@ class SerieDetailsViewController: UIViewController{
         scrollView.delegate = self
         thumbnailImageView.image = nil
         coverImageView.image = nil
-        titleLabel.text = nil
         descriptionLabel.text = nil
         statusLabel.text = nil
         updateDateLabel.text = nil
         readButton.isEnabled = false
         readButton.addTarget(self, action: #selector(showChaptersTable), for: .touchUpInside)
         toggleCollapseButton.addTarget(self, action: #selector(toggleCollapse), for: .touchUpInside)
-        
-        titleLabel.text = shortMeta.name
-        thumbnailImageView.loadImage(withLoader: ThumbnailLoader.shared, fromURL: shortMeta.thumbnailURL!)
         artworksCollectionView.dataSource = self
         
-        if serieMeta == nil{
-            fetchSerieMeta()
+        if isLocalSource{
+            (saveBarButton.value(forKey: "_view") as! UIView).removeFromSuperview()
+            titleLabel.text = localSerie!.name
+            thumbnailImageView.loadImage(withLoader: ThumbnailLoader.shared, fromURL: localSerie!.thumbnailURL!)
+            loadCoverImage(fromURL: localSerie!.coverURL!)
         }
         else{
-            fillupMeta()
+            titleLabel.text = shortMeta.name
+            thumbnailImageView.loadImage(withLoader: ThumbnailLoader.shared, fromURL: shortMeta.thumbnailURL!)
+            
+            if serieMeta == nil{
+                fetchSerieMeta()
+            }
+            else{
+                fillupMeta()
+            }
         }
 
     }
@@ -108,24 +138,46 @@ class SerieDetailsViewController: UIViewController{
     }
     
     private func fillupMeta(){
-        authorLabel.text = serieMeta!.author
-        statusLabel.text = serieMeta!.statusDescription
-        updateDateLabel.text = serieMeta!.lastUpdatedDescription
-        descriptionLabel.text = serieMeta!.description
+        let author: String, status: String, updated: String, description: String
+        if isLocalSource{
+            author = localSerie!.author!
+            status = localSerie!.statusDescription
+            updated = localSerie!.lastUpdatedDescription
+            description = localSerie!.serieDescription!
+        }
+        else{
+            author = serieMeta!.author
+            status = serieMeta!.statusDescription
+            updated = serieMeta!.lastUpdatedDescription
+            description = serieMeta!.description
+        }
+        authorLabel.text = author
+        statusLabel.text = status
+        updateDateLabel.text = updated
+        descriptionLabel.text = description
         descriptionHeightConstraint.constant = min(descriptionHeightConstraint.constant, serieMeta!.description.height(forWidth: descriptionLabel.bounds.width, font: descriptionLabel.font))
         readButton.isEnabled = true
         
-        if !serieMeta!.artworkURLs.isEmpty{
-            if navigationController?.visibleViewController == self{
-                artworksPreheater.startPreheating(with: serieMeta!.artworkURLs.map{Request(url: $0)})
+        if !isLocalSource{
+            saveBarButton.target = self
+            saveBarButton.action = #selector(saveSerie)
+            if !serieMeta!.artworkURLs.isEmpty{
+                if navigationController?.visibleViewController == self{
+                    artworksPreheater.startPreheating(with: serieMeta!.artworkURLs.map{Request(url: $0)})
+                }
+                artworksCollectionView.reloadData()
             }
-            artworksCollectionView.reloadData()
+            else{
+                artworksLabel.removeFromSuperview()
+                artworksCollectionView.removeFromSuperview()
+            }
+            loadCoverImage(fromURL: serieMeta!.coverURL)
         }
-        else{
-            artworksLabel.removeFromSuperview()
-            artworksCollectionView.removeFromSuperview()
-        }
-        coverImageView.loadImage(withLoader: ThumbnailLoader.shared, fromURL: serieMeta!.coverURL) { (image) in
+        
+    }
+    
+    private func loadCoverImage(fromURL url: URL){
+        coverImageView.loadImage(withLoader: ThumbnailLoader.shared, fromURL: url) { (image) in
             self.coverImageAspectRatioConstraint.isActive = false
             self.placeholderViewAspectRatioConstraint.isActive = false
             let widthToHeight = image.size.width / image.size.height
@@ -133,6 +185,11 @@ class SerieDetailsViewController: UIViewController{
             self.placeholderView.widthAnchor.constraint(equalTo: self.placeholderView.heightAnchor, multiplier: widthToHeight).isActive = true
             self.view.layoutIfNeeded()
         }
+    }
+    
+    @objc private func saveSerie(){
+        let localSerie = try! LocalMangaDataSource.shared.createSerie(withMeta: serieMeta!)
+        
     }
     
     @objc private func showChaptersTable(){
@@ -189,10 +246,10 @@ extension SerieDetailsViewController: UIScrollViewDelegate{
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let shouldShowNavigationBar = scrollView.contentOffset.y < 50
-        if shouldShowNavigationBar && navigationController!.isNavigationBarHidden{
+        if shouldShowNavigationBar && (navigationController?.isNavigationBarHidden ?? false){
             navigationController?.setNavigationBarHidden(false, animated: true)
         }
-        else if !shouldShowNavigationBar && !navigationController!.isNavigationBarHidden{
+        else if !shouldShowNavigationBar && !(navigationController?.isNavigationBarHidden ?? true){
             navigationController?.setNavigationBarHidden(true, animated: true)
         }
     }

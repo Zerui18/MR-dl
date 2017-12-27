@@ -14,9 +14,13 @@ fileprivate let jsonEncoder = JSONEncoder()
 
 @objc class MRChapter: NSManagedObject{
     
+    var lastUpdatedDescription: String{
+        return dateFormatter.string(from: dateUpdated!)
+    }
+    
     // copy meta infos, construct relationship, initialize directory
-    convenience init(fromMeta meta: MRSerieMeta.ChapterMeta, serie: MRSerie, context: NSManagedObjectContext = .shared) {
-        self.init(context: context)
+    convenience init(fromMeta meta: MRSerieMeta.ChapterMeta, serie: MRSerie, context: NSManagedObjectContext = .main) {
+        self.init(entity: NSEntityDescription.entity(forEntityName: "MRChapter", in: context)!, insertInto: context)
         self.dateUpdated = meta.updated
         self.oid = meta.oid
         self.name = meta.name
@@ -32,10 +36,10 @@ fileprivate let jsonEncoder = JSONEncoder()
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: false, attributes: nil)
     }
     
-    var imageURLs: [URL]?{
+    var remoteImageURLs: [URL]?{
         get{
-            if _imageURLs != nil{
-                return _imageURLs
+            if _remoteImageURLs != nil{
+                return _remoteImageURLs
             }
             else if let data = encodedImageURLs{
                 return try? jsonDecoder.decode([URL].self, from: data)
@@ -45,13 +49,31 @@ fileprivate let jsonEncoder = JSONEncoder()
         set{
             if let newValue = newValue{
                 encodedImageURLs = try! jsonEncoder.encode(newValue)
-                _imageURLs = newValue
+                _remoteImageURLs = newValue
             }
         }
     }
-    var _imageURLs: [URL]?
+    private var _remoteImageURLs: [URL]?
     
-    lazy var downloader: MRChapterDownloader = MRChapterDownloader(chapter: self, maxConcurrentDownload: 4, delegate: self)
+    func sortedLocalImageURLs()-> [URL]?{
+        if let pages = remoteImageURLs{
+            return [Int](0...pages.count-1).map(addressForPage)
+        }
+        return nil
+    }
+    
+    lazy var downloader: MRChapterDownloader? = MRChapterDownloader(chapter: self, maxConcurrentDownload: 4, delegate: self)
+    var downloadProgress: Progress?
+    
+    enum DownloadState: Int16{case none=0, downloading, downloaded}
+    var downloadState: DownloadState{
+        get{
+            return DownloadState(rawValue: downloadStateRaw)!
+        }
+        set{
+            downloadStateRaw = newValue.rawValue
+        }
+    }
     
 }
 
@@ -70,7 +92,7 @@ extension MRChapter{
 extension MRChapter: MRChapterDownloaderDelegate{
     
     func downloaderDidInitiateDownload(forChapter chapter: MRChapter, withError error: Error?) {
-        
+
     }
     
     func downloaderDidDownload(pageAtIndex index: Int, forChapter chapter: MRChapter, withError error: Error?) {

@@ -55,7 +55,7 @@ class ChapterImageViewController: UIViewController {
     
     private func startLoadingImage(){
         loadingIndicator.startAnimating()
-        Manager.shared.loadImage(with: chapterURL, into: imageView) {[weak self] (result, _) in
+        Manager.sharedMRImageManager.loadImage(with: chapterURL, into: imageView) {[weak self] (result, _) in
             guard let weakSelf = self else{
                 return
             }
@@ -73,11 +73,23 @@ class ChapterImageViewController: UIViewController {
         }
     }
     
+    let focusGesturePlaceholderView = UIView(frame: .zero)
+    
     private func setupUI(){
         view.backgroundColor = .white
         scrollView.delegate = self
         setupLoadingIndicator()
         reloadButton.addTarget(self, action: #selector(triggerImageReload), for: .touchUpInside)
+        
+        focusGesturePlaceholderView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(focusGesturePlaceholderView)
+        focusGesturePlaceholderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        focusGesturePlaceholderView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        focusGesturePlaceholderView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        focusGesturePlaceholderView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.4).isActive = true
+        let tapGesture = UITapGestureRecognizer(target: ChapterImagesPageViewController.shared!, action: #selector(ChapterImagesPageViewController.shared!.toggleFocus))
+        tapGesture.cancelsTouchesInView = false
+        focusGesturePlaceholderView.addGestureRecognizer(tapGesture)
     }
     
     private func setupLoadingIndicator(){
@@ -85,8 +97,9 @@ class ChapterImageViewController: UIViewController {
         view.addSubview(loadingIndicator)
         loadingIndicator.widthAnchor.constraint(equalToConstant: 50).isActive = true
         loadingIndicator.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        loadingIndicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        loadingIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
+        view.layoutIfNeeded()
     }
     
     @objc private func triggerImageReload(){
@@ -101,7 +114,7 @@ class ChapterImageViewController: UIViewController {
         if imageView != nil{
             imageView.image = image
             loadingIndicator.stopAnimating()
-            imageView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didHoldImageView(_:))))
+            view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didHoldImageView(_:))))
         }
     }
     

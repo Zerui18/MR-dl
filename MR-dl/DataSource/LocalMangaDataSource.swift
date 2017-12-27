@@ -26,15 +26,18 @@ class LocalMangaDataSource{
         return series.contains(where: {$0.oid == oid})
     }
     
-    func createSerie(withMeta meta: MRSerieMeta)throws {
+    func createSerie(withMeta meta: MRSerieMeta)throws -> MRSerie{
         let serieRecord = try MRSerie(fromMeta: meta)
         serieRecord.updateInfo(withMeta: meta)
         CoreDataHelper.shared.tryToSave()
+        return serieRecord
     }
     
     func deleteSerie(_ serie: MRSerie)throws {
         try FileManager.default.removeItem(at: serie.directory)
         CoreDataHelper.shared.deleteObject(serie)
     }
+    
+    var downloadQueue = [MRSerie]()
     
 }
