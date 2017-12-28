@@ -30,14 +30,14 @@ class LocalMangaDataSource{
         let serieRecord = try MRSerie(fromMeta: meta)
         serieRecord.updateInfo(withMeta: meta)
         CoreDataHelper.shared.tryToSave()
+        series.append(serieRecord)
         return serieRecord
     }
     
     func deleteSerie(_ serie: MRSerie)throws {
         try FileManager.default.removeItem(at: serie.directory)
         CoreDataHelper.shared.deleteObject(serie)
+        series.delete(serie)
     }
-    
-    var downloadQueue = [MRSerie]()
-    
+        
 }

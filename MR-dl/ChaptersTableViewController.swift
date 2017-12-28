@@ -42,7 +42,6 @@ class ChaptersTableViewController: UITableViewController {
     private func setupUI(){
         tableView.tableFooterView = UIView()
         navigationItem.title = "\(chaptersCount) Chapters"
-        navigationController?.hidesBarsOnSwipe = true
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -55,6 +54,12 @@ class ChaptersTableViewController: UITableViewController {
         self.isNavBarTransparent = false
         self.statusBarStyle = .default
         self.navBarItemsTintColor = #colorLiteral(red: 0.1058823529, green: 0.6784313725, blue: 0.9725490196, alpha: 1)
+        navigationController?.hidesBarsOnSwipe = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.hidesBarsOnSwipe = false
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -81,6 +86,7 @@ class ChaptersTableViewController: UITableViewController {
             viewChapterCtr = ChapterImagesPageViewController(forSerie: serieMeta, atChapter: indexPath.row)
         }
         navigationController?.pushViewController(viewChapterCtr, animated: true)
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
 }

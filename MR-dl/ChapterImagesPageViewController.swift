@@ -58,13 +58,17 @@ class ChapterImagesPageViewController: UIPageViewController {
     //Reactive: chapterImageURLs for current-diplaying chapter
     var chapterImageURLs: [URL]?{
         didSet{
-            if let preheater = imagePreheater{
-                let requests = chapterImageURLs!.map{Request(url: $0)}
-                preheater.stopPreheating()
-                preheater.startPreheating(with: shouldLoadReversed ? requests.reversed():requests)
-            }
+            startPreheatingIfNecessary()
             goto(pageIndex: shouldLoadReversed ? chapterImageURLs!.count-1:0)
             chapterIndexButon.isEnabled = true
+        }
+    }
+    
+    func startPreheatingIfNecessary(){
+        if let preheater = imagePreheater{
+            let requests = chapterImageURLs!.map{Request(url: $0)}
+            preheater.stopPreheating()
+            preheater.startPreheating(with: shouldLoadReversed ? requests.reversed():requests)
         }
     }
     
@@ -135,13 +139,12 @@ class ChapterImagesPageViewController: UIPageViewController {
             chapterImageURLs = localChapter!.sortedLocalImageURLs()!
         }
         else{
-            chapterIndexButon.isEnabled = false
-            let blockingAlert = UIAlertController(title: "Loading Chapter \(chapterIndex+1)", message: "", preferredStyle: .alert)
-            present(blockingAlert, animated: false)
+            let blockingAlert = UIAlertController(title: "Loading Chapter Indexes", message: "", preferredStyle: .alert)
+            navigationController?.present(blockingAlert, animated: false)
             MRClient.getChapterImageURLs(forOid: chapterMeta.oid) {(error, response) in
                 DispatchQueue.main.async {
-                    self.presentedViewController?.dismiss(animated: true)
                     if let imageURLs = response?.data{
+                        blockingAlert.dismiss(animated: true)
                         self.chapterImageURLs = imageURLs
                     }
                     else{

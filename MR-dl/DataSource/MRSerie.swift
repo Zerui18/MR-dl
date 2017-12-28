@@ -81,14 +81,6 @@ let dateFormatter: DateFormatter = {
         }
     }
     
-    func chaptersToDownload()-> [MRChapter]{
-        return (chapters!.array as! [MRChapter]).filter{$0.downloadState != .downloaded}
-    }
-    
-    func downloadChapterImages(){
-        chaptersToDownload().forEach{
-            $0.downloader?.beginDownload()
-        }
-    }
+    lazy var downloader: MRSerieDownloader = MRSerieDownloader(serie: self, maxConcurrent: 2)
     
 }

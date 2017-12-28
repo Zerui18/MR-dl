@@ -23,6 +23,7 @@ class ChapterImageViewController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var pageIndexLabel: UILabel!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var reloadButton: ZRBorderedButton!
     
@@ -56,19 +57,19 @@ class ChapterImageViewController: UIViewController {
     private func startLoadingImage(){
         loadingIndicator.startAnimating()
         Manager.sharedMRImageManager.loadImage(with: chapterURL, into: imageView) {[weak self] (result, _) in
-            guard let weakSelf = self else{
+            guard let strongSelf = self else{
                 return
             }
             if result.error != nil{
-                weakSelf.loadingIndicator.stopAnimating()
+                strongSelf.loadingIndicator.stopAnimating()
                 UIView.animate(withDuration: defaultAnimationDuration){
-                    weakSelf.errorLabel.alpha = 1
-                    weakSelf.reloadButton.alpha = 1
-                    weakSelf.reloadButton.isUserInteractionEnabled = true
+                    strongSelf.errorLabel.alpha = 1
+                    strongSelf.reloadButton.alpha = 1
+                    strongSelf.reloadButton.isUserInteractionEnabled = true
                 }
             }
             else{
-                weakSelf.image = result.value
+                strongSelf.image = result.value
             }
         }
     }
@@ -77,6 +78,7 @@ class ChapterImageViewController: UIViewController {
     
     private func setupUI(){
         view.backgroundColor = .white
+        pageIndexLabel.text = String(pageIndex+1)
         scrollView.delegate = self
         setupLoadingIndicator()
         reloadButton.addTarget(self, action: #selector(triggerImageReload), for: .touchUpInside)
@@ -106,6 +108,7 @@ class ChapterImageViewController: UIViewController {
         errorLabel.alpha = 0
         reloadButton.isUserInteractionEnabled = false
         reloadButton.alpha = 0
+        ChapterImagesPageViewController.shared?.startPreheatingIfNecessary()
         startLoadingImage()
     }
     

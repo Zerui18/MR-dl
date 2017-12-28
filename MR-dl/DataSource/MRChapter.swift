@@ -55,6 +55,16 @@ fileprivate let jsonEncoder = JSONEncoder()
     }
     private var _remoteImageURLs: [URL]?
     
+    func fetchImageURLs(completion:@escaping (Error?)->Void){
+        MRClient.getChapterImageURLs(forOid: oid!) { (error, response) in
+            if let urls = response?.data{
+                self.remoteImageURLs = urls
+                CoreDataHelper.shared.tryToSave()
+            }
+            completion(error)
+        }
+    }
+    
     func sortedLocalImageURLs()-> [URL]?{
         if let pages = remoteImageURLs{
             return [Int](0...pages.count-1).map(addressForPage)
@@ -62,18 +72,7 @@ fileprivate let jsonEncoder = JSONEncoder()
         return nil
     }
     
-    lazy var downloader: MRChapterDownloader? = MRChapterDownloader(chapter: self, maxConcurrentDownload: 4, delegate: self)
-    var downloadProgress: Progress?
-    
-    enum DownloadState: Int16{case none=0, downloading, downloaded}
-    var downloadState: DownloadState{
-        get{
-            return DownloadState(rawValue: downloadStateRaw)!
-        }
-        set{
-            downloadStateRaw = newValue.rawValue
-        }
-    }
+    lazy var downloader: MRChapterDownloader = MRChapterDownloader(chapter: self, maxConcurrentDownload: 4, delegate: serie!.downloader)
     
 }
 
@@ -86,17 +85,5 @@ extension MRChapter{
     func hasDownloadedPage(ofIndex index: Int)-> Bool{
         return FileManager.default.fileExists(atPath: addressForPage(atIndex: index).path)
     }
-    
-}
-
-extension MRChapter: MRChapterDownloaderDelegate{
-    
-    func downloaderDidInitiateDownload(forChapter chapter: MRChapter, withError error: Error?) {
-
-    }
-    
-    func downloaderDidDownload(pageAtIndex index: Int, forChapter chapter: MRChapter, withError error: Error?) {
         
-    }
-    
 }

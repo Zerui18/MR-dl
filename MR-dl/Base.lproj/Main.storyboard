@@ -12,6 +12,7 @@
     </dependencies>
     <customFonts key="customFonts">
         <array key="HiraginoKakuGothic.ttc">
+            <string>HiraginoSans-W3</string>
             <string>HiraginoSans-W6</string>
         </array>
     </customFonts>
@@ -585,10 +586,10 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" maximumZoomScale="4" translatesAutoresizingMaskIntoConstraints="NO" id="Qzd-g2-NhB">
-                                <rect key="frame" x="0.0" y="44" width="375" height="734"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="694"/>
                                 <subviews>
                                     <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Ga-0I-2ro">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="734"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="694"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
@@ -626,7 +627,16 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                                     <constraint firstAttribute="height" constant="25" id="XqG-OT-P3H"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HiraginoSans-W6" family="Hiragino Sans" pointSize="18"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eL2-Lh-8gB">
+                                <rect key="frame" x="10" y="758" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="dse-h1-umi"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="15"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -635,10 +645,12 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                             <constraint firstItem="Qzd-g2-NhB" firstAttribute="leading" secondItem="BeM-iH-G38" secondAttribute="leading" id="2uc-aR-ldp"/>
                             <constraint firstItem="Qzd-g2-NhB" firstAttribute="trailing" secondItem="BeM-iH-G38" secondAttribute="trailing" id="7AU-Dr-774"/>
                             <constraint firstItem="stB-G3-0Km" firstAttribute="top" secondItem="Ije-dY-cH0" secondAttribute="bottom" constant="15" id="Acq-O0-5dE"/>
+                            <constraint firstItem="eL2-Lh-8gB" firstAttribute="bottom" secondItem="BeM-iH-G38" secondAttribute="bottom" id="Cdh-ek-tBF"/>
                             <constraint firstItem="stB-G3-0Km" firstAttribute="centerX" secondItem="BeM-iH-G38" secondAttribute="centerX" id="Dra-LA-1o8"/>
+                            <constraint firstItem="eL2-Lh-8gB" firstAttribute="leading" secondItem="BeM-iH-G38" secondAttribute="leading" constant="10" id="HOy-ub-u4R"/>
                             <constraint firstItem="Ije-dY-cH0" firstAttribute="centerX" secondItem="BeM-iH-G38" secondAttribute="centerX" id="IK5-Cm-nGJ"/>
-                            <constraint firstItem="Qzd-g2-NhB" firstAttribute="bottom" secondItem="BeM-iH-G38" secondAttribute="bottom" id="blY-ON-m1Z"/>
-                            <constraint firstItem="Qzd-g2-NhB" firstAttribute="top" secondItem="BeM-iH-G38" secondAttribute="top" id="hHd-yf-tKf"/>
+                            <constraint firstItem="eL2-Lh-8gB" firstAttribute="top" secondItem="Qzd-g2-NhB" secondAttribute="bottom" id="OY6-V6-Mvl"/>
+                            <constraint firstItem="Qzd-g2-NhB" firstAttribute="top" secondItem="BeM-iH-G38" secondAttribute="top" constant="20" id="hHd-yf-tKf"/>
                             <constraint firstItem="Ije-dY-cH0" firstAttribute="centerY" secondItem="BeM-iH-G38" secondAttribute="centerY" id="sTV-wT-0Rh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BeM-iH-G38"/>
@@ -648,6 +660,7 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                     <connections>
                         <outlet property="errorLabel" destination="Ije-dY-cH0" id="tl7-tp-MUs"/>
                         <outlet property="imageView" destination="7Ga-0I-2ro" id="cx4-Wx-Xm9"/>
+                        <outlet property="pageIndexLabel" destination="eL2-Lh-8gB" id="xCV-SG-wc4"/>
                         <outlet property="reloadButton" destination="stB-G3-0Km" id="OJT-TQ-NER"/>
                         <outlet property="scrollView" destination="Qzd-g2-NhB" id="904-AA-FfT"/>
                     </connections>
@@ -661,7 +674,7 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
             <objects>
                 <pageViewController storyboardIdentifier="chapterImagesCtr" autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="max" id="Tzq-OE-Cu0" customClass="ChapterImagesPageViewController" customModule="MR_dl" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="Chapter 1" largeTitleDisplayMode="never" id="QfM-u3-M45">
-                        <barButtonItem key="rightBarButtonItem" title="7/80" id="GNn-c5-o6P"/>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="??" id="GNn-c5-o6P"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -696,7 +709,10 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="9pO-qc-uu4" customClass="ZRReactiveImageView" customModule="CustomUI">
-                                            <rect key="frame" x="0.0" y="0.0" width="130" height="195"/>
+                                            <rect key="frame" x="5" y="0.0" width="120" height="180"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="9pO-qc-uu4" secondAttribute="height" multiplier="2:3" id="fVI-a7-l8c"/>
+                                            </constraints>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                     <real key="value" value="15"/>
@@ -704,28 +720,32 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Akame ga Kill!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qqf-0d-3Bt">
-                                            <rect key="frame" x="0.0" y="195" width="130" height="39"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="39" id="VSr-CX-Azy"/>
-                                            </constraints>
+                                            <rect key="frame" x="0.0" y="180" width="130" height="39"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kZ9-is-3DM">
+                                            <rect key="frame" x="5" y="223" width="120" height="2"/>
+                                        </progressView>
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="9pO-qc-uu4" firstAttribute="top" secondItem="n3w-bv-OpF" secondAttribute="top" id="13L-AV-wBX"/>
-                                    <constraint firstAttribute="trailing" secondItem="9pO-qc-uu4" secondAttribute="trailing" id="Hla-as-O8R"/>
-                                    <constraint firstItem="9pO-qc-uu4" firstAttribute="trailing" secondItem="qqf-0d-3Bt" secondAttribute="trailing" id="OMZ-3e-sxI"/>
-                                    <constraint firstItem="9pO-qc-uu4" firstAttribute="leading" secondItem="qqf-0d-3Bt" secondAttribute="leading" id="cwa-mR-2NW"/>
-                                    <constraint firstItem="9pO-qc-uu4" firstAttribute="leading" secondItem="n3w-bv-OpF" secondAttribute="leading" id="gVn-lB-ufe"/>
-                                    <constraint firstAttribute="bottom" secondItem="qqf-0d-3Bt" secondAttribute="bottom" id="xRY-Hx-0CJ"/>
-                                    <constraint firstItem="qqf-0d-3Bt" firstAttribute="top" secondItem="9pO-qc-uu4" secondAttribute="bottom" id="z89-EQ-pCZ"/>
+                                    <constraint firstItem="9pO-qc-uu4" firstAttribute="leading" secondItem="n3w-bv-OpF" secondAttribute="leading" constant="5" id="5Yu-bI-ULK"/>
+                                    <constraint firstAttribute="trailing" secondItem="kZ9-is-3DM" secondAttribute="trailing" constant="5" id="5eO-aw-cOO"/>
+                                    <constraint firstItem="kZ9-is-3DM" firstAttribute="leading" secondItem="n3w-bv-OpF" secondAttribute="leading" constant="5" id="6sQ-bV-9a1"/>
+                                    <constraint firstItem="9pO-qc-uu4" firstAttribute="top" secondItem="n3w-bv-OpF" secondAttribute="top" id="B5w-lV-mgL"/>
+                                    <constraint firstAttribute="bottom" secondItem="kZ9-is-3DM" secondAttribute="bottom" constant="9" id="JJA-bM-aPs"/>
+                                    <constraint firstAttribute="trailing" secondItem="qqf-0d-3Bt" secondAttribute="trailing" id="KTa-2o-B49"/>
+                                    <constraint firstItem="qqf-0d-3Bt" firstAttribute="top" secondItem="9pO-qc-uu4" secondAttribute="bottom" id="RoK-Js-W5d"/>
+                                    <constraint firstItem="qqf-0d-3Bt" firstAttribute="leading" secondItem="n3w-bv-OpF" secondAttribute="leading" id="SPY-QU-5fG"/>
+                                    <constraint firstItem="kZ9-is-3DM" firstAttribute="top" secondItem="qqf-0d-3Bt" secondAttribute="bottom" constant="4" id="hOQ-JQ-yJc"/>
+                                    <constraint firstAttribute="trailing" secondItem="9pO-qc-uu4" secondAttribute="trailing" constant="5" id="lrE-Qa-DWj"/>
                                 </constraints>
                                 <size key="customSize" width="130" height="234"/>
                                 <connections>
                                     <outlet property="coverImageView" destination="9pO-qc-uu4" id="eEz-0z-BpQ"/>
+                                    <outlet property="downloadProgressBar" destination="kZ9-is-3DM" id="hsw-iy-wd0"/>
                                     <outlet property="titleLabel" destination="qqf-0d-3Bt" id="cVP-Zc-tku"/>
                                 </connections>
                             </collectionViewCell>
@@ -735,19 +755,50 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                             <outlet property="delegate" destination="FM6-Zd-58W" id="2mk-cR-suf"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="My Library" id="Z36-a7-KHc">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="bxf-qD-Dt5"/>
+                    <navigationItem key="navigationItem" title="My Library" largeTitleDisplayMode="always" id="Z36-a7-KHc">
+                        <barButtonItem key="rightBarButtonItem" image="download_queue" id="U8b-M3-aZJ">
+                            <color key="tintColor" red="0.016804177310000001" green="0.66473214285714288" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </barButtonItem>
                     </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Hp-N6-MXE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="868" y="645"/>
+            <point key="canvasLocation" x="868" y="643.5960591133005"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="CbU-b6-fLX">
+            <objects>
+                <tableViewController id="Fg2-in-8Ln" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="VvG-5R-7hD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Kif-mZ-SVv">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Kif-mZ-SVv" id="3qK-xf-P3k">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Fg2-in-8Ln" id="fAF-Qb-SoG"/>
+                            <outlet property="delegate" destination="Fg2-in-8Ln" id="EyD-EG-nhX"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZDJ-Yu-jEc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1868" y="644"/>
         </scene>
     </scenes>
     <resources>
         <image name="artwork_placeholder" width="692" height="1000"/>
         <image name="background_placeholder" width="720" height="270"/>
         <image name="cover_placeholder" width="150" height="225"/>
+        <image name="download_queue" width="32" height="32"/>
         <image name="ic_expand_more" width="48" height="48"/>
         <image name="ic_file_download" width="24" height="24"/>
         <image name="ic_search" width="36" height="36"/>

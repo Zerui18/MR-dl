@@ -21,6 +21,10 @@ public class ZRImageViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override public var prefersStatusBarHidden: Bool{
+        return true
+    }
+    
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -32,17 +36,6 @@ public class ZRImageViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
     }
-    
-    override public func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UIApplication.shared.isStatusBarHidden = true
-    }
-    
-    override public func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        UIApplication.shared.isStatusBarHidden = false
-    }
-    
     private func setupUI(){
         imageView.image = image
         scrollView.delegate = self

@@ -6,4 +6,4 @@ import MRClient
 //PlaygroundPage.current.needsIndefiniteExecution = true
 
 
-[1, 2, 3].suffix(from: 3)
+test()

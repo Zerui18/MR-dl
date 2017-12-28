@@ -69,7 +69,7 @@ public final class Loader: Loading {
     /// Some nitty-gritty options which can be used to customize loader.
     public struct Options {
         /// The maximum number of concurrent data loading tasks. `6` by default.
-        public var maxConcurrentDataLoadingTaskCount: Int = 8
+        public var maxConcurrentDataLoadingTaskCount: Int = 6
 
         /// The maximum number of concurrent image processing tasks. `2` by default.
         ///

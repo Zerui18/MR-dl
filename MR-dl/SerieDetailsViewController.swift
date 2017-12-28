@@ -188,7 +188,13 @@ class SerieDetailsViewController: UIViewController{
     }
     
     @objc private func saveSerie(){
-        let localSerie = try! LocalMangaDataSource.shared.createSerie(withMeta: serieMeta!)
+        do{
+            let localSerie = try LocalMangaDataSource.shared.createSerie(withMeta: serieMeta!)
+            localSerie.downloader.beginDownload()
+        }
+        catch{
+            AppDelegate.shared.reportError(error: error, ofCategory: "Save Serie")
+        }
         
     }
     
