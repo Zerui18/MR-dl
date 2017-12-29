@@ -54,17 +54,6 @@ class SerieSearchViewController: UITableViewController{
         setupUI()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        transitionCoordinator?.animate(alongsideTransition: { (_) in
-            self.isNavBarTransparent = false
-            self.navBarItemsTintColor = #colorLiteral(red: 0.1058823529, green: 0.6784313725, blue: 0.9725490196, alpha: 1)
-            self.statusBarStyle = .default
-        })
-        self.isNavBarTransparent = false
-        self.navBarItemsTintColor = #colorLiteral(red: 0.1058823529, green: 0.6784313725, blue: 0.9725490196, alpha: 1)
-        self.statusBarStyle = .default
-    }
 
     private func setupUI(){
         

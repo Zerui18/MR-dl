@@ -21,7 +21,8 @@ let dateFormatter: DateFormatter = {
     return f
 }()
 
-@objc class MRSerie: NSManagedObject{
+@objc(MRSerie)
+class MRSerie: NSManagedObject{
     
     var statusDescription: String{
         return (completed ? "Completed, ":"Ongoing, ") + "\(chapters!.count) chapters"
@@ -36,9 +37,13 @@ let dateFormatter: DateFormatter = {
         self.init(entity: NSEntityDescription.entity(forEntityName: "MRSerie", in: context)!, insertInto: context)
         self.name = meta.name
         self.thumbnailURL = meta.thumbnailURL
+        self.coverURL = meta.coverURL
         self.oid = meta.oid
         self.author = meta.author
         self.artworkURLs = meta.artworkURLs
+        self.serieDescription = meta.description
+        self.lastUpdated = meta.updated
+        self.completed = meta.completed
         self.chapters = NSOrderedSet()
         try initDirectory()
     }
@@ -77,10 +82,14 @@ let dateFormatter: DateFormatter = {
         let startIndex = chapters!.count
         let newChapterMetas = meta.chapters.suffix(from: startIndex)
         for meta in newChapterMetas{
-            _ = MRChapter(fromMeta: meta, serie: self)
+            downloader.addChapter(MRChapter(fromMeta: meta, serie: self))
         }
     }
     
-    lazy var downloader: MRSerieDownloader = MRSerieDownloader(serie: self, maxConcurrent: 2)
+    func chaptersAsArray()-> [MRChapter]{
+        return chapters!.array as! [MRChapter]
+    }
+    
+    lazy var downloader = MRSerieDownloader(serie: self)
     
 }

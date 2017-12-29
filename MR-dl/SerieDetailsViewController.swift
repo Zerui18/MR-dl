@@ -78,6 +78,18 @@ class SerieDetailsViewController: UIViewController{
         self.statusBarStyle = .lightContent
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        transitionCoordinator?.animate(alongsideTransition: { (_) in
+            self.isNavBarTransparent = false
+            self.statusBarStyle = .default
+            self.navBarItemsTintColor = #colorLiteral(red: 0.1058823529, green: 0.6784313725, blue: 0.9725490196, alpha: 1)
+        })
+        self.isNavBarTransparent = false
+        self.statusBarStyle = .default
+        self.navBarItemsTintColor = #colorLiteral(red: 0.1058823529, green: 0.6784313725, blue: 0.9725490196, alpha: 1)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if isLocalSource{
@@ -107,12 +119,16 @@ class SerieDetailsViewController: UIViewController{
         artworksCollectionView.dataSource = self
         
         if isLocalSource{
-            (saveBarButton.value(forKey: "_view") as! UIView).removeFromSuperview()
+            saveBarButton.target = self
+            saveBarButton.action = #selector(showDownloadsTable)
             titleLabel.text = localSerie!.name
             thumbnailImageView.loadImage(withLoader: ThumbnailLoader.shared, fromURL: localSerie!.thumbnailURL!)
-            loadCoverImage(fromURL: localSerie!.coverURL!)
+            fillupMeta()
         }
         else{
+            if LocalMangaDataSource.shared.hasSerie(withOid: shortMeta.oid){
+                saveBarButton.isEnabled = false
+            }
             titleLabel.text = shortMeta.name
             thumbnailImageView.loadImage(withLoader: ThumbnailLoader.shared, fromURL: shortMeta.thumbnailURL!)
             
@@ -138,40 +154,45 @@ class SerieDetailsViewController: UIViewController{
     }
     
     private func fillupMeta(){
-        let author: String, status: String, updated: String, description: String
+        let author: String, status: String, updated: String, description: String, coverURL: URL, artworkURLs: [URL]
         if isLocalSource{
             author = localSerie!.author!
             status = localSerie!.statusDescription
             updated = localSerie!.lastUpdatedDescription
             description = localSerie!.serieDescription!
+            coverURL = localSerie!.coverURL!
+            artworkURLs = localSerie!.artworkURLs!
         }
         else{
             author = serieMeta!.author
             status = serieMeta!.statusDescription
             updated = serieMeta!.lastUpdatedDescription
             description = serieMeta!.description
+            coverURL = serieMeta!.coverURL
+            artworkURLs = serieMeta!.artworkURLs
         }
         authorLabel.text = author
         statusLabel.text = status
         updateDateLabel.text = updated
         descriptionLabel.text = description
-        descriptionHeightConstraint.constant = min(descriptionHeightConstraint.constant, serieMeta!.description.height(forWidth: descriptionLabel.bounds.width, font: descriptionLabel.font))
+        descriptionHeightConstraint.constant = min(descriptionHeightConstraint.constant, description.height(forWidth: descriptionLabel.bounds.width, font: descriptionLabel.font))
         readButton.isEnabled = true
+        loadCoverImage(fromURL: coverURL)
+        
+        if !artworkURLs.isEmpty{
+            if navigationController?.visibleViewController == self{
+                artworksPreheater.startPreheating(with: artworkURLs.map{Request(url: $0)})
+            }
+            artworksCollectionView.reloadData()
+        }
+        else{
+            artworksLabel.removeFromSuperview()
+            artworksCollectionView.removeFromSuperview()
+        }
         
         if !isLocalSource{
             saveBarButton.target = self
             saveBarButton.action = #selector(saveSerie)
-            if !serieMeta!.artworkURLs.isEmpty{
-                if navigationController?.visibleViewController == self{
-                    artworksPreheater.startPreheating(with: serieMeta!.artworkURLs.map{Request(url: $0)})
-                }
-                artworksCollectionView.reloadData()
-            }
-            else{
-                artworksLabel.removeFromSuperview()
-                artworksCollectionView.removeFromSuperview()
-            }
-            loadCoverImage(fromURL: serieMeta!.coverURL)
         }
         
     }
@@ -191,6 +212,7 @@ class SerieDetailsViewController: UIViewController{
         do{
             let localSerie = try LocalMangaDataSource.shared.createSerie(withMeta: serieMeta!)
             localSerie.downloader.beginDownload()
+            saveBarButton.isEnabled = false
         }
         catch{
             AppDelegate.shared.reportError(error: error, ofCategory: "Save Serie")
@@ -198,8 +220,19 @@ class SerieDetailsViewController: UIViewController{
         
     }
     
+    @objc private func showDownloadsTable(){
+        let tableCtr = ChapterDownloadsTableViewController(serie: localSerie!)
+        navigationController?.pushViewController(tableCtr, animated: true)
+    }
+    
     @objc private func showChaptersTable(){
-        let chaptersTableCtr = ChaptersTableViewController(withSerieMeta: serieMeta!)
+        let chaptersTableCtr: ChaptersTableViewController
+        if isLocalSource{
+            chaptersTableCtr = ChaptersTableViewController(withSerie: localSerie!)
+        }
+        else{
+            chaptersTableCtr = ChaptersTableViewController(withSerieMeta: serieMeta!)
+        }
         navigationController?.pushViewController(chaptersTableCtr, animated: true)
     }
     
@@ -222,29 +255,14 @@ class SerieDetailsViewController: UIViewController{
 extension SerieDetailsViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return serieMeta?.artworkURLs.count ?? 0
+        return isLocalSource ? localSerie!.artworkURLs!.count:serieMeta?.artworkURLs.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ArtworkCollectionViewCell.identifier, for: indexPath) as! ArtworkCollectionViewCell
-        cell.artworkURL = serieMeta!.artworkURLs[indexPath.row]
+        cell.artworkURL = (isLocalSource ? localSerie!.artworkURLs!:serieMeta!.artworkURLs)[indexPath.row]
         return cell
     }
-    
-}
-
-extension SerieDetailsViewController: UITableViewDataSource, UITableViewDelegate{
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return serieMeta?.chapters.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.cellForRow(at: indexPath)
-        cell?.textLabel?.text = serieMeta!.chapters[indexPath.row].name
-        return cell!
-    }
-
     
 }
 

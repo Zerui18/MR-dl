@@ -695,21 +695,21 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="8" id="8td-Pn-ZEX">
-                            <size key="itemSize" width="130" height="234"/>
+                            <size key="itemSize" width="130" height="219"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="15" minY="15" maxX="15" maxY="10"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="serieItem" id="n3w-bv-OpF" customClass="SerieCollectionViewCell" customModule="MR_dl" customModuleProvider="target">
-                                <rect key="frame" x="15" y="15" width="130" height="234"/>
+                                <rect key="frame" x="15" y="15" width="130" height="219"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="130" height="234"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="130" height="219"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="9pO-qc-uu4" customClass="ZRReactiveImageView" customModule="CustomUI">
-                                            <rect key="frame" x="5" y="0.0" width="120" height="180"/>
+                                            <rect key="frame" x="10" y="0.0" width="110" height="165.33333333333334"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="9pO-qc-uu4" secondAttribute="height" multiplier="2:3" id="fVI-a7-l8c"/>
                                             </constraints>
@@ -720,32 +720,25 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Akame ga Kill!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qqf-0d-3Bt">
-                                            <rect key="frame" x="0.0" y="180" width="130" height="39"/>
+                                            <rect key="frame" x="0.0" y="165.33333333333334" width="130" height="51.666666666666657"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kZ9-is-3DM">
-                                            <rect key="frame" x="5" y="223" width="120" height="2"/>
-                                        </progressView>
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="9pO-qc-uu4" firstAttribute="leading" secondItem="n3w-bv-OpF" secondAttribute="leading" constant="5" id="5Yu-bI-ULK"/>
-                                    <constraint firstAttribute="trailing" secondItem="kZ9-is-3DM" secondAttribute="trailing" constant="5" id="5eO-aw-cOO"/>
-                                    <constraint firstItem="kZ9-is-3DM" firstAttribute="leading" secondItem="n3w-bv-OpF" secondAttribute="leading" constant="5" id="6sQ-bV-9a1"/>
+                                    <constraint firstItem="9pO-qc-uu4" firstAttribute="leading" secondItem="n3w-bv-OpF" secondAttribute="leading" constant="10" id="5Yu-bI-ULK"/>
                                     <constraint firstItem="9pO-qc-uu4" firstAttribute="top" secondItem="n3w-bv-OpF" secondAttribute="top" id="B5w-lV-mgL"/>
-                                    <constraint firstAttribute="bottom" secondItem="kZ9-is-3DM" secondAttribute="bottom" constant="9" id="JJA-bM-aPs"/>
                                     <constraint firstAttribute="trailing" secondItem="qqf-0d-3Bt" secondAttribute="trailing" id="KTa-2o-B49"/>
                                     <constraint firstItem="qqf-0d-3Bt" firstAttribute="top" secondItem="9pO-qc-uu4" secondAttribute="bottom" id="RoK-Js-W5d"/>
                                     <constraint firstItem="qqf-0d-3Bt" firstAttribute="leading" secondItem="n3w-bv-OpF" secondAttribute="leading" id="SPY-QU-5fG"/>
-                                    <constraint firstItem="kZ9-is-3DM" firstAttribute="top" secondItem="qqf-0d-3Bt" secondAttribute="bottom" constant="4" id="hOQ-JQ-yJc"/>
-                                    <constraint firstAttribute="trailing" secondItem="9pO-qc-uu4" secondAttribute="trailing" constant="5" id="lrE-Qa-DWj"/>
+                                    <constraint firstAttribute="bottom" secondItem="qqf-0d-3Bt" secondAttribute="bottom" constant="2" id="cd3-jz-3SB"/>
+                                    <constraint firstAttribute="trailing" secondItem="9pO-qc-uu4" secondAttribute="trailing" constant="10" id="lrE-Qa-DWj"/>
                                 </constraints>
-                                <size key="customSize" width="130" height="234"/>
+                                <size key="customSize" width="130" height="219"/>
                                 <connections>
                                     <outlet property="coverImageView" destination="9pO-qc-uu4" id="eEz-0z-BpQ"/>
-                                    <outlet property="downloadProgressBar" destination="kZ9-is-3DM" id="hsw-iy-wd0"/>
                                     <outlet property="titleLabel" destination="qqf-0d-3Bt" id="cVP-Zc-tku"/>
                                 </connections>
                             </collectionViewCell>
@@ -755,32 +748,104 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                             <outlet property="delegate" destination="FM6-Zd-58W" id="2mk-cR-suf"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="My Library" largeTitleDisplayMode="always" id="Z36-a7-KHc">
-                        <barButtonItem key="rightBarButtonItem" image="download_queue" id="U8b-M3-aZJ">
-                            <color key="tintColor" red="0.016804177310000001" green="0.66473214285714288" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="My Library" largeTitleDisplayMode="always" id="Z36-a7-KHc"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Hp-N6-MXE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="868" y="643.5960591133005"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Chapter Downloads Table View Controller-->
         <scene sceneID="CbU-b6-fLX">
             <objects>
-                <tableViewController id="Fg2-in-8Ln" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="chapterDownloadsCtr" id="Fg2-in-8Ln" customClass="ChapterDownloadsTableViewController" customModule="MR_dl" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="VvG-5R-7hD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Kif-mZ-SVv">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="chapterCell" rowHeight="60" id="I05-Vk-wbK" customClass="ChapterTableViewCell" customModule="MR_dl" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="60"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="I05-Vk-wbK" id="8Zt-22-EEY">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="59.666666666666664"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chapter 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="Xhs-AO-oKt">
+                                            <rect key="frame" x="16" y="18" width="344" height="31"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12 Dec 2017" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8CC-3O-LsN">
+                                            <rect key="frame" x="285.66666666666669" y="0.0" width="74.333333333333314" height="18"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="18" id="YGi-Rv-bYa"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="8CC-3O-LsN" firstAttribute="trailing" secondItem="Xhs-AO-oKt" secondAttribute="trailing" id="1Je-Da-LjF"/>
+                                        <constraint firstItem="Xhs-AO-oKt" firstAttribute="leading" secondItem="8Zt-22-EEY" secondAttribute="leadingMargin" id="kKe-qr-uOK"/>
+                                        <constraint firstItem="8CC-3O-LsN" firstAttribute="top" secondItem="8Zt-22-EEY" secondAttribute="top" id="nhG-HG-lTh"/>
+                                        <constraint firstAttribute="trailing" secondItem="Xhs-AO-oKt" secondAttribute="trailing" constant="15" id="qZH-e3-G93"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Xhs-AO-oKt" secondAttribute="bottom" id="t2G-Zk-fX0"/>
+                                        <constraint firstItem="Xhs-AO-oKt" firstAttribute="top" secondItem="8CC-3O-LsN" secondAttribute="bottom" id="v9x-fd-cry"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="lastUpdatedLabel" destination="8CC-3O-LsN" id="rse-E9-hNR"/>
+                                    <outlet property="titleLabel" destination="Xhs-AO-oKt" id="SNA-0y-9pb"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="chapterDownloadCell" rowHeight="60" id="Kif-mZ-SVv" customClass="ChapterDownloadTableViewCell" customModule="MR_dl" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="88" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Kif-mZ-SVv" id="3qK-xf-P3k">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="59.666666666666664"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chapter 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="w8i-MA-Nup">
+                                            <rect key="frame" x="16" y="11" width="344" height="31"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="31" id="cjF-gq-iQr"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nyb-fv-g39">
+                                            <rect key="frame" x="16" y="50" width="259" height="2"/>
+                                        </progressView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="queuing..." textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="thZ-Y1-K2u">
+                                            <rect key="frame" x="280" y="43.666666666666664" width="80" height="13"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="80" id="eNW-95-EVK"/>
+                                                <constraint firstAttribute="height" constant="13" id="qgQ-0K-46T"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="w8i-MA-Nup" firstAttribute="top" secondItem="3qK-xf-P3k" secondAttribute="top" constant="11" id="3eG-1T-jgV"/>
+                                        <constraint firstAttribute="bottom" secondItem="thZ-Y1-K2u" secondAttribute="bottom" constant="3" id="6I9-sk-vWl"/>
+                                        <constraint firstAttribute="trailing" secondItem="w8i-MA-Nup" secondAttribute="trailing" constant="15" id="7g7-A7-0E0"/>
+                                        <constraint firstItem="nyb-fv-g39" firstAttribute="centerY" secondItem="thZ-Y1-K2u" secondAttribute="centerY" id="EO1-78-fLR"/>
+                                        <constraint firstItem="w8i-MA-Nup" firstAttribute="leading" secondItem="3qK-xf-P3k" secondAttribute="leading" constant="16" id="bgr-Vd-Dl7"/>
+                                        <constraint firstItem="nyb-fv-g39" firstAttribute="leading" secondItem="3qK-xf-P3k" secondAttribute="leading" constant="16" id="cbT-hG-gxy"/>
+                                        <constraint firstAttribute="trailing" secondItem="thZ-Y1-K2u" secondAttribute="trailing" constant="15" id="vdg-yL-qpG"/>
+                                        <constraint firstItem="thZ-Y1-K2u" firstAttribute="leading" secondItem="nyb-fv-g39" secondAttribute="trailing" constant="5" id="xgG-Ai-pB9"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="progressView" destination="nyb-fv-g39" id="vGz-gi-uZS"/>
+                                    <outlet property="stateLabel" destination="thZ-Y1-K2u" id="iIy-JI-hfT"/>
+                                    <outlet property="titleLabel" destination="w8i-MA-Nup" id="A9k-b1-AmS"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -791,14 +856,13 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZDJ-Yu-jEc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1868" y="644"/>
+            <point key="canvasLocation" x="1868" y="643.5960591133005"/>
         </scene>
     </scenes>
     <resources>
         <image name="artwork_placeholder" width="692" height="1000"/>
         <image name="background_placeholder" width="720" height="270"/>
         <image name="cover_placeholder" width="150" height="225"/>
-        <image name="download_queue" width="32" height="32"/>
         <image name="ic_expand_more" width="48" height="48"/>
         <image name="ic_file_download" width="24" height="24"/>
         <image name="ic_search" width="36" height="36"/>

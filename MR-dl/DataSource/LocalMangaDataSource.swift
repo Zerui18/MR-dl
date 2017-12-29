@@ -31,6 +31,7 @@ class LocalMangaDataSource{
         serieRecord.updateInfo(withMeta: meta)
         CoreDataHelper.shared.tryToSave()
         series.append(serieRecord)
+        NotificationCenter.default.post(name: .serieAddedNotification, object: serieRecord)
         return serieRecord
     }
     
@@ -40,4 +41,11 @@ class LocalMangaDataSource{
         series.delete(serie)
     }
         
+}
+
+
+extension Notification.Name{
+    
+    static let serieAddedNotification = Notification.Name("SerieDownloadedNotificationName")
+    
 }

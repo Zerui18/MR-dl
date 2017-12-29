@@ -47,6 +47,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CoreDataHelper.shared.tryToSave()
     }
     
+    func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
+        
+    }
+    
     func reportError(error: Error, ofCategory category: String){
         DispatchQueue.main.async {
             let alert = UIAlertController(title: category+" Error", message: error.localizedDescription, preferredStyle: .alert)

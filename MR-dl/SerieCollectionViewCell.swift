@@ -15,13 +15,12 @@ class SerieCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var coverImageView: ZRReactiveImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var downloadProgressBar: UIProgressView!
     
     var serie: MRSerie!{
         didSet{
             titleLabel.text = serie.name
             coverImageView.loadImage(withLoader: ThumbnailLoader.shared, fromURL: serie.thumbnailURL!)
-            downloadProgressBar.setProgress(Float(serie.downloader.downloadProgress.fractionCompleted), animated: false)
+            coverImageView.isUserInteractionEnabled = false
         }
     }
     

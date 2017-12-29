@@ -13,11 +13,12 @@ import CustomUI
 class ChapterImageViewController: UIViewController {
 
 
-    static func `init`(imageURL mriImageURL: URL, pageIndex: Int, chapterIndex: Int)-> ChapterImageViewController{
+    static func `init`(loadingManager: Manager?, imageURL: URL, pageIndex: Int, chapterIndex: Int)-> ChapterImageViewController{
         let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: "chapterImageCtr") as! ChapterImageViewController
-        ctr.chapterURL = mriImageURL
+        ctr.imageURL = imageURL
         ctr.pageIndex = pageIndex
         ctr.chapterIndex = chapterIndex
+        ctr.loadingManager = loadingManager
         return ctr
     }
     
@@ -29,7 +30,8 @@ class ChapterImageViewController: UIViewController {
     
     var chapterIndex: Int!
     var pageIndex: Int!
-    var chapterURL: URL!
+    var imageURL: URL!
+    var loadingManager: Manager?
     
     //Reactive: image for the current-displaying page
     var image: UIImage?{
@@ -40,7 +42,7 @@ class ChapterImageViewController: UIViewController {
         }
     }
     
-    let loadingIndicator = NVActivityIndicatorView(frame: .zero, type: .circles, color: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1))
+    lazy var loadingIndicator = NVActivityIndicatorView(frame: .zero, type: .circles, color: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,20 +58,30 @@ class ChapterImageViewController: UIViewController {
     
     private func startLoadingImage(){
         loadingIndicator.startAnimating()
-        Manager.sharedMRImageManager.loadImage(with: chapterURL, into: imageView) {[weak self] (result, _) in
-            guard let strongSelf = self else{
-                return
-            }
-            if result.error != nil{
-                strongSelf.loadingIndicator.stopAnimating()
-                UIView.animate(withDuration: defaultAnimationDuration){
-                    strongSelf.errorLabel.alpha = 1
-                    strongSelf.reloadButton.alpha = 1
-                    strongSelf.reloadButton.isUserInteractionEnabled = true
+        if let m = loadingManager{
+            m.loadImage(with: imageURL, into: imageView) {[weak self] (result, _) in
+                guard let strongSelf = self else{
+                    return
+                }
+                if result.error != nil{
+                    strongSelf.loadingIndicator.stopAnimating()
+                    UIView.animate(withDuration: defaultAnimationDuration){
+                        strongSelf.errorLabel.alpha = 1
+                        strongSelf.reloadButton.alpha = 1
+                        strongSelf.reloadButton.isUserInteractionEnabled = true
+                    }
+                }
+                else{
+                    strongSelf.image = result.value
                 }
             }
-            else{
-                strongSelf.image = result.value
+        }
+        else{
+            DispatchQueue.global(qos: .userInitiated).async {
+                let image = UIImage(contentsOfFile: self.imageURL.path)
+                DispatchQueue.main.async {[weak self] in
+                    self?.imageView.image = image
+                }
             }
         }
     }
@@ -80,8 +92,12 @@ class ChapterImageViewController: UIViewController {
         view.backgroundColor = .white
         pageIndexLabel.text = String(pageIndex+1)
         scrollView.delegate = self
-        setupLoadingIndicator()
-        reloadButton.addTarget(self, action: #selector(triggerImageReload), for: .touchUpInside)
+        
+        // only setup loadingIndicator & retry controls if loading image from external source
+        if loadingManager != nil{
+            setupLoadingIndicator()
+            reloadButton.addTarget(self, action: #selector(triggerImageReload), for: .touchUpInside)
+        }
         
         focusGesturePlaceholderView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(focusGesturePlaceholderView)

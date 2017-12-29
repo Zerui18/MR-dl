@@ -25,10 +25,9 @@ class MRChapterDownloader: NSObject{
     var urlSession: URLSession!
     var downloadsQueue: [URLSessionDownloadTask] = []
     var activeDownloads: [URL:URLSessionDownloadTask] = [:]
-    var failedQueue: [URL] = []
     var urlToIndex: [URL:Int] = [:]
     
-    var initialURLsToDownload: [URL]!
+    var urlsToDownload = [URL]()
     
     // getter for private progress object, to ensure that initializeVariablesIfNecessary() has a chance to setup progress object if possible
     var progress: Progress{
@@ -38,18 +37,19 @@ class MRChapterDownloader: NSObject{
     
     // progress object linked to serie's download progress, with weight of 1
     lazy private var _progress: Progress = {
-        return Progress(totalUnitCount: 999, parent: chapter.serie!.downloader.downloadProgress, pendingUnitCount: 1)
+        return Progress(totalUnitCount: 999, parent: chapter.serie!.downloader.progress, pendingUnitCount: 1)
     }()
     
     // initializer
     init(chapter: MRChapter, maxConcurrentDownload: Int, delegate: MRChapterDownloaderDelegate){
         self.chapter = chapter
-        self.delegate = delegate
         self.maxConcurrentDownload = maxConcurrentDownload
+        self.delegate = delegate
         super.init()
     }
     
-    var downloadState: DownloadState{
+    
+    var state: DownloadState{
         if progress.totalUnitCount == 999{
             return .none
         }
@@ -71,7 +71,7 @@ class MRChapterDownloader: NSObject{
         _progress.totalUnitCount = Int64(imageURLs.count)
         for (index, url) in imageURLs.enumerated(){
             if !chapter.hasDownloadedPage(ofIndex: index){
-                initialURLsToDownload.append(url)
+                urlsToDownload.append(url)
             }
             else{
                 _progress.completedUnitCount += 1
@@ -85,12 +85,9 @@ class MRChapterDownloader: NSObject{
         if !activeDownloads.isEmpty{
             return
         }
-        if downloadState == .downloaded{
+        if state == .downloaded{
             return
         }
-        failedQueue.removeAll()
-        urlToIndex.removeAll()
-        downloadsQueue.removeAll()
         if chapter.remoteImageURLs != nil{
             _beginDownload()
         }
@@ -113,14 +110,13 @@ class MRChapterDownloader: NSObject{
         if urlSession == nil{
             urlSession = URLSession(configuration: .background(withIdentifier: "mrchapterdownloader-"+chapter.oid!), delegate: self, delegateQueue: nil)
         }
-        initiateDownloadTasks(forURLs: initialURLsToDownload)
+        initiateDownloadTasks(forURLs: urlsToDownload)
     }
     
     // create download tasks for the given urls & add them to queue
     private func initiateDownloadTasks(forURLs urls: [URL]){
-        for url in urls{
-            let downloadTask = urlSession.downloadTask(with: url)
-            addToQueue(downloadTask: downloadTask)
+        for task in urls.map(self.urlSession.downloadTask){
+            addToQueue(downloadTask: task)
         }
     }
     
@@ -136,64 +132,96 @@ class MRChapterDownloader: NSObject{
     
     // start task and record it in activeDownloads
     private func startTask(_ downloadTask: URLSessionDownloadTask){
-        activeDownloads[downloadTask.originalRequest!.url!] = downloadTask
-        downloadTask.resume()
+        let key = downloadTask.originalRequest!.url!
+        // check if image has already been cached
+        if let cachedImage = Manager.sharedMRImageManager.cachedImage(for: Request(url: key)){
+            let pageIndex = urlToIndex[key]!
+            try! UIImageJPEGRepresentation(cachedImage, 1.0)!.write(to: chapter.addressForPage(atIndex: pageIndex))
+            // already downloaded, report completion directly
+            downloadedPage(at: pageIndex, withError: nil)
+        }
+        else{
+            // record task in activeDownloads & startTask
+            activeDownloads[key] = downloadTask
+            downloadTask.resume()
+        }
     }
     
     // start next task in queue & returns if a new task has been started
     private func startNextPendingTaskIfNecessary()-> Bool{
-        if let nextTask = downloadsQueue.dropFirst().first{
-            startTask(nextTask)
+        if !downloadsQueue.isEmpty{
+            startTask(downloadsQueue.removeFirst())
             return true
         }
         return false
     }
     
-    // restarts all & removes tasks from failedTasks
-    func retryFailedTasks(){
-        if urlSession == nil{
-            urlSession = URLSession(configuration: .background(withIdentifier: "mrchapterdownloader-"+chapter.oid!), delegate: self, delegateQueue: nil)
-        }
-        initiateDownloadTasks(forURLs: failedQueue)
-        failedQueue.removeAll()
-    }
-    
     // convenience function for cancelling download for the chapter
     func cancelDownload(){
+        if state != .downloading{
+            return
+        }
+        print("cancel download called")
         downloadsQueue.removeAll()
         activeDownloads.removeAll()
         // url session will be reset anyway
-        urlSession.invalidateAndCancel()
-        urlSession = nil
+        if urlSession != nil{
+            urlSession.invalidateAndCancel()
+            urlSession = nil
+        }
+    }
+    
+    
+    func downloadedPage(at pageIndex: Int, withError error: Error?){
+        // stop downloader immediately when any page fails to download
+        if error != nil{
+            delegate?.downloaderDidDownload(pageAtIndex: pageIndex, forChapter: chapter, withError: error)
+            cancelDownload()
+            return
+        }
+        else{
+            // update progress， then notify delegate
+            _progress.completedUnitCount += 1
+            delegate?.downloaderDidDownload(pageAtIndex: pageIndex, forChapter: chapter, withError: error)
+        }
+        // if no more queing & outstanding tasks, notify delegate of completion (note: some pages might failed to download)
+        if !startNextPendingTaskIfNecessary() && activeDownloads.isEmpty{
+            delegate?.downloaderDidComplete(chapter: chapter)
+        }
     }
 
 }
 
+
 extension MRChapterDownloader: URLSessionDownloadDelegate{
     
-    // only called when download task completes successfully, vanila implementation assumes everything will go as planned...
+    // only called when download task completes successfully
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        // decrypt & 'move' webp-image data from download location to permanent location
-        let pageIndex = urlToIndex[downloadTask.originalRequest!.url!]!
-        let data = try! Data(contentsOf: location)
-        let decryptedData = MRImageDataDecryptor.decrypt(data: data)
-        try! decryptedData.write(to: chapter.addressForPage(atIndex: pageIndex))
-        // update progress
-        _progress.completedUnitCount += 1
-        try? FileManager.default.removeItem(at: location)
+        // decrypt, decode, move image data from download location to permanent location
+        let key = downloadTask.originalRequest!.url!
+        let pageIndex = urlToIndex[key]!
+        activeDownloads.removeValue(forKey: key)
+        do{
+            let data = try Data(contentsOf: location)
+            let image = UIImage(mriData: data)!
+            try! UIImageJPEGRepresentation(image, 1.0)!.write(to: chapter.addressForPage(atIndex: pageIndex))
+            try? FileManager.default.removeItem(at: location)
+            urlsToDownload.delete(key)
+            downloadedPage(at: pageIndex, withError: nil)
+        }
+        catch{
+            downloadedPage(at: pageIndex, withError: error)
+        }
     }
     
-    // called at the end of each task, here we remove the task from queue (add it to failed queue if...), start next task in queue & notifiy delegate about task completion
+    // called at the end of each task, only perform variables update & delegate call if error is caught here
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        let pageIndex = urlToIndex[task.originalRequest!.url!]!
-        activeDownloads.removeValue(forKey: task.originalRequest!.url!)
         if error != nil{
-            failedQueue.append(task.originalRequest!.url!)
+            activeDownloads.removeValue(forKey: task.originalRequest!.url!)
+            let pageIndex = urlToIndex[task.originalRequest!.url!]!
+            downloadedPage(at: pageIndex, withError: error)
         }
-        delegate?.downloaderDidDownload(pageAtIndex: pageIndex, forChapter: chapter, withError: error)
-        if !startNextPendingTaskIfNecessary() && activeDownloads.isEmpty{
-            delegate?.downloaderDidComplete(chapter: chapter)
-        }
+        // else didFinishDownloadingTo would have called the above
     }
     
 }

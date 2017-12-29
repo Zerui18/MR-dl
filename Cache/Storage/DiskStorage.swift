@@ -1,7 +1,7 @@
 import Foundation
 
 /// Save objects to file on disk
-final class DiskStorage {
+public final class DiskStorage {
   enum Error: Swift.Error {
     case fileEnumeratorFailed
   }
@@ -15,7 +15,7 @@ final class DiskStorage {
 
   // MARK: - Initialization
 
-  required init(config: DiskConfig, fileManager: FileManager = FileManager.default) throws {
+  required public init(config: DiskConfig, fileManager: FileManager = FileManager.default) throws {
     self.config = config
     self.fileManager = fileManager
 
@@ -44,7 +44,7 @@ final class DiskStorage {
 }
 
 extension DiskStorage: StorageAware {
-  func entry<T: Codable>(ofType type: T.Type, forKey key: String) throws -> Entry<T> {
+    public func entry<T: Codable>(ofType type: T.Type, forKey key: String) throws -> Entry<T> {
     let filePath = makeFilePath(for: key)
     let data = try Data(contentsOf: URL(fileURLWithPath: filePath))
     let attributes = try fileManager.attributesOfItem(atPath: filePath)
@@ -65,7 +65,7 @@ extension DiskStorage: StorageAware {
     )
   }
 
-  func setObject<T: Codable>(_ object: T, forKey key: String, expiry: Expiry? = nil) throws {
+    public func setObject<T: Codable>(_ object: T, forKey key: String, expiry: Expiry? = nil) throws {
     let expiry = expiry ?? config.expiry
     let data = try DataSerializer.serialize(object: object)
     let filePath = makeFilePath(for: key)
@@ -73,16 +73,16 @@ extension DiskStorage: StorageAware {
     try fileManager.setAttributes([.modificationDate: expiry.date], ofItemAtPath: filePath)
   }
 
-  func removeObject(forKey key: String) throws {
+    public func removeObject(forKey key: String) throws {
     try fileManager.removeItem(atPath: makeFilePath(for: key))
   }
 
-  func removeAll() throws {
+    public func removeAll() throws {
     try fileManager.removeItem(atPath: path)
     try createDirectory()
   }
 
-  func removeExpiredObjects() throws {
+    public func removeExpiredObjects() throws {
     let storageURL = URL(fileURLWithPath: path)
     let resourceKeys: [URLResourceKey] = [
       .isDirectoryKey,

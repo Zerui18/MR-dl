@@ -30,9 +30,9 @@ class ChaptersTableViewController: UITableViewController {
         return localSerie != nil
     }
     
-    lazy var chaptersCount: Int = {
-        return isLocalSource ? localSerie!.chapters!.count:serieMeta.chapters.count
-    }()
+    var chaptersCount: Int {
+        return isLocalSource ? localSerie!.downloader.downloadedChapters.count:serieMeta.chapters.count
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,18 +42,11 @@ class ChaptersTableViewController: UITableViewController {
     private func setupUI(){
         tableView.tableFooterView = UIView()
         navigationItem.title = "\(chaptersCount) Chapters"
+        localSerie?.downloader.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        transitionCoordinator?.animate(alongsideTransition: { (_) in
-            self.isNavBarTransparent = false
-            self.statusBarStyle = .default
-            self.navBarItemsTintColor = #colorLiteral(red: 0.1058823529, green: 0.6784313725, blue: 0.9725490196, alpha: 1)
-        })
-        self.isNavBarTransparent = false
-        self.statusBarStyle = .default
-        self.navBarItemsTintColor = #colorLiteral(red: 0.1058823529, green: 0.6784313725, blue: 0.9725490196, alpha: 1)
         navigationController?.hidesBarsOnSwipe = true
     }
     
@@ -69,7 +62,7 @@ class ChaptersTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ChapterTableViewCell.identifier) as! ChapterTableViewCell
         if isLocalSource{
-            cell.localChapter = localSerie!.chapters![indexPath.row] as! MRChapter
+            cell.localChapter = localSerie!.downloader.downloadedChapters[indexPath.row]
         }
         else{
             cell.chapterMeta = serieMeta.chapters[indexPath.row]
@@ -87,6 +80,21 @@ class ChaptersTableViewController: UITableViewController {
         }
         navigationController?.pushViewController(viewChapterCtr, animated: true)
         navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+}
+
+extension ChaptersTableViewController: MRSerieDownloaderDelegate{
+    
+    // add downloaded chapter to list of 'readable' chapters
+    func downloaderDidComplete(chapter: MRChapter, originalIndex: Int) {
+        DispatchQueue.main.async {
+            self.tableView.insertRows(at: [IndexPath(row: self.localSerie!.downloader.downloadedChapters.index(of: chapter)!, section: 0)], with: .automatic)
+        }
+    }
+    
+    func downloaderDidDownload(chapter: MRChapter, page: Int, error: Error?) {
+        // nothing to be done here
     }
     
 }

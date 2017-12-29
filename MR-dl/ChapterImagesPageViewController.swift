@@ -14,11 +14,13 @@ import ImageLoader
 class ChapterImagesPageViewController: UIPageViewController {
     
     var imagePreheater: Preheater?
+    var imageLoadingManager: Manager?
     
     static func `init`(forSerie serieMeta: MRSerieMeta, atChapter chapterIndex: Int)-> ChapterImagesPageViewController{
         let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: "chapterImagesCtr") as! ChapterImagesPageViewController
         ctr.serieMeta = serieMeta
         ctr.chapterIndex = chapterIndex
+        ctr.imageLoadingManager = .sharedMRImageManager
         ctr.imagePreheater = Preheater(manager: .sharedMRImageManager, maxConcurrentRequestCount: 4)
         return ctr
     }
@@ -75,7 +77,12 @@ class ChapterImagesPageViewController: UIPageViewController {
     //Reactive: current-displaying chapter index
     var chapterIndex: Int!{
         didSet{
-            navigationItem.title = chapterMeta.name
+            if isLocalSource{
+                navigationItem.title = localChapter!.name!
+            }
+            else{
+                navigationItem.title = chapterMeta.name
+            }
         }
     }
     
@@ -118,13 +125,11 @@ class ChapterImagesPageViewController: UIPageViewController {
     
     
     private func setupUI(){
-        navigationItem.title = chapterMeta.name
         dataSource = self
         delegate = self
         
         chapterIndexButon.target = self
         chapterIndexButon.action = #selector(showPagesSelector)
-        
     }
     
     @objc func toggleFocus(){
@@ -186,7 +191,7 @@ class ChapterImagesPageViewController: UIPageViewController {
         else if pageIndex == urls.count-1{
             reversedDirection = .forward
         }
-        setViewControllers([ChapterImageViewController(imageURL: urls[pageIndex], pageIndex: pageIndex, chapterIndex: chapterIndex)], direction: reversedDirection, animated: true)
+        setViewControllers([ChapterImageViewController(loadingManager: imageLoadingManager, imageURL: urls[pageIndex], pageIndex: pageIndex, chapterIndex: chapterIndex)], direction: reversedDirection, animated: true)
     }
 
 }
@@ -216,7 +221,7 @@ extension ChapterImagesPageViewController: UIPageViewControllerDataSource, UIPag
             }
             else{
                 // load next page
-                return ChapterImageViewController(imageURL: urls[sourceIndex+1], pageIndex: sourceIndex+1, chapterIndex: chapterIndex)
+                return ChapterImageViewController(loadingManager: imageLoadingManager, imageURL: urls[sourceIndex+1], pageIndex: sourceIndex+1, chapterIndex: chapterIndex)
             }
         }
         return nil
@@ -239,7 +244,7 @@ extension ChapterImagesPageViewController: UIPageViewControllerDataSource, UIPag
             }
             else{
                 // load prev page
-                return ChapterImageViewController(imageURL: urls[sourceIndex-1], pageIndex: sourceIndex-1, chapterIndex: chapterIndex)
+                return ChapterImageViewController(loadingManager: imageLoadingManager, imageURL: urls[sourceIndex-1], pageIndex: sourceIndex-1, chapterIndex: chapterIndex)
             }
         }
         return nil

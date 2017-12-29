@@ -12,7 +12,8 @@ import MRClient
 fileprivate let jsonDecoder = JSONDecoder()
 fileprivate let jsonEncoder = JSONEncoder()
 
-@objc class MRChapter: NSManagedObject{
+@objc(MRChapter)
+class MRChapter: NSManagedObject{
     
     var lastUpdatedDescription: String{
         return dateFormatter.string(from: dateUpdated!)
@@ -24,12 +25,13 @@ fileprivate let jsonEncoder = JSONEncoder()
         self.dateUpdated = meta.updated
         self.oid = meta.oid
         self.name = meta.name
+        self.order = Int64(meta.order)
         serie.addToChapters(self)
         try! initDirectory()
     }
     
     lazy var directory: URL = {
-        return serie!.directory.appendingPathComponent(String(order))
+        return serie!.directory.appendingPathComponent(String(order)+"/")
     }()
     
     private func initDirectory()throws {
@@ -72,14 +74,14 @@ fileprivate let jsonEncoder = JSONEncoder()
         return nil
     }
     
-    lazy var downloader: MRChapterDownloader = MRChapterDownloader(chapter: self, maxConcurrentDownload: 4, delegate: serie!.downloader)
+    lazy var downloader = MRChapterDownloader(chapter: self, maxConcurrentDownload: 12, delegate: serie!.downloader)
     
 }
 
 extension MRChapter{
     
     func addressForPage(atIndex index: Int)-> URL{
-        return directory.appendingPathComponent("\(index).webp")
+        return directory.appendingPathComponent("\(index).jpeg")
     }
     
     func hasDownloadedPage(ofIndex index: Int)-> Bool{

@@ -8,54 +8,78 @@
 
 import Foundation
 
+protocol MRSerieDownloaderDelegate: class{
+    func downloaderDidDownload(chapter: MRChapter, page: Int, error: Error?)
+    func downloaderDidComplete(chapter: MRChapter, originalIndex: Int)
+}
+
 class MRSerieDownloader{
     
+    weak var delegate: MRSerieDownloaderDelegate?
+    
     let serie: MRSerie
-    let downloadProgress: Progress
-    let maxConcurrent: Int
-    var isDownloaded: Bool{
-        return downloadProgress.isFinished
+    let progress: Progress
+    var isFullyDownloaded: Bool{
+        return progress.isFinished
     }
     
-    var serieChapters: [MRChapter]{
-        return serie.chapters!.array as! [MRChapter]
-    }
+    // all fully-downloaded chapters
+    var downloadedChapters = [MRChapter]()
+    // all non-fully downloaded chapters
+    var downloadingChapters = [MRChapter]()
     
-    init(serie: MRSerie, maxConcurrent: Int = 2){
+    // temporary variable to keep track if the current download was cancelled
+    var isCancelled = false
+    
+    init(serie: MRSerie){
         self.serie = serie
-        self.downloadProgress = Progress(totalUnitCount: Int64(serie.chapters!.count))
-        self.maxConcurrent = maxConcurrent
-        self.downloadProgress.completedUnitCount = Int64(serieChapters.count{$0.downloader.downloadState == .downloaded})
-    }
-    
-    private var downloadingChapters: [MRChapter] = []
-    private var queuingChapters: [MRChapter] = []
-    
-    func beginDownload(){
-        for chapter in serieChapters{
-            chapter.downloader.beginDownload()
+        let allChapters = serie.chaptersAsArray()
+        // initialize progress
+        self.progress = Progress(totalUnitCount: Int64(allChapters.count))
+        // new hack to prevent circular reference
+        serie.downloader = self
+        
+        for chapter in allChapters{
+            if chapter.downloader.state == .downloaded{
+                downloadedChapters.append(chapter)
+                progress.completedUnitCount += 1
+            }
+            else{
+                downloadingChapters.append(chapter)
+            }
         }
     }
-    
-    private func addToQueue(_ chapter: MRChapter){
-        if downloadingChapters.count < maxConcurrent{
-            downloadingChapters.append(chapter)
-            chapter.downloader.beginDownload()
+
+    // add chapter to download queue (when serie is refreshed with the downloader already initialized)
+    func addChapter(_ chapter: MRChapter){
+        progress.totalUnitCount += 1
+        if chapter.downloader.state == .downloaded{
+            downloadedChapters.append(chapter)
+            progress.completedUnitCount += 1
         }
         else{
-            queuingChapters.append(chapter)
+            downloadingChapters.append(chapter)
         }
     }
-    
-    func pauseDownload(){
-        for chapter in serieChapters{
-            chapter.downloader.cancelDownload()
-        }
+
+    // begin downloading (in series) the downloadingChapters
+    func beginDownload(){
+        isCancelled = false
+        downloadingChapters.first?.downloader.beginDownload()
     }
     
-    func resumeDownload(){
-        for chapter in serieChapters{
-            chapter.downloader.retryFailedTasks()
+    // cancel download for current-downloading chapter and begin downloading the chapter at the specifed index in the downloadingChapters array
+    func beginDownload(forIndex index: Int){
+        cancelDownload()
+        downloadingChapters.insert(downloadingChapters.remove(at: index), at: 0)
+        beginDownload()
+    }
+    
+    // cancel download for the current-downloadin chapter (if applicable), then post notification regarding this cancellation event
+    func cancelDownload(){
+        if let firstChapter = downloadingChapters.first{
+            isCancelled = true
+            firstChapter.downloader.cancelDownload()
         }
     }
     
@@ -68,15 +92,29 @@ extension MRSerieDownloader: MRChapterDownloaderDelegate{
     }
     
     func downloaderDidDownload(pageAtIndex index: Int, forChapter chapter: MRChapter, withError error: Error?) {
-        
-    }
-    
-    // on chapter downloader tasks complete, remove it from downloading list & add it back to queue if not fully downloaded
-    func downloaderDidComplete(chapter: MRChapter) {
-        downloadingChapters.delete(chapter)
-        if chapter.downloader.downloadState != .downloaded{
-            addToQueue(chapter)
+        if error == nil{
+            // no error, post notification about progress
+            delegate?.downloaderDidDownload(chapter: chapter, page: index, error: error)
         }
     }
     
+    // on chapter downloader tasks complete, remove it from downloading list & add it back to queue if not fully downloaded, also update downloaded/downloading chapters list
+    func downloaderDidComplete(chapter: MRChapter) {
+        // do not perform any action if function called due to download cancellation
+        if isCancelled{
+            return
+        }
+        if chapter.downloader.state != .downloaded{
+            // chapter failed to download, cancel all pending chapter downloads
+            cancelDownload()
+            return
+        }
+        // download successful, update all related arrays & start downloading next chapter
+        let originalIndex = downloadingChapters.index(of: chapter)!
+        downloadingChapters.remove(at: originalIndex)
+        downloadedChapters.append(chapter)
+        delegate?.downloaderDidComplete(chapter: chapter, originalIndex: originalIndex)
+        downloadingChapters.first?.downloader.beginDownload()
+    }
+
 }

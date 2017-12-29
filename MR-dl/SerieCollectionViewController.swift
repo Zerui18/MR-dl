@@ -14,7 +14,7 @@ class SerieCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(serieAddedNotification), name: .serieAddedNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -28,6 +28,10 @@ class SerieCollectionViewController: UICollectionViewController {
         self.navBarItemsTintColor = #colorLiteral(red: 0.1058823529, green: 0.6784313725, blue: 0.9725490196, alpha: 1)
         self.statusBarStyle = .default
         self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    @objc private func serieAddedNotification(){
+        collectionView!.insertItems(at: [IndexPath(item: LocalMangaDataSource.shared.numberOfSeries-1, section: 0)])
     }
 
 }

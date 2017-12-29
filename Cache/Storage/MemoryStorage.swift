@@ -1,7 +1,7 @@
 import Foundation
 
 /// Save objects to memory based on NSCache
-final class MemoryStorage {
+public final class MemoryStorage {
   /// Memory cache instance
   fileprivate let cache = NSCache<NSString, MemoryCapsule>()
   // Memory cache keys
@@ -11,7 +11,7 @@ final class MemoryStorage {
 
   // MARK: - Initialization
 
-  init(config: MemoryConfig) {
+  public init(config: MemoryConfig) {
     self.config = config
     self.cache.countLimit = Int(config.countLimit)
     self.cache.totalCostLimit = Int(config.totalCostLimit)
@@ -19,7 +19,7 @@ final class MemoryStorage {
 }
 
 extension MemoryStorage: StorageAware {
-  func entry<T: Codable>(ofType type: T.Type, forKey key: String) throws -> Entry<T> {
+    public func entry<T: Codable>(ofType type: T.Type, forKey key: String) throws -> Entry<T> {
     guard let capsule = cache.object(forKey: NSString(string: key)) else {
       throw StorageError.notFound
     }
@@ -31,23 +31,23 @@ extension MemoryStorage: StorageAware {
     return Entry(object: object, expiry: capsule.expiry)
   }
 
-  func removeObject(forKey key: String) {
+    public func removeObject(forKey key: String) {
     cache.removeObject(forKey: NSString(string: key))
     keys.remove(key)
   }
 
-  func setObject<T: Codable>(_ object: T, forKey key: String, expiry: Expiry? = nil) {
+    public func setObject<T: Codable>(_ object: T, forKey key: String, expiry: Expiry? = nil) {
     let capsule = MemoryCapsule(value: object, expiry: expiry ?? config.expiry)
     cache.setObject(capsule, forKey: NSString(string: key))
     keys.insert(key)
   }
 
-  func removeAll() {
+    public func removeAll() {
     cache.removeAllObjects()
     keys.removeAll()
   }
 
-  func removeExpiredObjects() {
+    public func removeExpiredObjects() {
     let allKeys = keys
     for key in allKeys {
       removeObjectIfExpired(forKey: key)

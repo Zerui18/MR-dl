@@ -31,3 +31,10 @@ extension Array where Iterator.Element: Equatable{
     }
     
 }
+extension Array{
+    
+    mutating func sortUsingProperty<VariableType: Comparable>(atKeypath keypath: KeyPath<Iterator.Element, VariableType>, ascending: Bool = true){
+        sort{ascending ? $0[keyPath: keypath] < $1[keyPath: keypath] : $0[keyPath: keypath] > $1[keyPath: keypath]}
+    }
+    
+}

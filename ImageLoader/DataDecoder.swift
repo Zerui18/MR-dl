@@ -33,6 +33,14 @@ public struct MRIDataDecoder: DataDecoding {
     }
 }
 
+public struct ImageDataDecoder: DataDecoding{
+    public init(){}
+    
+    public func decode(data: Data, response: URLResponse) -> Image? {
+        return UIImage(data: data)
+    }
+}
+
 public typealias ImageDecodeFunction = (_ imageData: Data)-> UIImage?
 public typealias DataDecryptFunction = (_ encryptedData: Data)-> Data
 

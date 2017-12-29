@@ -32,6 +32,8 @@
 		017E7F661FF0C7CD0014E5C5 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017E7F651FF0C7CD0014E5C5 /* CoreDataHelper.swift */; };
 		017E7F6A1FF0EC890014E5C5 /* LocalMangaDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017E7F691FF0EC890014E5C5 /* LocalMangaDataSource.swift */; };
 		0181715A1FF4D7CE00F60335 /* ChapterDownloadsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018171591FF4D7CE00F60335 /* ChapterDownloadsTableViewController.swift */; };
+		0181715C1FF4DAA600F60335 /* ChapterDownloadTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0181715B1FF4DAA600F60335 /* ChapterDownloadTableViewCell.swift */; };
+		0181715E1FF4DF7F00F60335 /* Progress+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0181715D1FF4DF7F00F60335 /* Progress+Extension.swift */; };
 		018A00E41FEE28AD00191D2A /* WebP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 018A00E31FEE28AD00191D2A /* WebP.framework */; };
 		018A01011FEE73FF00191D2A /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018A01001FEE73FF00191D2A /* UIImage+Extensions.swift */; };
 		018A01031FEE740F00191D2A /* ImageWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018A01021FEE740F00191D2A /* ImageWrapper.swift */; };
@@ -181,6 +183,8 @@
 		017E7F651FF0C7CD0014E5C5 /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		017E7F691FF0EC890014E5C5 /* LocalMangaDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMangaDataSource.swift; sourceTree = "<group>"; };
 		018171591FF4D7CE00F60335 /* ChapterDownloadsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterDownloadsTableViewController.swift; sourceTree = "<group>"; };
+		0181715B1FF4DAA600F60335 /* ChapterDownloadTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterDownloadTableViewCell.swift; sourceTree = "<group>"; };
+		0181715D1FF4DF7F00F60335 /* Progress+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Progress+Extension.swift"; sourceTree = "<group>"; };
 		018A00E31FEE28AD00191D2A /* WebP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebP.framework; path = "../../../Downloads/libwebp-0.6.1-ios-framework/WebP.framework"; sourceTree = "<group>"; };
 		018A01001FEE73FF00191D2A /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		018A01021FEE740F00191D2A /* ImageWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageWrapper.swift; sourceTree = "<group>"; };
@@ -478,6 +482,7 @@
 				015C5B461FECEB1000415F1B /* ChapterImagesPageViewController.swift */,
 				015C5B481FECEB2A00415F1B /* ChapterImageViewController.swift */,
 				018171591FF4D7CE00F60335 /* ChapterDownloadsTableViewController.swift */,
+				0181715B1FF4DAA600F60335 /* ChapterDownloadTableViewCell.swift */,
 				2225742C1FE94523005D8865 /* Main.storyboard */,
 				017648861FEA030C00B2B7F9 /* DataSource */,
 				22740E721FE94BE600B04454 /* Supporting Files */,
@@ -516,6 +521,7 @@
 				014AD9CC1FEE274100B3C1E0 /* UIImage+WebP.swift */,
 				016A78001FEBC2B9009BB0D5 /* String+Extensions.swift */,
 				01A92F961FF3D5BF009D0A6F /* Sequence+Extension.swift */,
+				0181715D1FF4DF7F00F60335 /* Progress+Extension.swift */,
 				01A34A821FEF929C0022E670 /* HapticsController.swift */,
 				22740E711FE94BB600B04454 /* Bridging-Header.h */,
 				222574321FE94523005D8865 /* Assets.xcassets */,
@@ -684,6 +690,11 @@
 					222574241FE94523005D8865 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
 					};
 					224F48841FE950A3005F5A94 = {
 						CreatedOnToolsVersion = 9.2;
@@ -839,11 +850,13 @@
 				01A92F971FF3D5BF009D0A6F /* Sequence+Extension.swift in Sources */,
 				01A92F9B1FF3DD74009D0A6F /* MRSerieDownloader.swift in Sources */,
 				015C5B401FECD7E100415F1B /* ChapterTableViewCell.swift in Sources */,
+				0181715E1FF4DF7F00F60335 /* Progress+Extension.swift in Sources */,
 				01A34A871FEFAB040022E670 /* MRSerie.swift in Sources */,
 				222574291FE94523005D8865 /* AppDelegate.swift in Sources */,
 				014AD9CD1FEE274100B3C1E0 /* UIImage+WebP.swift in Sources */,
 				22DC2C2F1FE9E512005F4407 /* SerieCollectionViewCell.swift in Sources */,
 				017E7F6A1FF0EC890014E5C5 /* LocalMangaDataSource.swift in Sources */,
+				0181715C1FF4DAA600F60335 /* ChapterDownloadTableViewCell.swift in Sources */,
 				01B6D6C51FED4E7400D8A273 /* ThumbnailLoader.swift in Sources */,
 				01A92F951FF3CF29009D0A6F /* DownloadState.swift in Sources */,
 				01A34A851FEFA7590022E670 /* MRChapterDownloader.swift in Sources */,
