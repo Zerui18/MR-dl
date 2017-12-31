@@ -8,6 +8,6 @@
 
 import Foundation
 
-enum DownloadState{
-    case none, downloading, downloaded
+enum DownloadState: Int{
+    case downloaded = 0, notDownloaded = 1
 }

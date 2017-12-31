@@ -88,12 +88,12 @@ class SerieSearchViewController: UITableViewController{
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        return (tableView.cellForRow(at: indexPath) as! SerieTableViewCell).shortMeta != nil ? indexPath:nil
+        return (tableView.cellForRow(at: indexPath) as! SerieTableViewCell).serieMeta != nil ? indexPath:nil
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! SerieTableViewCell
-        let detailsCtr = SerieDetailsViewController.init(shortMeta: cell.shortMeta!, serieMeta: cell.serieMeta)
+        let detailsCtr = SerieDetailsViewController.init(dataProvider: cell.serieMeta!)
         navigationItem.searchController?.isActive = false
         navigationController!.pushViewController(detailsCtr, animated: true)
     }

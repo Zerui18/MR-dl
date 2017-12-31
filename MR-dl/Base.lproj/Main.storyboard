@@ -517,66 +517,6 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
             </objects>
             <point key="canvasLocation" x="1807" y="1524"/>
         </scene>
-        <!--70 Chapters-->
-        <scene sceneID="41c-Dy-cls">
-            <objects>
-                <tableViewController storyboardIdentifier="chaptersTableCtr" id="npt-yM-0bH" customClass="ChaptersTableViewController" customModule="MR_dl" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="pWB-m9-alI">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="chapterCell" rowHeight="60" id="tzx-Ok-nxK" customClass="ChapterTableViewCell" customModule="MR_dl" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="60"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tzx-Ok-nxK" id="yKn-uW-Q99">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="59.666666666666664"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chapter 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.90000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="MOR-WM-9HA">
-                                            <rect key="frame" x="16" y="18" width="344" height="31"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12 Dec 2017" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zNr-V6-ljD">
-                                            <rect key="frame" x="285.66666666666669" y="0.0" width="74.333333333333314" height="18"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="18" id="yZo-02-4TZ"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="MOR-WM-9HA" firstAttribute="leading" secondItem="yKn-uW-Q99" secondAttribute="leadingMargin" id="5zZ-Ti-Aej"/>
-                                        <constraint firstItem="zNr-V6-ljD" firstAttribute="trailing" secondItem="MOR-WM-9HA" secondAttribute="trailing" id="6NL-jO-nTF"/>
-                                        <constraint firstItem="MOR-WM-9HA" firstAttribute="top" secondItem="zNr-V6-ljD" secondAttribute="bottom" id="EIS-qu-cI5"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="MOR-WM-9HA" secondAttribute="bottom" id="cPA-4e-swn"/>
-                                        <constraint firstItem="zNr-V6-ljD" firstAttribute="top" secondItem="yKn-uW-Q99" secondAttribute="top" id="hYl-Zw-kQG"/>
-                                        <constraint firstAttribute="trailing" secondItem="MOR-WM-9HA" secondAttribute="trailing" constant="15" id="ldD-iD-rXO"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="lastUpdatedLabel" destination="zNr-V6-ljD" id="rfT-Xj-j6i"/>
-                                    <outlet property="titleLabel" destination="MOR-WM-9HA" id="Qca-Vj-urE"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="npt-yM-0bH" id="eVn-Os-JOa"/>
-                            <outlet property="delegate" destination="npt-yM-0bH" id="NzS-hC-wMe"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="70 Chapters" largeTitleDisplayMode="never" id="sDF-n5-DX4"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4ZF-UH-q7L" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2650" y="1496"/>
-        </scene>
         <!--Chapter Image View Controller-->
         <scene sceneID="LKP-Gh-lxB">
             <objects>
@@ -690,7 +630,7 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
         <scene sceneID="35E-9S-CjB">
             <objects>
                 <collectionViewController id="FM6-Zd-58W" customClass="SerieCollectionViewController" customModule="MR_dl" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="MeZ-hw-f9P">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="MeZ-hw-f9P">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -754,11 +694,11 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
             </objects>
             <point key="canvasLocation" x="868" y="643.5960591133005"/>
         </scene>
-        <!--Chapter Downloads Table View Controller-->
+        <!--Chapters Table View Controller-->
         <scene sceneID="CbU-b6-fLX">
             <objects>
-                <tableViewController storyboardIdentifier="chapterDownloadsCtr" id="Fg2-in-8Ln" customClass="ChapterDownloadsTableViewController" customModule="MR_dl" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="VvG-5R-7hD">
+                <tableViewController storyboardIdentifier="chapterDownloadsCtr" id="Fg2-in-8Ln" customClass="ChaptersTableViewController" customModule="MR_dl" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="VvG-5R-7hD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

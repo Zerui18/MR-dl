@@ -10,7 +10,6 @@ import MRClient
 import ImageLoader
 
 protocol MRChapterDownloaderDelegate: class{
-    func downloaderDidInitiateDownload(forChapter chapter: MRChapter, withError error: Error?)
     func downloaderDidDownload(pageAtIndex index: Int, forChapter chapter: MRChapter, withError error: Error?)
     func downloaderDidComplete(chapter: MRChapter)
 }
@@ -28,6 +27,8 @@ class MRChapterDownloader: NSObject{
     var urlToIndex: [URL:Int] = [:]
     
     var urlsToDownload = [URL]()
+    // no UI to update so not using this
+//    var backgroundCompletionHandler: (()->Void)?
     
     // getter for private progress object, to ensure that initializeVariablesIfNecessary() has a chance to setup progress object if possible
     var progress: Progress{
@@ -46,14 +47,15 @@ class MRChapterDownloader: NSObject{
         self.maxConcurrentDownload = maxConcurrentDownload
         self.delegate = delegate
         super.init()
+        self.urlSession = URLSession(configuration: .background(withIdentifier: chapter.serie!.oid!+"-"+chapter.oid!), delegate: self, delegateQueue: nil)
     }
     
     
     var state: DownloadState{
         if progress.totalUnitCount == 999{
-            return .none
+            return .notDownloaded
         }
-        return progress.isFinished ? .downloaded:.downloading
+        return progress.isFinished ? .downloaded:.notDownloaded
     }
     
     // initialize urls to download & update progress' total unit count if that's not done
@@ -92,15 +94,14 @@ class MRChapterDownloader: NSObject{
             _beginDownload()
         }
         else{
-            chapter.fetchImageURLs{[weak self] error in
+            chapter.fetchImageURLs{[weak self] urls in
                 guard let strongSelf = self else{
                     return
                 }
-                if error == nil{
+                if urls != nil{
                     strongSelf.initializeVariablesIfNecessary()
                     strongSelf._beginDownload()
                 }
-                strongSelf.delegate?.downloaderDidInitiateDownload(forChapter: strongSelf.chapter, withError: error)
             }
         }
     }
@@ -108,7 +109,7 @@ class MRChapterDownloader: NSObject{
     // initialize urlsession data tasks & local progress object
     private func _beginDownload(){
         if urlSession == nil{
-            urlSession = URLSession(configuration: .background(withIdentifier: "mrchapterdownloader-"+chapter.oid!), delegate: self, delegateQueue: nil)
+            urlSession = URLSession(configuration: .background(withIdentifier: chapter.serie!.oid!+"-"+chapter.oid!), delegate: self, delegateQueue: nil)
         }
         initiateDownloadTasks(forURLs: urlsToDownload)
     }
@@ -158,7 +159,7 @@ class MRChapterDownloader: NSObject{
     
     // convenience function for cancelling download for the chapter
     func cancelDownload(){
-        if state != .downloading{
+        if state != .notDownloaded{
             return
         }
         print("cancel download called")

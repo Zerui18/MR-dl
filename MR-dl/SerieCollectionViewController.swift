@@ -50,7 +50,7 @@ extension SerieCollectionViewController{
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let serie = (collectionView.cellForItem(at: indexPath) as! SerieCollectionViewCell).serie!
-        let ctr = SerieDetailsViewController(localSerie: serie)
+        let ctr = SerieDetailsViewController(dataProvider: serie)
         navigationController!.pushViewController(ctr, animated: true)
     }
     

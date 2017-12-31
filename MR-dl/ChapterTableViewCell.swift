@@ -13,16 +13,10 @@ class ChapterTableViewCell: UITableViewCell {
     
     static let identifier = "chapterCell"
 
-    var chapterMeta: MRSerieMeta.ChapterMeta!{
+    var chapterDataProvider: ChapterDataProvider!{
         didSet{
-            titleLabel.text = chapterMeta.name
-            lastUpdatedLabel.text = chapterMeta.lastUpdatedDescription
-        }
-    }
-    var localChapter: MRChapter!{
-        didSet{
-            titleLabel.text = localChapter.name!
-            lastUpdatedLabel.text = localChapter.lastUpdatedDescription
+            titleLabel.text = chapterDataProvider[.name]
+            lastUpdatedLabel.text = chapterDataProvider[.lastUpdatedDescription]
         }
     }
     

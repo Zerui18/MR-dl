@@ -16,21 +16,19 @@ class ChapterImagesPageViewController: UIPageViewController {
     var imagePreheater: Preheater?
     var imageLoadingManager: Manager?
     
-    static func `init`(forSerie serieMeta: MRSerieMeta, atChapter chapterIndex: Int)-> ChapterImagesPageViewController{
+    static func `init`(dataProvider: SerieDataProvider, atChapter chapterIndex: Int)-> ChapterImagesPageViewController{
         let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: "chapterImagesCtr") as! ChapterImagesPageViewController
-        ctr.serieMeta = serieMeta
+        ctr.serieDataProvider = dataProvider
         ctr.chapterIndex = chapterIndex
-        ctr.imageLoadingManager = .sharedMRImageManager
-        ctr.imagePreheater = Preheater(manager: .sharedMRImageManager, maxConcurrentRequestCount: 4)
+        
+        if dataProvider is MRSerieMeta{
+            // loading from remote source, enable preheating
+            ctr.imageLoadingManager = .sharedMRImageManager
+            ctr.imagePreheater = Preheater(manager: .sharedMRImageManager, maxConcurrentRequestCount: 4)
+        }
         return ctr
     }
     
-    static func `init`(forLocalSerie serie: MRSerie, atChapter chapterIndex: Int)-> ChapterImagesPageViewController{
-        let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: "chapterImagesCtr") as! ChapterImagesPageViewController
-        ctr.localSerie = serie
-        ctr.chapterIndex = chapterIndex
-        return ctr
-    }
     
     static weak var shared: ChapterImagesPageViewController?
     
@@ -52,8 +50,7 @@ class ChapterImagesPageViewController: UIPageViewController {
     }
     
     // current-displaying serie-meta
-    var serieMeta: MRSerieMeta!
-    var localSerie: MRSerie?
+    var serieDataProvider: SerieDataProvider!
     
     var shouldLoadReversed = false
     
@@ -66,6 +63,7 @@ class ChapterImagesPageViewController: UIPageViewController {
         }
     }
     
+    // start preheating chapters images in the 'correct' order only ig preheater exists (when loading from remote source)
     func startPreheatingIfNecessary(){
         if let preheater = imagePreheater{
             let requests = chapterImageURLs!.map{Request(url: $0)}
@@ -77,21 +75,13 @@ class ChapterImagesPageViewController: UIPageViewController {
     //Reactive: current-displaying chapter index
     var chapterIndex: Int!{
         didSet{
-            if isLocalSource{
-                navigationItem.title = localChapter!.name!
-            }
-            else{
-                navigationItem.title = chapterMeta.name
-            }
+            navigationItem.title = chapterDataProvider[.name]
         }
     }
     
-    // current-displaying chapter
-    var chapterMeta: MRSerieMeta.ChapterMeta{
-        return serieMeta.chapters[chapterIndex]
-    }
-    var localChapter: MRChapter?{
-        return localSerie?.chapters?[chapterIndex] as? MRChapter
+    // data provider current-displaying chapter
+    var chapterDataProvider: ChapterDataProvider{
+        return serieDataProvider.chapter(atIndex: chapterIndex, forState: .downloaded)
     }
     
     //Reactive: current-displaying page index, 0-indexed
@@ -99,10 +89,6 @@ class ChapterImagesPageViewController: UIPageViewController {
         didSet{
             chapterIndexButon.title = "\(currentPageIndex+1)/\(chapterImageURLs!.count)"
         }
-    }
-    
-    var isLocalSource: Bool{
-        return localSerie != nil
     }
     
     override func viewDidLoad() {
@@ -140,25 +126,20 @@ class ChapterImagesPageViewController: UIPageViewController {
     private func fetchImageURLs(forChapterIndex index: Int){
         let oldIndex = chapterIndex
         chapterIndex = index
-        if isLocalSource{
-            chapterImageURLs = localChapter!.sortedLocalImageURLs()!
-        }
-        else{
-            let blockingAlert = UIAlertController(title: "Loading Chapter Indexes", message: "", preferredStyle: .alert)
-            navigationController?.present(blockingAlert, animated: false)
-            MRClient.getChapterImageURLs(forOid: chapterMeta.oid) {(error, response) in
-                DispatchQueue.main.async {
-                    if let imageURLs = response?.data{
+        let blockingAlert = UIAlertController(title: "Loading Chapter Indexes", message: "", preferredStyle: .alert)
+        navigationController?.present(blockingAlert, animated: false)
+        chapterDataProvider.fetchImageURLs {urls in
+            DispatchQueue.main.async {
+                if urls != nil{
+                    blockingAlert.dismiss(animated: true)
+                    self.chapterImageURLs = urls
+                }
+                else{
+                    self.chapterIndex = oldIndex
+                    blockingAlert.title = "Network Error"
+                    blockingAlert.message = "Failed to load image-urls for chapter, please check your network connectivity."
+                    Timer.scheduledTimer(withTimeInterval: 2, repeats: false){_ in
                         blockingAlert.dismiss(animated: true)
-                        self.chapterImageURLs = imageURLs
-                    }
-                    else{
-                        self.chapterIndex = oldIndex
-                        blockingAlert.title = "Network Error"
-                        blockingAlert.message = "Failed to load image-urls for chapter, please check your network connectivity."
-                        Timer.scheduledTimer(withTimeInterval: 2, repeats: false){_ in
-                            blockingAlert.dismiss(animated: true)
-                        }
                     }
                 }
             }
@@ -210,7 +191,7 @@ extension ChapterImagesPageViewController: UIPageViewControllerDataSource, UIPag
             let sourceIndex = (viewController as! ChapterImageViewController).pageIndex!
             if sourceIndex+1 >= chapterImageURLs!.count{
                 // load next chapter if exists
-                if chapterIndex+1 < (isLocalSource ? localSerie!.chapters!.count:serieMeta.chaptersCount){
+                if chapterIndex+1 < serieDataProvider.numberOfChapters(ofState: .downloaded){
                     shouldLoadReversed = false
                     fetchImageURLs(forChapterIndex: chapterIndex+1)
                 }

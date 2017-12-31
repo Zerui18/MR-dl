@@ -14,16 +14,9 @@ class SerieDetailsViewController: UIViewController{
     
     static let storyboardID = "serieDetailsCtr"
     
-    static func `init`(shortMeta: MRShortMeta, serieMeta: MRSerieMeta?)-> SerieDetailsViewController{
+    static func `init`(dataProvider: SerieDataProvider)-> SerieDetailsViewController{
         let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: storyboardID) as! SerieDetailsViewController
-        ctr.shortMeta = shortMeta
-        ctr.serieMeta = serieMeta
-        return ctr
-    }
-    
-    static func `init`(localSerie: MRSerie)-> SerieDetailsViewController{
-        let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: storyboardID) as! SerieDetailsViewController
-        ctr.localSerie = localSerie
+        ctr.serieDataProvider = dataProvider
         return ctr
     }
     
@@ -50,15 +43,15 @@ class SerieDetailsViewController: UIViewController{
     @IBOutlet weak var artworksLabel: UILabel!
     @IBOutlet weak var artworksCollectionView: UICollectionView!
     
+    lazy var artworkURLs: [URL] = {
+        return serieDataProvider[.artworkURLs]!
+    }()
     let artworksPreheater = Preheater(manager: ThumbnailLoader.shared.imageLoaderManager, maxConcurrentRequestCount: 4)
     
-    var shortMeta: MRShortMeta!
-    var serieMeta: MRSerieMeta?
-    
-    var localSerie: MRSerie?
+    var serieDataProvider: SerieDataProvider!
     
     var isLocalSource: Bool{
-        return localSerie != nil
+        return serieDataProvider is MRSerie
     }
     
     override func viewDidLoad() {
@@ -92,12 +85,8 @@ class SerieDetailsViewController: UIViewController{
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if isLocalSource{
-            artworksPreheater.startPreheating(with: localSerie!.artworkURLs!.map(Request.init))
-        }
-        else if let urls = serieMeta?.artworkURLs{
-            artworksPreheater.startPreheating(with: urls.map(Request.init))
-        }
+        let artworkURLs: [URL] = serieDataProvider[.artworkURLs]!
+        artworksPreheater.stopPreheating(with: artworkURLs.map(Request.init))
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -108,82 +97,28 @@ class SerieDetailsViewController: UIViewController{
     
     private func setupUI(){
         scrollView.delegate = self
-        thumbnailImageView.image = nil
-        coverImageView.image = nil
-        descriptionLabel.text = nil
-        statusLabel.text = nil
-        updateDateLabel.text = nil
-        readButton.isEnabled = false
+
         readButton.addTarget(self, action: #selector(showChaptersTable), for: .touchUpInside)
         toggleCollapseButton.addTarget(self, action: #selector(toggleCollapse), for: .touchUpInside)
-        artworksCollectionView.dataSource = self
         
-        if isLocalSource{
-            saveBarButton.target = self
-            saveBarButton.action = #selector(showDownloadsTable)
-            titleLabel.text = localSerie!.name
-            thumbnailImageView.loadImage(withLoader: ThumbnailLoader.shared, fromURL: localSerie!.thumbnailURL!)
-            fillupMeta()
-        }
-        else{
-            if LocalMangaDataSource.shared.hasSerie(withOid: shortMeta.oid){
-                saveBarButton.isEnabled = false
-            }
-            titleLabel.text = shortMeta.name
-            thumbnailImageView.loadImage(withLoader: ThumbnailLoader.shared, fromURL: shortMeta.thumbnailURL!)
-            
-            if serieMeta == nil{
-                fetchSerieMeta()
-            }
-            else{
-                fillupMeta()
-            }
-        }
-
-    }
-
-    private func fetchSerieMeta(){
-        MRClient.getSerieMeta(forOid: shortMeta.oid, completion: {[weak self] (error, response) in
-            if let `self` = self, let meta = response?.data{
-                self.serieMeta = meta
-                DispatchQueue.main.async {
-                    self.fillupMeta()
-                }
-            }
-        })
-    }
-    
-    private func fillupMeta(){
-        let author: String, status: String, updated: String, description: String, coverURL: URL, artworkURLs: [URL]
-        if isLocalSource{
-            author = localSerie!.author!
-            status = localSerie!.statusDescription
-            updated = localSerie!.lastUpdatedDescription
-            description = localSerie!.serieDescription!
-            coverURL = localSerie!.coverURL!
-            artworkURLs = localSerie!.artworkURLs!
-        }
-        else{
-            author = serieMeta!.author
-            status = serieMeta!.statusDescription
-            updated = serieMeta!.lastUpdatedDescription
-            description = serieMeta!.description
-            coverURL = serieMeta!.coverURL
-            artworkURLs = serieMeta!.artworkURLs
-        }
-        authorLabel.text = author
-        statusLabel.text = status
-        updateDateLabel.text = updated
+        titleLabel.text = serieDataProvider[.name]
+        thumbnailImageView.loadImage(withLoader: ThumbnailLoader.shared, fromURL: serieDataProvider[.thumbnailURL]!)
+        
+        authorLabel.text = serieDataProvider[.author]
+        statusLabel.text = serieDataProvider[.statusDescription]
+        updateDateLabel.text = serieDataProvider[.lastUpdatedDescription]
+        
+        let description: String = serieDataProvider[.serieDescription]!
         descriptionLabel.text = description
         descriptionHeightConstraint.constant = min(descriptionHeightConstraint.constant, description.height(forWidth: descriptionLabel.bounds.width, font: descriptionLabel.font))
-        readButton.isEnabled = true
+        
+        let coverURL: URL = serieDataProvider[.coverURL]!
         loadCoverImage(fromURL: coverURL)
         
+        let artworkURLs: [URL] = serieDataProvider[.artworkURLs]!
         if !artworkURLs.isEmpty{
-            if navigationController?.visibleViewController == self{
-                artworksPreheater.startPreheating(with: artworkURLs.map{Request(url: $0)})
-            }
-            artworksCollectionView.reloadData()
+            artworksPreheater.startPreheating(with: artworkURLs.map(Request.init))
+            artworksCollectionView.dataSource = self
         }
         else{
             artworksLabel.removeFromSuperview()
@@ -194,7 +129,7 @@ class SerieDetailsViewController: UIViewController{
             saveBarButton.target = self
             saveBarButton.action = #selector(saveSerie)
         }
-        
+
     }
     
     private func loadCoverImage(fromURL url: URL){
@@ -210,8 +145,8 @@ class SerieDetailsViewController: UIViewController{
     
     @objc private func saveSerie(){
         do{
-            let localSerie = try LocalMangaDataSource.shared.createSerie(withMeta: serieMeta!)
-            localSerie.downloader.beginDownload()
+            let localSerie = try LocalMangaDataSource.shared.createSerie(withMeta: serieDataProvider as! MRSerieMeta)
+            serieDataProvider = localSerie
             saveBarButton.isEnabled = false
         }
         catch{
@@ -219,20 +154,9 @@ class SerieDetailsViewController: UIViewController{
         }
         
     }
-    
-    @objc private func showDownloadsTable(){
-        let tableCtr = ChapterDownloadsTableViewController(serie: localSerie!)
-        navigationController?.pushViewController(tableCtr, animated: true)
-    }
-    
+
     @objc private func showChaptersTable(){
-        let chaptersTableCtr: ChaptersTableViewController
-        if isLocalSource{
-            chaptersTableCtr = ChaptersTableViewController(withSerie: localSerie!)
-        }
-        else{
-            chaptersTableCtr = ChaptersTableViewController(withSerieMeta: serieMeta!)
-        }
+        let chaptersTableCtr = ChaptersTableViewController(dataProvider: serieDataProvider)
         navigationController?.pushViewController(chaptersTableCtr, animated: true)
     }
     
@@ -255,12 +179,12 @@ class SerieDetailsViewController: UIViewController{
 extension SerieDetailsViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return isLocalSource ? localSerie!.artworkURLs!.count:serieMeta?.artworkURLs.count ?? 0
+        return artworkURLs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ArtworkCollectionViewCell.identifier, for: indexPath) as! ArtworkCollectionViewCell
-        cell.artworkURL = (isLocalSource ? localSerie!.artworkURLs!:serieMeta!.artworkURLs)[indexPath.row]
+        cell.artworkURL = artworkURLs[indexPath.row]
         return cell
     }
     

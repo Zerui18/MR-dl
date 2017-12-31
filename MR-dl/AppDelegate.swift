@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 import CustomUI
 import ImageLoader
 import MRClient
@@ -47,8 +48,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CoreDataHelper.shared.tryToSave()
     }
     
+    
+    
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
-        
+        // empty implementation for now
     }
     
     func reportError(error: Error, ofCategory category: String){
@@ -57,6 +60,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
             self.topViewController?.present(alert, animated: true)
         }
+    }
+    
+    func simpleNotification(title: String, body: String){
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        let request = UNNotificationRequest(identifier: "\(arc4random())", content: content, trigger: nil)
+        UNUserNotificationCenter.current().add(request)
     }
 }
 

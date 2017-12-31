@@ -26,7 +26,7 @@ class MRSerieDownloader{
     // all fully-downloaded chapters
     var downloadedChapters = [MRChapter]()
     // all non-fully downloaded chapters
-    var downloadingChapters = [MRChapter]()
+    var notDownloadedChapters = [MRChapter]()
     
     // temporary variable to keep track if the current download was cancelled
     var isCancelled = false
@@ -45,7 +45,7 @@ class MRSerieDownloader{
                 progress.completedUnitCount += 1
             }
             else{
-                downloadingChapters.append(chapter)
+                notDownloadedChapters.append(chapter)
             }
         }
     }
@@ -58,26 +58,26 @@ class MRSerieDownloader{
             progress.completedUnitCount += 1
         }
         else{
-            downloadingChapters.append(chapter)
+            notDownloadedChapters.append(chapter)
         }
     }
 
     // begin downloading (in series) the downloadingChapters
     func beginDownload(){
         isCancelled = false
-        downloadingChapters.first?.downloader.beginDownload()
+        notDownloadedChapters.first?.downloader.beginDownload()
     }
     
     // cancel download for current-downloading chapter and begin downloading the chapter at the specifed index in the downloadingChapters array
     func beginDownload(forIndex index: Int){
         cancelDownload()
-        downloadingChapters.insert(downloadingChapters.remove(at: index), at: 0)
+        notDownloadedChapters.insert(notDownloadedChapters.remove(at: index), at: 0)
         beginDownload()
     }
     
     // cancel download for the current-downloadin chapter (if applicable), then post notification regarding this cancellation event
     func cancelDownload(){
-        if let firstChapter = downloadingChapters.first{
+        if let firstChapter = notDownloadedChapters.first{
             isCancelled = true
             firstChapter.downloader.cancelDownload()
         }
@@ -86,11 +86,7 @@ class MRSerieDownloader{
 }
 
 extension MRSerieDownloader: MRChapterDownloaderDelegate{
-    
-    func downloaderDidInitiateDownload(forChapter chapter: MRChapter, withError error: Error?) {
-        // currently noting to be done here...
-    }
-    
+
     func downloaderDidDownload(pageAtIndex index: Int, forChapter chapter: MRChapter, withError error: Error?) {
         if error == nil{
             // no error, post notification about progress
@@ -110,11 +106,18 @@ extension MRSerieDownloader: MRChapterDownloaderDelegate{
             return
         }
         // download successful, update all related arrays & start downloading next chapter
-        let originalIndex = downloadingChapters.index(of: chapter)!
-        downloadingChapters.remove(at: originalIndex)
+        let originalIndex = notDownloadedChapters.index(of: chapter)!
+        notDownloadedChapters.remove(at: originalIndex)
         downloadedChapters.append(chapter)
+        downloadedChapters.sortUsingProperty(atKeypath: \.order)
         delegate?.downloaderDidComplete(chapter: chapter, originalIndex: originalIndex)
-        downloadingChapters.first?.downloader.beginDownload()
+        if let nextTask = notDownloadedChapters.first?.downloader{
+            nextTask.beginDownload()
+        }
+        else{
+            // all download completed, notify serie download completion
+            
+        }
     }
 
 }

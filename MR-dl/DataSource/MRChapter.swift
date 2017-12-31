@@ -20,9 +20,9 @@ class MRChapter: NSManagedObject{
     }
     
     // copy meta infos, construct relationship, initialize directory
-    convenience init(fromMeta meta: MRSerieMeta.ChapterMeta, serie: MRSerie, context: NSManagedObjectContext = .main) {
+    convenience init(fromMeta meta: MRChapterMeta, serie: MRSerie, context: NSManagedObjectContext = .main) {
         self.init(entity: NSEntityDescription.entity(forEntityName: "MRChapter", in: context)!, insertInto: context)
-        self.dateUpdated = meta.updated
+        self.dateUpdated = meta.lastUpdated
         self.oid = meta.oid
         self.name = meta.name
         self.order = Int64(meta.order)
@@ -57,13 +57,13 @@ class MRChapter: NSManagedObject{
     }
     private var _remoteImageURLs: [URL]?
     
-    func fetchImageURLs(completion:@escaping (Error?)->Void){
-        MRClient.getChapterImageURLs(forOid: oid!) { (error, response) in
+    func fetchImageURLs(completion:@escaping ([URL]?)->Void){
+        MRClient.getChapterImageURLs(forOid: oid!) { (_, response) in
             if let urls = response?.data{
                 self.remoteImageURLs = urls
                 CoreDataHelper.shared.tryToSave()
             }
-            completion(error)
+            completion(response?.data)
         }
     }
     

@@ -77,7 +77,7 @@ class MRSerie: NSManagedObject{
     var _artworkURLs: [URL]?
     
     func updateInfo(withMeta meta: MRSerieMeta){
-        self.chaptersCount = Int64(meta.chaptersCount)
+        self.chaptersCountRaw = Int64(meta.chaptersCount)
         self.completed = meta.completed
         let startIndex = chapters!.count
         let newChapterMetas = meta.chapters.suffix(from: startIndex)
