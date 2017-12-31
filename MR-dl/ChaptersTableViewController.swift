@@ -64,11 +64,13 @@ extension ChaptersTableViewController{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0{
             let cell = tableView.dequeueReusableCell(withIdentifier: ChapterTableViewCell.identifier) as! ChapterTableViewCell
+            cell.indexPath = indexPath
             cell.chapterDataProvider = serieDataProvider.chapter(atIndex: indexPath.row, forState: DownloadState(rawValue: 0)!)
             return cell
         }
         else{
             let cell = tableView.dequeueReusableCell(withIdentifier: ChapterDownloadTableViewCell.identifier) as! ChapterDownloadTableViewCell
+            cell.indexPath = indexPath
             cell.chapter = serieDataProvider.chapter(atIndex: indexPath.row, forState: DownloadState(rawValue: 1)!) as! MRChapter
             return cell
         }
@@ -120,12 +122,12 @@ extension ChaptersTableViewController{
 extension ChaptersTableViewController: MRSerieDownloaderDelegate{
     
     // reload row to reflect progress change
-    // TODO: use visible-only reload
+    // using visible-only reload to save processing & enable smooth progress animation
     func downloaderDidDownload(chapter: MRChapter, page: Int, error: Error?) {
-        if let index = localSerie!.downloader.notDownloadedChapters.index(of: chapter){
-            // sync to block current thread from modifying data before ui change is applied
-            DispatchQueue.main.sync {
-                self.tableView.reloadRows(at: [IndexPath(row: index, section: 1)], with: .none)
+        if let index = localSerie!.downloader.notDownloadedChapters.index(of: chapter),
+            let cell = tableView.visibleCell(forIndexPath: IndexPath(row: index, section: 1)) as? ChapterDownloadTableViewCell{
+            DispatchQueue.main.async {
+                cell.progressView.setProgress(Float(chapter.downloader.progress.fractionCompleted), animated: true)
             }
         }
     }
