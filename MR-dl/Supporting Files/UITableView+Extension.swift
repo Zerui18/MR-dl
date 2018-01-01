@@ -8,6 +8,12 @@
 
 import UIKit
 
+extension UITableViewCell{
+    var indexPath: IndexPath?{
+        return (superview as! UITableView).indexPath(for: self)
+    }
+}
+
 extension UITableView{
     
     func visibleCell(forIndexPath indexPath: IndexPath)-> UITableViewCell?{

@@ -15,7 +15,7 @@ fileprivate let jsonEncoder = JSONEncoder()
 @objc(MRChapter)
 class MRChapter: NSManagedObject{
     
-    var lastUpdatedDescription: String{
+    @objc var lastUpdatedDescription: String{
         return dateFormatter.string(from: dateUpdated!)
     }
     

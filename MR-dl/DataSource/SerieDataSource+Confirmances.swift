@@ -47,7 +47,7 @@ extension MRSerie: SerieDataProvider{
         }
     }
     
-    var chaptersCount: Int{
+    @objc var chaptersCount: Int{
         return Int(chaptersCountRaw)
     }
     

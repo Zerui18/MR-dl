@@ -10,16 +10,16 @@ import UIKit
 
 public class MRChapterMeta: NSObject, Codable{
     
-    public var lastUpdatedDescription: String{
+    @objc public var lastUpdatedDescription: String{
         return dateFormatter.string(from: lastUpdated)
     }
     
-    public let oid: String = .init()
-    public let order: Int = 0
-    public let name: String = .init()
-    public let lastUpdated: Date = .init()
+    @objc public var oid: String!
+    @objc public var order: Int = 0
+    @objc public var name: String!
+    @objc public var lastUpdated: Date!
     
-    public var imageURLs: [URL]?
+    @objc public var imageURLs: [URL]?
     
     enum CodingKeys: String, CodingKey{
         case oid, order, name, imageURLs

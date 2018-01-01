@@ -125,11 +125,13 @@ class SerieDetailsViewController: UIViewController{
             artworksCollectionView.removeFromSuperview()
         }
         
-        if !isLocalSource{
+        if isLocalSource{
+            saveBarButton.isEnabled = false
+        }
+        else{
             saveBarButton.target = self
             saveBarButton.action = #selector(saveSerie)
         }
-
     }
     
     private func loadCoverImage(fromURL url: URL){
@@ -157,6 +159,9 @@ class SerieDetailsViewController: UIViewController{
 
     @objc private func showChaptersTable(){
         let chaptersTableCtr = ChaptersTableViewController(dataProvider: serieDataProvider)
+        if navigationController!.navigationBar.isHidden{
+            navigationController?.setNavigationBarHidden(false, animated: true)
+        }
         navigationController?.pushViewController(chaptersTableCtr, animated: true)
     }
     

@@ -172,7 +172,7 @@ class ChapterImagesPageViewController: UIPageViewController {
         else if pageIndex == urls.count-1{
             reversedDirection = .forward
         }
-        setViewControllers([ChapterImageViewController(loadingManager: imageLoadingManager, imageURL: urls[pageIndex], pageIndex: pageIndex, chapterIndex: chapterIndex)], direction: reversedDirection, animated: true)
+        setViewControllers([ChapterImageViewController(dataProvider: chapterDataProvider, pageIndex: pageIndex, chapterIndex: chapterIndex)], direction: reversedDirection, animated: true)
     }
 
 }
@@ -187,7 +187,7 @@ extension ChapterImagesPageViewController: UIPageViewControllerDataSource, UIPag
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         // does not do anything if this chapter has not loaded
-        if let urls = chapterImageURLs{
+        if chapterImageURLs != nil{
             let sourceIndex = (viewController as! ChapterImageViewController).pageIndex!
             if sourceIndex+1 >= chapterImageURLs!.count{
                 // load next chapter if exists
@@ -202,7 +202,7 @@ extension ChapterImagesPageViewController: UIPageViewControllerDataSource, UIPag
             }
             else{
                 // load next page
-                return ChapterImageViewController(loadingManager: imageLoadingManager, imageURL: urls[sourceIndex+1], pageIndex: sourceIndex+1, chapterIndex: chapterIndex)
+                return ChapterImageViewController(dataProvider: chapterDataProvider, pageIndex: sourceIndex+1, chapterIndex: chapterIndex)
             }
         }
         return nil
@@ -210,7 +210,7 @@ extension ChapterImagesPageViewController: UIPageViewControllerDataSource, UIPag
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         // does not do anything if this chapter has not loaded
-        if let urls = chapterImageURLs{
+        if chapterImageURLs != nil{
             let sourceIndex = (viewController as! ChapterImageViewController).pageIndex!
             if sourceIndex-1 < 0{
                 // load prev chapter if exists
@@ -225,7 +225,7 @@ extension ChapterImagesPageViewController: UIPageViewControllerDataSource, UIPag
             }
             else{
                 // load prev page
-                return ChapterImageViewController(loadingManager: imageLoadingManager, imageURL: urls[sourceIndex-1], pageIndex: sourceIndex-1, chapterIndex: chapterIndex)
+                return ChapterImageViewController(dataProvider: chapterDataProvider, pageIndex: sourceIndex-1, chapterIndex: chapterIndex)
             }
         }
         return nil

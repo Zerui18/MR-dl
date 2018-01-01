@@ -28,22 +28,39 @@ class ChaptersTableViewController: UITableViewController {
         setupUI()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.hidesBarsOnSwipe = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.hidesBarsOnSwipe = false
-    }
-    
     private func setupUI(){
         let chaptersCount: Int = serieDataProvider[.chaptersCount]!
         navigationItem.title = "\(chaptersCount) Chapters"
         tableView.tableFooterView = UIView()
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(refreshSerie), for: .valueChanged)
         if let serie = localSerie{
             serie.downloader.delegate = self
+        }
+    }
+    
+    @objc private func refreshSerie(){
+        MRClient.getSerieMeta(forOid: serieDataProvider[.oid]!) {[weak self] (error, response) in
+            guard let strongSelf = self else{
+                return
+            }
+            DispatchQueue.main.async {
+                if let meta = response?.data{
+                    if let serie = strongSelf.localSerie{
+                        serie.updateInfo(withMeta: meta)
+                    }
+                    else{
+                        strongSelf.serieDataProvider = meta
+                    }
+                    strongSelf.navigationItem.title = "\(meta.chaptersCount) Chapters"
+                    strongSelf.tableView.reloadData()
+                    CoreDataHelper.shared.tryToSave()
+                }
+                else{
+                    AppDelegate.shared.reportError(error: error!, ofCategory: "Load Serie")
+                }
+                strongSelf.refreshControl?.endRefreshing()
+            }
         }
     }
     
@@ -62,16 +79,14 @@ extension ChaptersTableViewController{
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0{
+        if indexPath.section == 0 || serieDataProvider is MRSerieMeta{
             let cell = tableView.dequeueReusableCell(withIdentifier: ChapterTableViewCell.identifier) as! ChapterTableViewCell
-            cell.indexPath = indexPath
-            cell.chapterDataProvider = serieDataProvider.chapter(atIndex: indexPath.row, forState: DownloadState(rawValue: 0)!)
+            cell.chapterDataProvider = serieDataProvider.chapter(atIndex: indexPath.row, forState: .downloaded)
             return cell
         }
         else{
             let cell = tableView.dequeueReusableCell(withIdentifier: ChapterDownloadTableViewCell.identifier) as! ChapterDownloadTableViewCell
-            cell.indexPath = indexPath
-            cell.chapter = serieDataProvider.chapter(atIndex: indexPath.row, forState: DownloadState(rawValue: 1)!) as! MRChapter
+            cell.chapter = serieDataProvider.chapter(atIndex: indexPath.row, forState: .notDownloaded) as! MRChapter
             return cell
         }
     }
@@ -80,7 +95,7 @@ extension ChaptersTableViewController{
         if section == 0{
             return "\(serieDataProvider.numberOfChapters(ofState: .downloaded)) Downloaded"
         }
-        return "\(serieDataProvider.numberOfChapters(ofState: .notDownloaded)) Not downloaded"
+        return "\(serieDataProvider.numberOfChapters(ofState: .notDownloaded)) Downloading"
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -100,8 +115,8 @@ extension ChaptersTableViewController{
             return nil
         }
         // is first in download queue
-        if serie.downloader.notDownloadedChapters[indexPath.row].downloader.state == .notDownloaded{
-            let pauseAction = UIContextualAction.init(style: .normal, title: "Pause", handler: { (_, _, completion) in
+        if serie.downloader.notDownloadedChapters[indexPath.row].downloader.state == .downloaded{
+            let pauseAction = UIContextualAction(style: .normal, title: "Pause", handler: { (_, _, completion) in
                 serie.downloader.cancelDownload()
                 completion(true)
             })
@@ -124,15 +139,16 @@ extension ChaptersTableViewController: MRSerieDownloaderDelegate{
     // reload row to reflect progress change
     // using visible-only reload to save processing & enable smooth progress animation
     func downloaderDidDownload(chapter: MRChapter, page: Int, error: Error?) {
-        if let index = localSerie!.downloader.notDownloadedChapters.index(of: chapter),
-            let cell = tableView.visibleCell(forIndexPath: IndexPath(row: index, section: 1)) as? ChapterDownloadTableViewCell{
-            DispatchQueue.main.async {
+        DispatchQueue.main.sync {
+            if let index = self.localSerie!.downloader.notDownloadedChapters.index(of: chapter),
+                let cell = self.tableView.visibleCell(forIndexPath: IndexPath(row: index, section: 1)) as? ChapterDownloadTableViewCell{
                 cell.progressView.setProgress(Float(chapter.downloader.progress.fractionCompleted), animated: true)
+                cell.stateLabel.text = chapter.downloader.progress.descriptionInUnit
             }
         }
     }
     
-    // 'move' row from downloading section (1) to downloaded section (0)
+    // 'move' row from downloading section (1) to downloaded section (0), then update section headers
     func downloaderDidComplete(chapter: MRChapter, originalIndex: Int) {
         if let index = localSerie!.downloader.downloadedChapters.index(of: chapter){
             DispatchQueue.main.async {
@@ -140,6 +156,8 @@ extension ChaptersTableViewController: MRSerieDownloaderDelegate{
                 self.tableView.deleteRows(at: [IndexPath(row: originalIndex, section: 1)], with: .automatic)
                 self.tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
                 self.tableView.endUpdates()
+                self.tableView.headerView(forSection: 0)?.textLabel?.text = "\(self.serieDataProvider.numberOfChapters(ofState: .downloaded)) Downloaded"
+                self.tableView.headerView(forSection: 1)?.textLabel?.text = "\(self.serieDataProvider.numberOfChapters(ofState: .notDownloaded)) Downloading"
             }
         }
     }

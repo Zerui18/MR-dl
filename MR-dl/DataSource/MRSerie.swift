@@ -24,11 +24,11 @@ let dateFormatter: DateFormatter = {
 @objc(MRSerie)
 class MRSerie: NSManagedObject{
     
-    var statusDescription: String{
+    @objc var statusDescription: String{
         return (completed ? "Completed, ":"Ongoing, ") + "\(chapters!.count) chapters"
     }
     
-    var lastUpdatedDescription: String{
+    @objc var lastUpdatedDescription: String{
         return dateFormatter.string(from: lastUpdated!)
     }
     
@@ -41,10 +41,11 @@ class MRSerie: NSManagedObject{
         self.oid = meta.oid
         self.author = meta.author
         self.artworkURLs = meta.artworkURLs
-        self.serieDescription = meta.description
+        self.serieDescription = meta.serieDescription
         self.lastUpdated = meta.updated
         self.completed = meta.completed
         self.chapters = NSOrderedSet()
+        self.chaptersCountRaw = Int64(meta.chaptersCount)
         try initDirectory()
     }
     
@@ -57,7 +58,7 @@ class MRSerie: NSManagedObject{
         return seriesDirectory.appendingPathComponent(oid!)
     }()
     
-    var artworkURLs: [URL]?{
+    @objc var artworkURLs: [URL]?{
         get{
             if _artworkURLs != nil{
                 return _artworkURLs

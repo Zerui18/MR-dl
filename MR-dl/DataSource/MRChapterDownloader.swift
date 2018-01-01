@@ -163,13 +163,14 @@ class MRChapterDownloader: NSObject{
             return
         }
         print("cancel download called")
+        downloadsQueue.forEach{
+            $0.cancel()
+        }
+        activeDownloads.values.forEach{
+            $0.cancel()
+        }
         downloadsQueue.removeAll()
         activeDownloads.removeAll()
-        // url session will be reset anyway
-        if urlSession != nil{
-            urlSession.invalidateAndCancel()
-            urlSession = nil
-        }
     }
     
     

@@ -21,9 +21,9 @@ class LocalMangaDataSource{
     var numberOfSeries: Int{
         return series.count
     }
-    
-    func hasSerie(withOid oid: String)-> Bool{
-        return series.contains(where: {$0.oid == oid})
+
+    func getSerie(forOid oid: String)-> MRSerie?{
+        return series.first{$0.oid == oid}
     }
     
     func createSerie(withMeta meta: MRSerieMeta)throws -> MRSerie{

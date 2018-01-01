@@ -14,29 +14,30 @@ let dateFormatter: DateFormatter = {
     return f
 }()
 
+
 public class MRSerieMeta: NSObject, Codable{
     
-    public var statusDescription: String{
+    @objc public var statusDescription: String{
         return (completed ? "Completed, ":"Ongoing, ") + "\(chaptersCount) chapters"
     }
     
-    public var lastUpdatedDescription: String{
+    @objc public var lastUpdatedDescription: String{
         return dateFormatter.string(from: updated)
     }
     
-    public let oid: String = .init()
-    public let name: String = .init()
-    public let author: String = .init()
-    public let completed: Bool = false
-    public let updated: Date = .init()
-    public let chaptersCount: Int = 0
-    public let serieDescription: String = .init()
-    public let thumbnailURL: URL = .init(fileURLWithPath: "/")
-    public let coverURL: URL = .init(fileURLWithPath: "/")
-    public let artworkURLs: [URL] = .init()
-    public let alias: [String] = .init()
+    @objc public var oid: String!
+    @objc public var name: String!
+    @objc public var author: String!
+    @objc public var completed: Bool = false
+    @objc public var updated: Date!
+    @objc public var chaptersCount: Int = 0
+    @objc public var serieDescription: String!
+    @objc public var thumbnailURL: URL!
+    @objc public var coverURL: URL!
+    @objc public var artworkURLs: [URL]!
+    @objc public var alias: [String]!
     
-    public let chapters: [MRChapterMeta] = .init()
+    public var chapters: [MRChapterMeta]!
     
     enum CodingKeys: String, CodingKey{
         case oid, name, author, completed, chapters, alias

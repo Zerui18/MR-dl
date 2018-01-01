@@ -56,7 +56,7 @@ class SerieTableViewCell: UITableViewCell {
             if let meta = serieMeta{
                 statusLabel.text = meta.statusDescription
                 lastUpdatedLabel.text = meta.lastUpdatedDescription
-                shortDescriptionLabel.text = meta.description
+                shortDescriptionLabel.text = meta.serieDescription
             }
         }
     }

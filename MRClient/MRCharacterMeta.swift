@@ -8,13 +8,14 @@
 
 import Foundation
 
-public struct MRCharacterMeta: Codable{
+@objcMembers
+public class MRCharacterMeta: Codable{
     
-    public let oid: String
-    public let name: String
-    public let bioMarkup: String
-    public let thumbnailURL: URL
-    public let artworkURLs: [URL]
+    public var oid: String!
+    public var name: String!
+    public var bioMarkup: String!
+    public var thumbnailURL: URL!
+    public var artworkURLs: [URL]!
     
     enum CodingKeys: String, CodingKey{
         case oid, name

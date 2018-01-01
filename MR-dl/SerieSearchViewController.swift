@@ -93,7 +93,10 @@ class SerieSearchViewController: UITableViewController{
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! SerieTableViewCell
-        let detailsCtr = SerieDetailsViewController.init(dataProvider: cell.serieMeta!)
+        
+        // use local serie record as dataSource where possible
+        let dataProvider: SerieDataProvider = LocalMangaDataSource.shared.getSerie(forOid: cell.serieMeta!.oid) ?? cell.serieMeta!
+        let detailsCtr = SerieDetailsViewController(dataProvider: dataProvider)
         navigationItem.searchController?.isActive = false
         navigationController!.pushViewController(detailsCtr, animated: true)
     }

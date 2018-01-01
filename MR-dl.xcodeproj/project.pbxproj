@@ -96,7 +96,6 @@
 		01F9E1631FF1184C00145D72 /* ImageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 01F9E1611FF1184C00145D72 /* ImageLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		01F9E1661FF1184C00145D72 /* ImageLoader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01F9E15F1FF1184C00145D72 /* ImageLoader.framework */; };
 		01F9E1671FF1184C00145D72 /* ImageLoader.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01F9E15F1FF1184C00145D72 /* ImageLoader.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		01FB78AC1FF8E80700360341 /* UITableViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FB78AB1FF8E80700360341 /* UITableViewCell+Extension.swift */; };
 		01FB78AE1FF8E91E00360341 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FB78AD1FF8E91E00360341 /* UITableView+Extension.swift */; };
 		222574291FE94523005D8865 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222574281FE94523005D8865 /* AppDelegate.swift */; };
 		2225742B1FE94523005D8865 /* SerieCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2225742A1FE94523005D8865 /* SerieCollectionViewController.swift */; };
@@ -252,7 +251,6 @@
 		01F9E15F1FF1184C00145D72 /* ImageLoader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ImageLoader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		01F9E1611FF1184C00145D72 /* ImageLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageLoader.h; sourceTree = "<group>"; };
 		01F9E1621FF1184C00145D72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		01FB78AB1FF8E80700360341 /* UITableViewCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Extension.swift"; sourceTree = "<group>"; };
 		01FB78AD1FF8E91E00360341 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		222574251FE94523005D8865 /* MR-dl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MR-dl.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		222574281FE94523005D8865 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -539,7 +537,6 @@
 				016A78001FEBC2B9009BB0D5 /* String+Extensions.swift */,
 				01A92F961FF3D5BF009D0A6F /* Sequence+Extension.swift */,
 				0181715D1FF4DF7F00F60335 /* Progress+Extension.swift */,
-				01FB78AB1FF8E80700360341 /* UITableViewCell+Extension.swift */,
 				01FB78AD1FF8E91E00360341 /* UITableView+Extension.swift */,
 				01A34A821FEF929C0022E670 /* HapticsController.swift */,
 				22740E711FE94BB600B04454 /* Bridging-Header.h */,
@@ -892,7 +889,6 @@
 				015C5B471FECEB1000415F1B /* ChapterImagesPageViewController.swift in Sources */,
 				01BECC691FF8CC2B00646438 /* ChapterDataProvider.swift in Sources */,
 				018F0DAC1FF3639100A31989 /* DownloadManager.swift in Sources */,
-				01FB78AC1FF8E80700360341 /* UITableViewCell+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

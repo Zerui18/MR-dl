@@ -7,18 +7,17 @@
 //
 
 import UIKit
-import ImageLoader
+import MRClient
 import CustomUI
 
 class ChapterImageViewController: UIViewController {
 
 
-    static func `init`(loadingManager: Manager?, imageURL: URL, pageIndex: Int, chapterIndex: Int)-> ChapterImageViewController{
+    static func `init`(dataProvider: ChapterDataProvider, pageIndex: Int, chapterIndex: Int)-> ChapterImageViewController{
         let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: "chapterImageCtr") as! ChapterImageViewController
-        ctr.imageURL = imageURL
+        ctr.dataProvider = dataProvider
         ctr.pageIndex = pageIndex
         ctr.chapterIndex = chapterIndex
-        ctr.loadingManager = loadingManager
         return ctr
     }
     
@@ -28,19 +27,11 @@ class ChapterImageViewController: UIViewController {
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var reloadButton: ZRBorderedButton!
     
+    var dataProvider: ChapterDataProvider!
     var chapterIndex: Int!
     var pageIndex: Int!
-    var imageURL: URL!
-    var loadingManager: Manager?
     
-    //Reactive: image for the current-displaying page
-    var image: UIImage?{
-        didSet{
-            if imageView != nil{
-                loadingFinished()
-            }
-        }
-    }
+    var image: UIImage?
     
     lazy var loadingIndicator = NVActivityIndicatorView(frame: .zero, type: .circles, color: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1))
     
@@ -58,29 +49,21 @@ class ChapterImageViewController: UIViewController {
     
     private func startLoadingImage(){
         loadingIndicator.startAnimating()
-        if let m = loadingManager{
-            m.loadImage(with: imageURL, into: imageView) {[weak self] (result, _) in
-                guard let strongSelf = self else{
-                    return
-                }
-                if result.error != nil{
-                    strongSelf.loadingIndicator.stopAnimating()
-                    UIView.animate(withDuration: defaultAnimationDuration){
-                        strongSelf.errorLabel.alpha = 1
-                        strongSelf.reloadButton.alpha = 1
-                        strongSelf.reloadButton.isUserInteractionEnabled = true
-                    }
-                }
-                else{
-                    strongSelf.image = result.value
-                }
+        dataProvider.fetchPage(atIndex: pageIndex) {[weak self] image in
+            guard let strongSelf = self else{
+                return
             }
-        }
-        else{
-            DispatchQueue.global(qos: .userInitiated).async {
-                let image = UIImage(contentsOfFile: self.imageURL.path)
-                DispatchQueue.main.async {[weak self] in
-                    self?.imageView.image = image
+            strongSelf.loadingIndicator.stopAnimating()
+            if let image = image{
+                strongSelf.image = image
+                strongSelf.imageView.image = image
+                strongSelf.view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(strongSelf.didHoldImageView(_:))))
+            }
+            else{
+                UIView.animate(withDuration: defaultAnimationDuration){
+                    strongSelf.errorLabel.alpha = 1
+                    strongSelf.reloadButton.alpha = 1
+                    strongSelf.reloadButton.isUserInteractionEnabled = true
                 }
             }
         }
@@ -94,7 +77,7 @@ class ChapterImageViewController: UIViewController {
         scrollView.delegate = self
         
         // only setup loadingIndicator & retry controls if loading image from external source
-        if loadingManager != nil{
+        if dataProvider is MRChapterMeta{
             setupLoadingIndicator()
             reloadButton.addTarget(self, action: #selector(triggerImageReload), for: .touchUpInside)
         }
@@ -127,16 +110,7 @@ class ChapterImageViewController: UIViewController {
         ChapterImagesPageViewController.shared?.startPreheatingIfNecessary()
         startLoadingImage()
     }
-    
-    // called after setting self.image to a non-nil value
-    private func loadingFinished(){
-        if imageView != nil{
-            imageView.image = image
-            loadingIndicator.stopAnimating()
-            view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didHoldImageView(_:))))
-        }
-    }
-    
+
     @objc private func didHoldImageView(_ sender: UILongPressGestureRecognizer){
         if sender.state == .began{
             let saveActionSheet = UIAlertController(title: "Save image?", message: "", preferredStyle: .actionSheet)
