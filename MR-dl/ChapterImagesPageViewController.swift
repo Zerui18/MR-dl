@@ -22,7 +22,7 @@ class ChapterImagesPageViewController: UIPageViewController {
         ctr.chapterIndex = chapterIndex
         
         if dataProvider is MRSerieMeta{
-            // loading from remote source, enable preheating
+            // loading from remote source, enable preheating with MRImage support
             ctr.imageLoadingManager = .sharedMRImageManager
             ctr.imagePreheater = Preheater(manager: .sharedMRImageManager, maxConcurrentRequestCount: 4)
         }
@@ -126,20 +126,28 @@ class ChapterImagesPageViewController: UIPageViewController {
     private func fetchImageURLs(forChapterIndex index: Int){
         let oldIndex = chapterIndex
         chapterIndex = index
-        let blockingAlert = UIAlertController(title: "Loading Chapter Indexes", message: "", preferredStyle: .alert)
-        navigationController?.present(blockingAlert, animated: false)
-        chapterDataProvider.fetchImageURLs {urls in
-            DispatchQueue.main.async {
-                if urls != nil{
-                    blockingAlert.dismiss(animated: true)
-                    self.chapterImageURLs = urls
-                }
-                else{
-                    self.chapterIndex = oldIndex
-                    blockingAlert.title = "Network Error"
-                    blockingAlert.message = "Failed to load image-urls for chapter, please check your network connectivity."
-                    Timer.scheduledTimer(withTimeInterval: 2, repeats: false){_ in
+        
+        // set chapterImageURLs right away for local source
+        if let localChapter = chapterDataProvider as? MRChapter{
+            chapterImageURLs = localChapter.sortedLocalImageURLs()
+        }
+        else{
+            // load-from-remote style
+            let blockingAlert = UIAlertController(title: "Loading Chapter Indexes", message: "", preferredStyle: .alert)
+            navigationController?.present(blockingAlert, animated: false)
+            chapterDataProvider.fetchImageURLs{urls in
+                DispatchQueue.main.async {
+                    if urls != nil{
                         blockingAlert.dismiss(animated: true)
+                        self.chapterImageURLs = urls
+                    }
+                    else{
+                        self.chapterIndex = oldIndex
+                        blockingAlert.title = "Network Error"
+                        blockingAlert.message = "Failed to load image-urls for chapter, please check your network connectivity."
+                        Timer.scheduledTimer(withTimeInterval: 2, repeats: false){_ in
+                            blockingAlert.dismiss(animated: true)
+                        }
                     }
                 }
             }
