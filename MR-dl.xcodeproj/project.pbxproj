@@ -24,6 +24,9 @@
 		015C5B451FECE2DA00415F1B /* NVActivityIndicatorAnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015C5B441FECE2DA00415F1B /* NVActivityIndicatorAnimationDelegate.swift */; };
 		015C5B471FECEB1000415F1B /* ChapterImagesPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015C5B461FECEB1000415F1B /* ChapterImagesPageViewController.swift */; };
 		015C5B491FECEB2A00415F1B /* ChapterImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015C5B481FECEB2A00415F1B /* ChapterImageViewController.swift */; };
+		0166FDA51FFA82CF004B0FA2 /* Cache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01CC77DE1FEBFD4300C0128D /* Cache.framework */; };
+		0166FDA61FFA82D9004B0FA2 /* ImageLoader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01F9E15F1FF1184C00145D72 /* ImageLoader.framework */; };
+		0166FDA81FFA8348004B0FA2 /* WebP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0166FDA71FFA8348004B0FA2 /* WebP.framework */; };
 		016A77FF1FEBB133009BB0D5 /* ZRNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016A77FE1FEBB133009BB0D5 /* ZRNavigationController.swift */; };
 		016A78011FEBC2B9009BB0D5 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016A78001FEBC2B9009BB0D5 /* String+Extensions.swift */; };
 		017648881FEA033200B2B7F9 /* SerieSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017648871FEA033200B2B7F9 /* SerieSearchViewController.swift */; };
@@ -33,7 +36,6 @@
 		0181715A1FF4D7CE00F60335 /* ChaptersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018171591FF4D7CE00F60335 /* ChaptersTableViewController.swift */; };
 		0181715C1FF4DAA600F60335 /* ChapterDownloadTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0181715B1FF4DAA600F60335 /* ChapterDownloadTableViewCell.swift */; };
 		0181715E1FF4DF7F00F60335 /* Progress+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0181715D1FF4DF7F00F60335 /* Progress+Extension.swift */; };
-		018A00E41FEE28AD00191D2A /* WebP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 018A00E31FEE28AD00191D2A /* WebP.framework */; };
 		018A01011FEE73FF00191D2A /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018A01001FEE73FF00191D2A /* UIImage+Extensions.swift */; };
 		018A01031FEE740F00191D2A /* ImageWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018A01021FEE740F00191D2A /* ImageWrapper.swift */; };
 		018A01061FEE9F4B00191D2A /* ZRPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018A01041FEE9F4B00191D2A /* ZRPickerViewController.swift */; };
@@ -180,6 +182,7 @@
 		015C5B441FECE2DA00415F1B /* NVActivityIndicatorAnimationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationDelegate.swift; sourceTree = "<group>"; };
 		015C5B461FECEB1000415F1B /* ChapterImagesPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterImagesPageViewController.swift; sourceTree = "<group>"; };
 		015C5B481FECEB2A00415F1B /* ChapterImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterImageViewController.swift; sourceTree = "<group>"; };
+		0166FDA71FFA8348004B0FA2 /* WebP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebP.framework; sourceTree = "<group>"; };
 		016A77FE1FEBB133009BB0D5 /* ZRNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZRNavigationController.swift; sourceTree = "<group>"; };
 		016A78001FEBC2B9009BB0D5 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		017648871FEA033200B2B7F9 /* SerieSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerieSearchViewController.swift; sourceTree = "<group>"; };
@@ -189,7 +192,6 @@
 		018171591FF4D7CE00F60335 /* ChaptersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersTableViewController.swift; sourceTree = "<group>"; };
 		0181715B1FF4DAA600F60335 /* ChapterDownloadTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterDownloadTableViewCell.swift; sourceTree = "<group>"; };
 		0181715D1FF4DF7F00F60335 /* Progress+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Progress+Extension.swift"; sourceTree = "<group>"; };
-		018A00E31FEE28AD00191D2A /* WebP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebP.framework; path = "../../../Downloads/libwebp-0.6.1-ios-framework/WebP.framework"; sourceTree = "<group>"; };
 		018A01001FEE73FF00191D2A /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		018A01021FEE740F00191D2A /* ImageWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageWrapper.swift; sourceTree = "<group>"; };
 		018A01041FEE9F4B00191D2A /* ZRPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZRPickerViewController.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0166FDA61FFA82D9004B0FA2 /* ImageLoader.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,6 +297,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0166FDA51FFA82CF004B0FA2 /* Cache.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,7 +305,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				018A00E41FEE28AD00191D2A /* WebP.framework in Frameworks */,
+				0166FDA81FFA8348004B0FA2 /* WebP.framework in Frameworks */,
 				01F9E1661FF1184C00145D72 /* ImageLoader.framework in Frameworks */,
 				015A59A11FEA940D0014941E /* CustomUI.framework in Frameworks */,
 				224F488C1FE950A3005F5A94 /* MRClient.framework in Frameworks */,
@@ -524,7 +528,7 @@
 		22740E6E1FE94B9600B04454 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				018A00E31FEE28AD00191D2A /* WebP.framework */,
+				0166FDA71FFA8348004B0FA2 /* WebP.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -1223,6 +1227,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1245,6 +1250,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/chenzerui/Desktop/MR-dl/MR-dl/Supporting Files/Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Debug;
@@ -1253,6 +1259,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1274,6 +1281,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/chenzerui/Desktop/MR-dl/MR-dl/Supporting Files/Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Release;
@@ -1309,6 +1317,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1344,6 +1353,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
