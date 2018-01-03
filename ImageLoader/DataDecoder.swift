@@ -2,15 +2,7 @@
 //
 // Copyright (c) 2017 Alexander Grebenyuk (github.com/kean).
 
-#if os(macOS)
-    import Cocoa
-#else
-    import UIKit
-#endif
-
-#if os(watchOS)
-    import WatchKit
-#endif
+import UIKit
 
 /// Decodes image data.
 public protocol DataDecoding {

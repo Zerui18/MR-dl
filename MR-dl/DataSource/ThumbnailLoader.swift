@@ -11,7 +11,7 @@ import Cache
 import ImageLoader
 
 
-class ThumbnailLoader: ZRImageLoading{
+class ThumbnailLoader{
     
     static let shared = ThumbnailLoader()
     
@@ -19,7 +19,7 @@ class ThumbnailLoader: ZRImageLoading{
     let imageLoaderManager: Manager
     
     init(){
-        cache = try! Storage(diskConfig: DiskConfig(name: "ThumbnailsLoaderCache", expiry: .never, maxSize: 1024*1024*100), memoryConfig: MemoryConfig(expiry: .never, countLimit: 40, totalCostLimit: 0))
+        cache = try! Storage(diskConfig: DiskConfig(name: "ThumbnailsLoaderCache", expiry: .never, maxSize: 1024*1024*100), memoryConfig: MemoryConfig(expiry: .never, countLimit: 200, totalCostLimit: 0))
         imageLoaderManager = Manager(loader: Loader(loader: DataLoader(), decoder: MRIDataDecoder(decryptFunction: {$0}, decodeFunction: {UIImage(data: $0)})), cache: cache)
     }
     

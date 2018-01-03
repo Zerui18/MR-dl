@@ -99,6 +99,10 @@ extension ChaptersTableViewController{
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // no action if chaper is not downloaded & is local serie
+        if indexPath.row == 1 && serieDataProvider is MRSerie{
+            return
+        }
         let viewChapterCtr = ChapterImagesPageViewController(dataProvider: serieDataProvider, atChapter: indexPath.row)
         navigationController?.pushViewController(viewChapterCtr, animated: true)
         navigationController?.setNavigationBarHidden(false, animated: true)
@@ -115,7 +119,7 @@ extension ChaptersTableViewController{
             return nil
         }
         // is first in download queue
-        if serie.downloader.notDownloadedChapters[indexPath.row].downloader.state == .downloaded{
+        if serie.downloader.notDownloadedChapters[indexPath.row].downloader.isDownloading{
             let pauseAction = UIContextualAction(style: .normal, title: "Pause", handler: { (_, _, completion) in
                 serie.downloader.cancelDownload()
                 completion(true)
@@ -139,7 +143,7 @@ extension ChaptersTableViewController: MRSerieDownloaderDelegate{
     // reload row to reflect progress change
     // using visible-only reload to save processing & enable smooth progress animation
     func downloaderDidDownload(chapter: MRChapter, page: Int, error: Error?) {
-        DispatchQueue.main.sync {
+        DispatchQueue.main.async {
             if let index = self.localSerie!.downloader.notDownloadedChapters.index(of: chapter),
                 let cell = self.tableView.visibleCell(forIndexPath: IndexPath(row: index, section: 1)) as? ChapterDownloadTableViewCell{
                 cell.progressView.setProgress(Float(chapter.downloader.progress.fractionCompleted), animated: true)

@@ -14,7 +14,7 @@ class SerieTableViewCell: UITableViewCell {
 
     static let identifier = "serieCell"
 
-    @IBOutlet weak var thumbnailImageView: ZRReactiveImageView!
+    @IBOutlet weak var thumbnailImageView: ReactiveThumbnailView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var lastUpdatedLabel: UILabel!
@@ -27,6 +27,7 @@ class SerieTableViewCell: UITableViewCell {
             statusLabel.text = nil
             lastUpdatedLabel.text = nil
             shortDescriptionLabel.text = nil
+            serieMeta = nil
             
             fetchSerieMeta()
         }
@@ -46,7 +47,7 @@ class SerieTableViewCell: UITableViewCell {
         didSet{
             if let meta = shortMeta{
                 titleLabel.text = meta.name
-                thumbnailImageView.loadImage(withLoader: ThumbnailLoader.shared, fromURL: meta.thumbnailURL!)
+                thumbnailImageView.loadImage(fromURL: meta.thumbnailURL!)
             }
         }
     }

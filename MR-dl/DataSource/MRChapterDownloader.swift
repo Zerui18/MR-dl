@@ -27,6 +27,9 @@ class MRChapterDownloader: NSObject{
     var urlToIndex: [URL:Int] = [:]
     
     var urlsToDownload = [URL]()
+    var isDownloading: Bool{
+        return !activeDownloads.isEmpty
+    }
     // no UI to update so not using this
 //    var backgroundCompletionHandler: (()->Void)?
     
@@ -84,7 +87,7 @@ class MRChapterDownloader: NSObject{
     // convenience function for starting download for the chapter
     func beginDownload(){
         // ignore call if currently downloading || fully downloaded
-        if !activeDownloads.isEmpty{
+        if isDownloading{
             return
         }
         if state == .downloaded{
@@ -108,6 +111,7 @@ class MRChapterDownloader: NSObject{
     
     // initialize urlsession data tasks & local progress object
     private func _beginDownload(){
+        isCancelled = false
         if urlSession == nil{
             urlSession = URLSession(configuration: .background(withIdentifier: chapter.serie!.oid!+"-"+chapter.oid!), delegate: self, delegateQueue: nil)
         }
@@ -157,15 +161,18 @@ class MRChapterDownloader: NSObject{
         return false
     }
     
+    // indicating whether downloader is cancelled
+    private var isCancelled = false
+    
     // convenience function for cancelling download for the chapter
     func cancelDownload(){
-        if state != .notDownloaded{
-            return
-        }
-        print("cancel download called")
+        print("cancelling..")
+        isCancelled = true
+        print("queuing: ", downloadsQueue.count)
         downloadsQueue.forEach{
             $0.cancel()
         }
+        print("downloading: ", activeDownloads.count)
         activeDownloads.values.forEach{
             $0.cancel()
         }
@@ -178,16 +185,20 @@ class MRChapterDownloader: NSObject{
         // stop downloader immediately when any page fails to download
         if error != nil{
             delegate?.downloaderDidDownload(pageAtIndex: pageIndex, forChapter: chapter, withError: error)
-            cancelDownload()
+            // error not due to task cancelled, cancel all other tasks
+            if !isCancelled{
+                cancelDownload()
+            }
             return
         }
         else{
             // update progress， then notify delegate
             _progress.completedUnitCount += 1
-            delegate?.downloaderDidDownload(pageAtIndex: pageIndex, forChapter: chapter, withError: error)
+            delegate?.downloaderDidDownload(pageAtIndex: pageIndex, forChapter: chapter, withError: nil)
         }
+        print("downloadedPage; progress: ", _progress)
         // if no more queing & outstanding tasks, notify delegate of completion (note: some pages might failed to download)
-        if !startNextPendingTaskIfNecessary() && activeDownloads.isEmpty{
+        if !startNextPendingTaskIfNecessary() && state == .downloaded{
             delegate?.downloaderDidComplete(chapter: chapter)
         }
     }
@@ -204,9 +215,10 @@ extension MRChapterDownloader: URLSessionDownloadDelegate{
         let pageIndex = urlToIndex[key]!
         activeDownloads.removeValue(forKey: key)
         do{
-            let data = try Data(contentsOf: location)
-            let image = UIImage(mriData: data)!
-            try! UIImageJPEGRepresentation(image, 1.0)!.write(to: chapter.addressForPage(atIndex: pageIndex))
+            let image = try autoreleasepool{
+                UIImage(mriData: try Data(contentsOf: location))!
+            }
+            image.writeHeicRepresentation(toURL: self.chapter.addressForPage(atIndex: pageIndex))
             try? FileManager.default.removeItem(at: location)
             urlsToDownload.delete(key)
             downloadedPage(at: pageIndex, withError: nil)
@@ -219,9 +231,9 @@ extension MRChapterDownloader: URLSessionDownloadDelegate{
     // called at the end of each task, only perform variables update & delegate call if error is caught here
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         if error != nil{
-            activeDownloads.removeValue(forKey: task.originalRequest!.url!)
-            let pageIndex = urlToIndex[task.originalRequest!.url!]!
-            downloadedPage(at: pageIndex, withError: error)
+            self.activeDownloads.removeValue(forKey: task.originalRequest!.url!)
+            let pageIndex = self.urlToIndex[task.originalRequest!.url!]!
+            self.downloadedPage(at: pageIndex, withError: error)
         }
         // else didFinishDownloadingTo would have called the above
     }

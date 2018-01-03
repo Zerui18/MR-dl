@@ -2,7 +2,6 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="17B48" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="MRChapter" representedClassName="MRChapter" syncable="YES" codeGenerationType="category">
         <attribute name="dateUpdated" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="downloadStateRaw" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="encodedImageURLs" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="oid" attributeType="String" syncable="YES"/>
@@ -23,7 +22,7 @@
         <relationship name="chapters" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="MRChapter" inverseName="serie" inverseEntity="MRChapter" syncable="YES"/>
     </entity>
     <elements>
-        <element name="MRChapter" positionX="-54" positionY="18" width="128" height="150"/>
+        <element name="MRChapter" positionX="-54" positionY="18" width="128" height="135"/>
         <element name="MRSerie" positionX="-63" positionY="-18" width="128" height="210"/>
     </elements>
 </model>

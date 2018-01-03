@@ -74,14 +74,14 @@ class MRChapter: NSManagedObject{
         return nil
     }
     
-    lazy var downloader = MRChapterDownloader(chapter: self, maxConcurrentDownload: 12, delegate: serie!.downloader)
+    lazy var downloader = MRChapterDownloader(chapter: self, maxConcurrentDownload: 16, delegate: serie!.downloader)
     
 }
 
 extension MRChapter{
     
     func addressForPage(atIndex index: Int)-> URL{
-        return directory.appendingPathComponent("\(index).jpeg")
+        return directory.appendingPathComponent("\(index).heic")
     }
     
     func hasDownloadedPage(ofIndex index: Int)-> Bool{

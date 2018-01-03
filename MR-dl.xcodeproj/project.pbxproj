@@ -24,8 +24,10 @@
 		015C5B451FECE2DA00415F1B /* NVActivityIndicatorAnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015C5B441FECE2DA00415F1B /* NVActivityIndicatorAnimationDelegate.swift */; };
 		015C5B471FECEB1000415F1B /* ChapterImagesPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015C5B461FECEB1000415F1B /* ChapterImagesPageViewController.swift */; };
 		015C5B491FECEB2A00415F1B /* ChapterImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015C5B481FECEB2A00415F1B /* ChapterImageViewController.swift */; };
-		0166FDA51FFA82CF004B0FA2 /* Cache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01CC77DE1FEBFD4300C0128D /* Cache.framework */; };
-		0166FDA61FFA82D9004B0FA2 /* ImageLoader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01F9E15F1FF1184C00145D72 /* ImageLoader.framework */; };
+		015DA87E1FFC8E8B0050F6DC /* UIImage+HEIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015DA87D1FFC8E8B0050F6DC /* UIImage+HEIF.swift */; };
+		015DA87F1FFC97780050F6DC /* ReactiveThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F9E1581FF1178700145D72 /* ReactiveThumbnailView.swift */; };
+		015DA8821FFC99FB0050F6DC /* Cache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01CC77DE1FEBFD4300C0128D /* Cache.framework */; };
+		015DA8831FFC9A550050F6DC /* Cache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01CC77DE1FEBFD4300C0128D /* Cache.framework */; };
 		0166FDA81FFA8348004B0FA2 /* WebP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0166FDA71FFA8348004B0FA2 /* WebP.framework */; };
 		016A77FF1FEBB133009BB0D5 /* ZRNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016A77FE1FEBB133009BB0D5 /* ZRNavigationController.swift */; };
 		016A78011FEBC2B9009BB0D5 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016A78001FEBC2B9009BB0D5 /* String+Extensions.swift */; };
@@ -36,11 +38,9 @@
 		0181715A1FF4D7CE00F60335 /* ChaptersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018171591FF4D7CE00F60335 /* ChaptersTableViewController.swift */; };
 		0181715C1FF4DAA600F60335 /* ChapterDownloadTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0181715B1FF4DAA600F60335 /* ChapterDownloadTableViewCell.swift */; };
 		0181715E1FF4DF7F00F60335 /* Progress+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0181715D1FF4DF7F00F60335 /* Progress+Extension.swift */; };
-		018A01011FEE73FF00191D2A /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018A01001FEE73FF00191D2A /* UIImage+Extensions.swift */; };
 		018A01031FEE740F00191D2A /* ImageWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018A01021FEE740F00191D2A /* ImageWrapper.swift */; };
 		018A01061FEE9F4B00191D2A /* ZRPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018A01041FEE9F4B00191D2A /* ZRPickerViewController.swift */; };
 		018A01071FEE9F4B00191D2A /* ZRPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 018A01051FEE9F4B00191D2A /* ZRPickerViewController.xib */; };
-		018F0DAC1FF3639100A31989 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018F0DAB1FF3639100A31989 /* DownloadManager.swift */; };
 		0191295D1FEB5E8000AF890E /* SerieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0191295C1FEB5E8000AF890E /* SerieDetailsViewController.swift */; };
 		0191295F1FEB5E9D00AF890E /* ArtworkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0191295E1FEB5E9D00AF890E /* ArtworkCollectionViewCell.swift */; };
 		01A34A831FEF929C0022E670 /* HapticsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A34A821FEF929C0022E670 /* HapticsController.swift */; };
@@ -94,7 +94,6 @@
 		01F206311FF276F800C13137 /* Processor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F2062A1FF276F800C13137 /* Processor.swift */; };
 		01F206321FF276F800C13137 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F2062B1FF276F800C13137 /* Loader.swift */; };
 		01F206331FF276F800C13137 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F2062C1FF276F800C13137 /* Request.swift */; };
-		01F9E1591FF1178700145D72 /* ZRReactiveImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F9E1581FF1178700145D72 /* ZRReactiveImageView.swift */; };
 		01F9E1631FF1184C00145D72 /* ImageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 01F9E1611FF1184C00145D72 /* ImageLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		01F9E1661FF1184C00145D72 /* ImageLoader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01F9E15F1FF1184C00145D72 /* ImageLoader.framework */; };
 		01F9E1671FF1184C00145D72 /* ImageLoader.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01F9E15F1FF1184C00145D72 /* ImageLoader.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -182,9 +181,11 @@
 		015C5B441FECE2DA00415F1B /* NVActivityIndicatorAnimationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationDelegate.swift; sourceTree = "<group>"; };
 		015C5B461FECEB1000415F1B /* ChapterImagesPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterImagesPageViewController.swift; sourceTree = "<group>"; };
 		015C5B481FECEB2A00415F1B /* ChapterImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterImageViewController.swift; sourceTree = "<group>"; };
+		015DA87D1FFC8E8B0050F6DC /* UIImage+HEIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+HEIF.swift"; sourceTree = "<group>"; };
 		0166FDA71FFA8348004B0FA2 /* WebP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebP.framework; sourceTree = "<group>"; };
 		016A77FE1FEBB133009BB0D5 /* ZRNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZRNavigationController.swift; sourceTree = "<group>"; };
 		016A78001FEBC2B9009BB0D5 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		016E77E31FFCBA7300BD51ED /* MRImageProcessingPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRImageProcessingPool.swift; sourceTree = "<group>"; };
 		017648871FEA033200B2B7F9 /* SerieSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerieSearchViewController.swift; sourceTree = "<group>"; };
 		017648891FEA038400B2B7F9 /* SerieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerieTableViewCell.swift; sourceTree = "<group>"; };
 		017E7F651FF0C7CD0014E5C5 /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
@@ -192,11 +193,9 @@
 		018171591FF4D7CE00F60335 /* ChaptersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersTableViewController.swift; sourceTree = "<group>"; };
 		0181715B1FF4DAA600F60335 /* ChapterDownloadTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterDownloadTableViewCell.swift; sourceTree = "<group>"; };
 		0181715D1FF4DF7F00F60335 /* Progress+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Progress+Extension.swift"; sourceTree = "<group>"; };
-		018A01001FEE73FF00191D2A /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		018A01021FEE740F00191D2A /* ImageWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageWrapper.swift; sourceTree = "<group>"; };
 		018A01041FEE9F4B00191D2A /* ZRPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZRPickerViewController.swift; sourceTree = "<group>"; };
 		018A01051FEE9F4B00191D2A /* ZRPickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZRPickerViewController.xib; sourceTree = "<group>"; };
-		018F0DAB1FF3639100A31989 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		0191295C1FEB5E8000AF890E /* SerieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerieDetailsViewController.swift; sourceTree = "<group>"; };
 		0191295E1FEB5E9D00AF890E /* ArtworkCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkCollectionViewCell.swift; sourceTree = "<group>"; };
 		01A34A821FEF929C0022E670 /* HapticsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsController.swift; sourceTree = "<group>"; };
@@ -249,7 +248,7 @@
 		01F2062A1FF276F800C13137 /* Processor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Processor.swift; sourceTree = "<group>"; };
 		01F2062B1FF276F800C13137 /* Loader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		01F2062C1FF276F800C13137 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
-		01F9E1581FF1178700145D72 /* ZRReactiveImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZRReactiveImageView.swift; sourceTree = "<group>"; };
+		01F9E1581FF1178700145D72 /* ReactiveThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveThumbnailView.swift; sourceTree = "<group>"; };
 		01F9E15F1FF1184C00145D72 /* ImageLoader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ImageLoader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		01F9E1611FF1184C00145D72 /* ImageLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageLoader.h; sourceTree = "<group>"; };
 		01F9E1621FF1184C00145D72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -282,7 +281,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0166FDA61FFA82D9004B0FA2 /* ImageLoader.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,7 +295,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0166FDA51FFA82CF004B0FA2 /* Cache.framework in Frameworks */,
+				015DA8831FFC9A550050F6DC /* Cache.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,6 +315,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				015DA8821FFC99FB0050F6DC /* Cache.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,7 +335,6 @@
 				015C5B391FECC60500415F1B /* ZRImageViewController.xib */,
 				018A01041FEE9F4B00191D2A /* ZRPickerViewController.swift */,
 				018A01051FEE9F4B00191D2A /* ZRPickerViewController.xib */,
-				01F9E1581FF1178700145D72 /* ZRReactiveImageView.swift */,
 				01B6D6C21FED362F00D8A273 /* Assets.xcassets */,
 				015A598E1FEA940D0014941E /* CustomUI.h */,
 				015A598F1FEA940D0014941E /* Info.plist */,
@@ -359,7 +357,6 @@
 			isa = PBXGroup;
 			children = (
 				01B6D6C41FED4E7300D8A273 /* ThumbnailLoader.swift */,
-				018F0DAB1FF3639100A31989 /* DownloadManager.swift */,
 				017E7F651FF0C7CD0014E5C5 /* CoreDataHelper.swift */,
 				017E7F691FF0EC890014E5C5 /* LocalMangaDataSource.swift */,
 				22DC2C341FE9EF4F005F4407 /* MRSerie.swift */,
@@ -370,6 +367,7 @@
 				01BECC681FF8CC2B00646438 /* ChapterDataProvider.swift */,
 				01BECC701FF8D0AF00646438 /* MRChapterDataProvider+Confirmances.swift */,
 				01A34A841FEFA7590022E670 /* MRChapterDownloader.swift */,
+				016E77E31FFCBA7300BD51ED /* MRImageProcessingPool.swift */,
 				2225742F1FE94523005D8865 /* MR_dl.xcdatamodeld */,
 			);
 			path = DataSource;
@@ -409,7 +407,6 @@
 		01CC77FA1FEBFDDB00C0128D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				018A01001FEE73FF00191D2A /* UIImage+Extensions.swift */,
 				01CC77FB1FEBFDDB00C0128D /* JSONDecoder+Extensions.swift */,
 				01CC77FC1FEBFDDB00C0128D /* Date+Extensions.swift */,
 			);
@@ -536,6 +533,7 @@
 		22740E721FE94BE600B04454 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				01F9E1581FF1178700145D72 /* ReactiveThumbnailView.swift */,
 				01A92F941FF3CF29009D0A6F /* DownloadState.swift */,
 				014AD9CC1FEE274100B3C1E0 /* UIImage+WebP.swift */,
 				016A78001FEBC2B9009BB0D5 /* String+Extensions.swift */,
@@ -543,6 +541,7 @@
 				0181715D1FF4DF7F00F60335 /* Progress+Extension.swift */,
 				01FB78AD1FF8E91E00360341 /* UITableView+Extension.swift */,
 				01A34A821FEF929C0022E670 /* HapticsController.swift */,
+				015DA87D1FFC8E8B0050F6DC /* UIImage+HEIF.swift */,
 				22740E711FE94BB600B04454 /* Bridging-Header.h */,
 				222574321FE94523005D8865 /* Assets.xcassets */,
 				222574341FE94523005D8865 /* LaunchScreen.storyboard */,
@@ -804,7 +803,6 @@
 				015A59B01FEAAB480014941E /* ZRImageView.swift in Sources */,
 				015A59AC1FEA94630014941E /* ZRGradientOverlayView.swift in Sources */,
 				015C5B451FECE2DA00415F1B /* NVActivityIndicatorAnimationDelegate.swift in Sources */,
-				01F9E1591FF1178700145D72 /* ZRReactiveImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -828,7 +826,6 @@
 				01CC78171FEBFF0F00C0128D /* MD5.swift in Sources */,
 				01CC78141FEBFF0A00C0128D /* HybridStorage.swift in Sources */,
 				01CC78121FEBFF0A00C0128D /* AsyncStorageAware.swift in Sources */,
-				018A01011FEE73FF00191D2A /* UIImage+Extensions.swift in Sources */,
 				01CC780E1FEBFF0A00C0128D /* SyncStorage.swift in Sources */,
 				01CC78231FEBFF1800C0128D /* MemoryConfig.swift in Sources */,
 				01CC780C1FEBFF0A00C0128D /* Storage.swift in Sources */,
@@ -862,6 +859,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				015C5B491FECEB2A00415F1B /* ChapterImageViewController.swift in Sources */,
+				015DA87F1FFC97780050F6DC /* ReactiveThumbnailView.swift in Sources */,
 				0181715A1FF4D7CE00F60335 /* ChaptersTableViewController.swift in Sources */,
 				2225742B1FE94523005D8865 /* SerieCollectionViewController.swift in Sources */,
 				01A34A831FEF929C0022E670 /* HapticsController.swift in Sources */,
@@ -873,6 +871,7 @@
 				0181715E1FF4DF7F00F60335 /* Progress+Extension.swift in Sources */,
 				01A34A871FEFAB040022E670 /* MRSerie.swift in Sources */,
 				01FB78AE1FF8E91E00360341 /* UITableView+Extension.swift in Sources */,
+				015DA87E1FFC8E8B0050F6DC /* UIImage+HEIF.swift in Sources */,
 				01BECC6B1FF8CDF200646438 /* SerieDataSource+Confirmances.swift in Sources */,
 				222574291FE94523005D8865 /* AppDelegate.swift in Sources */,
 				014AD9CD1FEE274100B3C1E0 /* UIImage+WebP.swift in Sources */,
@@ -892,7 +891,6 @@
 				017648881FEA033200B2B7F9 /* SerieSearchViewController.swift in Sources */,
 				015C5B471FECEB1000415F1B /* ChapterImagesPageViewController.swift in Sources */,
 				01BECC691FF8CC2B00646438 /* ChapterDataProvider.swift in Sources */,
-				018F0DAC1FF3639100A31989 /* DownloadManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1314,7 +1312,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1342,6 +1340,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/MRClient",
 				);
+				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = MRClient/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

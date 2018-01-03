@@ -13,13 +13,13 @@ class SerieCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "serieItem"
     
-    @IBOutlet weak var coverImageView: ZRReactiveImageView!
+    @IBOutlet weak var coverImageView: ReactiveThumbnailView!
     @IBOutlet weak var titleLabel: UILabel!
     
     var serie: MRSerie!{
         didSet{
             titleLabel.text = serie.name
-            coverImageView.loadImage(withLoader: ThumbnailLoader.shared, fromURL: serie.thumbnailURL!)
+            coverImageView.loadImage(fromURL: serie.thumbnailURL!)
             coverImageView.isUserInteractionEnabled = false
         }
     }

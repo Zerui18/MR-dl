@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable
-public class ZRImageView: UIImageView{
+open class ZRImageView: UIImageView{
     
     @IBInspectable var cornerRadius: CGFloat = 0{
         didSet{
@@ -28,11 +28,12 @@ public class ZRImageView: UIImageView{
     }
     
     private func setup(){
+        clipsToBounds = true
         isUserInteractionEnabled = true
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageViewTapped)))
     }
     
-    @objc private func imageViewTapped(){
+    @objc open func imageViewTapped(){
         UIView.animateKeyframes(withDuration: 0.35, delay: 0, options: [], animations: {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5){
                 self.alpha = 0

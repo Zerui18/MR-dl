@@ -28,6 +28,8 @@ class MRSerieDownloader{
     // all non-fully downloaded chapters
     var notDownloadedChapters = [MRChapter]()
     
+    var allChapters = [MRChapter]()
+    
     // temporary variable to keep track if the current download was cancelled
     var isCancelled = false
     
@@ -48,6 +50,7 @@ class MRSerieDownloader{
                 notDownloadedChapters.append(chapter)
             }
         }
+        self.allChapters = downloadedChapters + notDownloadedChapters
     }
 
     // add chapter to download queue (when serie is refreshed with the downloader already initialized)
@@ -66,6 +69,7 @@ class MRSerieDownloader{
     func beginDownload(){
         isCancelled = false
         notDownloadedChapters.first?.downloader.beginDownload()
+        allChapters = downloadedChapters + notDownloadedChapters
     }
     
     // cancel download for current-downloading chapter and begin downloading the chapter at the specifed index in the downloadingChapters array
@@ -97,7 +101,8 @@ extension MRSerieDownloader: MRChapterDownloaderDelegate{
     // on chapter downloader tasks complete, remove it from downloading list & add it back to queue if not fully downloaded, also update downloaded/downloading chapters list
     func downloaderDidComplete(chapter: MRChapter) {
         // do not perform any action if function called due to download cancellation
-        if isCancelled{
+        // additionally check if chapter's already downloaded -> ignore cancellation and continue to update UI
+        if isCancelled && chapter.downloader.state == .notDownloaded{
             return
         }
         if chapter.downloader.state != .downloaded{

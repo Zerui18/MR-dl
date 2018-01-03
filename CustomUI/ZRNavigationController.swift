@@ -13,7 +13,6 @@ public class ZRNavigationController: UINavigationController {
 
     public var isStatusBarHidden = false{
         didSet{
-            navigationBar.shadowImage = isStatusBarHidden ? UIImage():nil
             setNeedsStatusBarAppearanceUpdate()
         }
     }

@@ -28,9 +28,9 @@ class SerieDetailsViewController: UIViewController{
     
     @IBOutlet weak var placeholderView: UIView!
     @IBOutlet weak var placeholderViewAspectRatioConstraint: NSLayoutConstraint!
-    @IBOutlet weak var coverImageView: ZRReactiveImageView!
+    @IBOutlet weak var coverImageView: ReactiveThumbnailView!
     @IBOutlet weak var coverImageAspectRatioConstraint: NSLayoutConstraint!
-    @IBOutlet weak var thumbnailImageView: ZRReactiveImageView!
+    @IBOutlet weak var thumbnailImageView: ReactiveThumbnailView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
@@ -42,6 +42,8 @@ class SerieDetailsViewController: UIViewController{
     @IBOutlet var descriptionHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var artworksLabel: UILabel!
     @IBOutlet weak var artworksCollectionView: UICollectionView!
+    
+    let refreshControl = UIRefreshControl()
     
     lazy var artworkURLs: [URL] = {
         return serieDataProvider[.artworkURLs]!
@@ -62,7 +64,6 @@ class SerieDetailsViewController: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         transitionCoordinator?.animate(alongsideTransition: { (_) in
-            self.isNavBarTransparent = true
             self.navBarItemsTintColor = .white
             self.statusBarStyle = .lightContent
         })
@@ -74,7 +75,6 @@ class SerieDetailsViewController: UIViewController{
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         transitionCoordinator?.animate(alongsideTransition: { (_) in
-            self.isNavBarTransparent = false
             self.statusBarStyle = .default
             self.navBarItemsTintColor = #colorLiteral(red: 0.1058823529, green: 0.6784313725, blue: 0.9725490196, alpha: 1)
         })
@@ -97,12 +97,18 @@ class SerieDetailsViewController: UIViewController{
     
     private func setupUI(){
         scrollView.delegate = self
+        refreshControl.tintColor = .white
+        refreshControl.translatesAutoresizingMaskIntoConstraints = false
+        refreshControl.addTarget(self, action: #selector(refreshSerie), for: .valueChanged)
+        scrollView.addSubview(refreshControl)
+        refreshControl.topAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.topAnchor).isActive = true
+        refreshControl.centerXAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.centerXAnchor).isActive = true
 
         readButton.addTarget(self, action: #selector(showChaptersTable), for: .touchUpInside)
         toggleCollapseButton.addTarget(self, action: #selector(toggleCollapse), for: .touchUpInside)
         
         titleLabel.text = serieDataProvider[.name]
-        thumbnailImageView.loadImage(withLoader: ThumbnailLoader.shared, fromURL: serieDataProvider[.thumbnailURL]!)
+        thumbnailImageView.loadImage(fromURL: serieDataProvider[.thumbnailURL]!)
         
         authorLabel.text = serieDataProvider[.author]
         statusLabel.text = serieDataProvider[.statusDescription]
@@ -135,13 +141,39 @@ class SerieDetailsViewController: UIViewController{
     }
     
     private func loadCoverImage(fromURL url: URL){
-        coverImageView.loadImage(withLoader: ThumbnailLoader.shared, fromURL: url) { (image) in
+        coverImageView.loadImage(fromURL: url) { (image) in
             self.coverImageAspectRatioConstraint.isActive = false
             self.placeholderViewAspectRatioConstraint.isActive = false
             let widthToHeight = image.size.width / image.size.height
             self.coverImageView.widthAnchor.constraint(equalTo: self.coverImageView.heightAnchor, multiplier: widthToHeight).isActive =  true
             self.placeholderView.widthAnchor.constraint(equalTo: self.placeholderView.heightAnchor, multiplier: widthToHeight).isActive = true
             self.view.layoutIfNeeded()
+        }
+    }
+    
+    @objc private func refreshSerie(){
+        MRClient.getSerieMeta(forOid: serieDataProvider[.oid]!) {[weak self] (error, response) in
+            guard let strongSelf = self else{
+                return
+            }
+            DispatchQueue.main.async {
+                if let meta = response?.data{
+                    let dataProvider = strongSelf.serieDataProvider!
+                    if let serie = dataProvider as? MRSerie{
+                        serie.updateInfo(withMeta: meta)
+                    }
+                    else{
+                        strongSelf.serieDataProvider = meta
+                    }
+                    strongSelf.statusLabel.text = dataProvider[.statusDescription]
+                    strongSelf.updateDateLabel.text = dataProvider[.lastUpdatedDescription]
+                    CoreDataHelper.shared.tryToSave()
+                }
+                else{
+                    AppDelegate.shared.reportError(error: error!, ofCategory: "Load Serie")
+                }
+                strongSelf.refreshControl.endRefreshing()
+            }
         }
     }
     

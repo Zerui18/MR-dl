@@ -48,13 +48,13 @@ class SerieSearchViewController: UITableViewController{
     var resultUpdateTimer = Timer()
     
     lazy var searchActiveIndicator = NVActivityIndicatorView(frame: CGRect(x: 150, y: 200, width: 55, height: 55), type: .balls, color:  #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1))
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
     
-
+    
     private func setupUI(){
         
         navigationItem.searchController = UISearchController(searchResultsController: nil)
@@ -65,7 +65,7 @@ class SerieSearchViewController: UITableViewController{
         
         tableView.tableFooterView = UIView()
         tableView.backgroundView = UIView()
-
+        
         searchActiveIndicator.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundView!.addSubview(searchActiveIndicator)
         
@@ -73,7 +73,7 @@ class SerieSearchViewController: UITableViewController{
         searchActiveIndicator.topAnchor.constraint(equalTo: tableView.contentLayoutGuide.topAnchor, constant: 30).isActive = true
         
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return serieSearchResults.count
     }
@@ -90,7 +90,7 @@ class SerieSearchViewController: UITableViewController{
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         return (tableView.cellForRow(at: indexPath) as! SerieTableViewCell).serieMeta != nil ? indexPath:nil
     }
-
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! SerieTableViewCell
         
@@ -129,9 +129,9 @@ extension SerieSearchViewController: UISearchResultsUpdating, UISearchBarDelegat
         self.query = query
         searchActiveIndicator.startAnimating()
         MRClient.quickSearch(forQuery: query) { (error, response) in
-            if self.query == query, let response = response{
-                DispatchQueue.main.async {
-                    self.searchActiveIndicator.stopAnimating()
+            DispatchQueue.main.async {
+                self.searchActiveIndicator.stopAnimating()
+                if self.query == query, let response = response{
                     self.serieSearchResults = response.data["series"] ?? []
                 }
             }
@@ -142,10 +142,10 @@ extension SerieSearchViewController: UISearchResultsUpdating, UISearchBarDelegat
         self.query = query
         searchActiveIndicator.startAnimating()
         MRClient.completeSearch(forQuery: query, category: .series) { (error, response) in
-            if self.query == query{
-                DispatchQueue.main.async {
-                    self.searchActiveIndicator.stopAnimating()
-                    self.serieSearchResults = response!.data
+            DispatchQueue.main.async {
+                self.searchActiveIndicator.stopAnimating()
+                if self.query == query, let response = response{
+                    self.serieSearchResults = response.data
                 }
             }
         }

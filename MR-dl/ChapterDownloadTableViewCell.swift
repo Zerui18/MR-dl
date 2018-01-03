@@ -21,12 +21,7 @@ class ChapterDownloadTableViewCell: UITableViewCell {
         didSet{
             titleLabel.text = chapter.name
             progressView.progress = Float(chapter.downloader.progress.fractionCompleted)
-            if chapter.downloader.state == .notDownloaded{
-                stateLabel.text = chapter.downloader.progress.descriptionInUnit
-            }
-            else{
-                stateLabel.text = "queuing..."
-            }
+            stateLabel.text = chapter.downloader.progress.descriptionInUnit
         }
     }
 

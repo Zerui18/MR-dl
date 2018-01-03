@@ -9,6 +9,8 @@ import Cache
 public final class Manager: Loading {
     public let loader: Loading
     public let cache: StorageAware?
+    
+    public let imageRetreivalQueue = DispatchQueue(label: "imageRetrieval", qos: .userInitiated)
 
     /// Shared `Manager` instance.
     ///
@@ -49,33 +51,35 @@ public final class Manager: Loading {
     ///
     /// See `loadImage(with:into:)` method for more info.
     public func loadImage(with request: Request, into target: AnyObject, handler: @escaping Handler) {
-        assert(Thread.isMainThread)
+        
 
         let context = getContext(for: target)
         context.cts?.cancel() // cancel outstanding request if any
         context.cts = nil
 
-        // Quick synchronous memory cache lookup
-        if let image = cachedImage(for: request) {
-            handler(.success(image), true)
-            return
-        }
-
-        // Create CTS and associate it with a context
-        let cts = CancellationTokenSource()
-        context.cts = cts
-
-        // Start the request
-        _loadImage(with: request, token: cts.token) { [weak context] in
-            guard let context = context, context.cts === cts else { return } // check if still registered
-            handler($0, false)
-            context.cts = nil // avoid redundant cancellations on deinit
+        imageRetreivalQueue.async {
+            // Quick synchronous memory cache lookup
+            if let image = self.cachedImage(for: request) {
+                handler(.success(image), true)
+                return
+            }
+            
+            // Create CTS and associate it with a context
+            let cts = CancellationTokenSource()
+            context.cts = cts
+            
+            // Start the request
+            self._loadImage(with: request, token: cts.token) { [weak context] in
+                guard let context = context, context.cts === cts else { return } // check if still registered
+                handler($0, false)
+                context.cts = nil // avoid redundant cancellations on deinit
+            }
         }
     }
 
     /// Cancels an outstanding request associated with the target.
     public func cancelRequest(for target: AnyObject) {
-        assert(Thread.isMainThread)
+        
         let context = getContext(for: target)
         context.cts?.cancel() // cancel outstanding request if any
         context.cts = nil // unregister request

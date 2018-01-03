@@ -85,7 +85,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="131.66666666666666"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="eur-lf-bwk" customClass="ZRReactiveImageView" customModule="CustomUI">
+                                        <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="eur-lf-bwk" customClass="ReactiveThumbnailView" customModule="MR_dl" customModuleProvider="target">
                                             <rect key="frame" x="16" y="11" width="73" height="110"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="eur-lf-bwk" secondAttribute="height" multiplier="1:1.5" id="Ze0-2A-fXF"/>
@@ -187,7 +187,7 @@
                                                     <constraint firstAttribute="width" secondItem="zXa-dQ-tgo" secondAttribute="height" multiplier="25:12" id="lCM-h6-atq"/>
                                                 </constraints>
                                             </view>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="rhu-5b-K5u" customClass="ZRReactiveImageView" customModule="CustomUI">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="rhu-5b-K5u" customClass="ReactiveThumbnailView" customModule="MR_dl" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="rhu-5b-K5u" secondAttribute="height" multiplier="25:12" id="xjr-kQ-U9Q"/>
@@ -216,7 +216,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ma-Mf-9a2">
                                                 <rect key="frame" x="0.0" y="188" width="375" height="190"/>
                                                 <subviews>
-                                                    <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="NgT-Oy-6Mi" customClass="ZRReactiveImageView" customModule="CustomUI">
+                                                    <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="NgT-Oy-6Mi" customClass="ReactiveThumbnailView" customModule="MR_dl" customModuleProvider="target">
                                                         <rect key="frame" x="12.000000000000007" y="8" width="118.66666666666669" height="177"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="NgT-Oy-6Mi" secondAttribute="height" multiplier="2:3" id="cOy-OU-WVT"/>
@@ -391,7 +391,7 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                                                                     <rect key="frame" x="0.0" y="0.0" width="86" height="129"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                     <subviews>
-                                                                        <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="artwork_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="2rM-zO-1dX" customClass="ZRReactiveImageView" customModule="CustomUI">
+                                                                        <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="artwork_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="2rM-zO-1dX" customClass="ReactiveThumbnailView" customModule="MR_dl" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="0.0" width="86" height="129"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" secondItem="2rM-zO-1dX" secondAttribute="height" multiplier="2:3" id="dFF-R9-dSR"/>
@@ -648,8 +648,8 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                                     <rect key="frame" x="0.0" y="0.0" width="130" height="219"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="9pO-qc-uu4" customClass="ZRReactiveImageView" customModule="CustomUI">
-                                            <rect key="frame" x="10" y="0.0" width="110" height="165.33333333333334"/>
+                                        <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="9pO-qc-uu4" customClass="ReactiveThumbnailView" customModule="MR_dl" customModuleProvider="target">
+                                            <rect key="frame" x="10" y="0.0" width="110" height="165.66666666666666"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="9pO-qc-uu4" secondAttribute="height" multiplier="2:3" id="fVI-a7-l8c"/>
                                             </constraints>
@@ -660,7 +660,7 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Akame ga Kill!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qqf-0d-3Bt">
-                                            <rect key="frame" x="0.0" y="165.33333333333334" width="130" height="51.666666666666657"/>
+                                            <rect key="frame" x="0.0" y="165.66666666666666" width="130" height="51.333333333333343"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -757,7 +757,7 @@ Akame is often considered to be one of the stronger members of Night Raid, slayi
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nyb-fv-g39">
-                                            <rect key="frame" x="16" y="50" width="259" height="2"/>
+                                            <rect key="frame" x="16" y="49" width="259" height="2"/>
                                         </progressView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="queuing..." textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="thZ-Y1-K2u">
                                             <rect key="frame" x="280" y="43.666666666666664" width="80" height="13"/>
