@@ -24,12 +24,12 @@ extension UIImage{
 
     @discardableResult
     func writeHeicRepresentation(toURL url: URL)-> Bool{
-        if let destination = CGImageDestinationCreateWithURL(url as CFURL, AVFileType.heic as CFString, 1, nil){
-            CGImageDestinationAddImage(destination, cgImage!, nil)
-            CGImageDestinationFinalize(destination)
-            return true
+        guard let destination = CGImageDestinationCreateWithURL(url as CFURL, AVFileType.heic as CFString, 1, nil) else{
+            return false
         }
-        return false
+        CGImageDestinationAddImage(destination, cgImage!, nil)
+        CGImageDestinationFinalize(destination)
+        return true
     }
     
 }

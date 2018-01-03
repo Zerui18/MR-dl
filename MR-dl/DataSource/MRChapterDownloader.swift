@@ -166,13 +166,10 @@ class MRChapterDownloader: NSObject{
     
     // convenience function for cancelling download for the chapter
     func cancelDownload(){
-        print("cancelling..")
         isCancelled = true
-        print("queuing: ", downloadsQueue.count)
         downloadsQueue.forEach{
             $0.cancel()
         }
-        print("downloading: ", activeDownloads.count)
         activeDownloads.values.forEach{
             $0.cancel()
         }
@@ -196,7 +193,6 @@ class MRChapterDownloader: NSObject{
             _progress.completedUnitCount += 1
             delegate?.downloaderDidDownload(pageAtIndex: pageIndex, forChapter: chapter, withError: nil)
         }
-        print("downloadedPage; progress: ", _progress)
         // if no more queing & outstanding tasks, notify delegate of completion (note: some pages might failed to download)
         if !startNextPendingTaskIfNecessary() && state == .downloaded{
             delegate?.downloaderDidComplete(chapter: chapter)
@@ -215,9 +211,7 @@ extension MRChapterDownloader: URLSessionDownloadDelegate{
         let pageIndex = urlToIndex[key]!
         activeDownloads.removeValue(forKey: key)
         do{
-            let image = try autoreleasepool{
-                UIImage(mriData: try Data(contentsOf: location))!
-            }
+            let image = UIImage(mriData: try Data(contentsOf: location))!
             image.writeHeicRepresentation(toURL: self.chapter.addressForPage(atIndex: pageIndex))
             try? FileManager.default.removeItem(at: location)
             urlsToDownload.delete(key)
