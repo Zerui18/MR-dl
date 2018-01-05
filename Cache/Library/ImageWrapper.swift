@@ -2,28 +2,28 @@ import UIKit
 import AVFoundation
 
 
-fileprivate extension UIImage{
-    
-    convenience init?(heicData: Data) {
-        if let source = CGImageSourceCreateWithData(heicData as CFData, nil), let image = CGImageSourceCreateImageAtIndex(source, 0, nil){
-            self.init(cgImage: image)
-        }
-        else{
-            return nil
-        }
-    }
-    
-    func heicRepresentation()-> Data?{
-        let imageData = NSMutableData()
-        if let destination = CGImageDestinationCreateWithData(imageData as CFMutableData, AVFileType.heic.rawValue as CFString, 1, nil){
-            CGImageDestinationAddImage(destination, cgImage!, nil)
-            CGImageDestinationFinalize(destination)
-            return imageData as Data
-        }
-        return nil
-    }
-    
-}
+//fileprivate extension UIImage{
+//
+//    convenience init?(heicData: Data) {
+//        if let source = CGImageSourceCreateWithData(heicData as CFData, nil), let image = CGImageSourceCreateImageAtIndex(source, 0, nil){
+//            self.init(cgImage: image)
+//        }
+//        else{
+//            return nil
+//        }
+//    }
+//
+//    func heicRepresentation()-> Data?{
+//        let imageData = NSMutableData()
+//        if let destination = CGImageDestinationCreateWithData(imageData as CFMutableData, AVFileType.heic.rawValue as CFString, 1, nil){
+//            CGImageDestinationAddImage(destination, cgImage!, nil)
+//            CGImageDestinationFinalize(destination)
+//            return imageData as Data
+//        }
+//        return nil
+//    }
+//
+//}
 
 public struct ImageWrapper: Codable {
   public let image: UIImage
@@ -39,7 +39,7 @@ public struct ImageWrapper: Codable {
   public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     let data = try container.decode(Data.self, forKey: CodingKeys.image)
-    guard let image = UIImage(heicData: data) else {
+    guard let image = UIImage(data: data) else {
       throw StorageError.decodingFailed
     }
 
@@ -48,7 +48,7 @@ public struct ImageWrapper: Codable {
 
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
-    guard let data = image.heicRepresentation() else {
+    guard let data = UIImageJPEGRepresentation(image, 1) else {
         throw StorageError.encodingFailed
     }
 

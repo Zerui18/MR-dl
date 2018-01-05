@@ -138,18 +138,22 @@ class MRChapterDownloader: NSObject{
     // start task and record it in activeDownloads
     private func startTask(_ downloadTask: URLSessionDownloadTask){
         let key = downloadTask.originalRequest!.url!
+        // record task in activeDownloads & startTask
+        activeDownloads[key] = downloadTask
+        downloadTask.resume()
         // check if image has already been cached
-        if let cachedImage = Manager.sharedMRImageManager.cachedImage(for: Request(url: key)){
-            let pageIndex = urlToIndex[key]!
-            try! UIImageJPEGRepresentation(cachedImage, 1.0)!.write(to: chapter.addressForPage(atIndex: pageIndex))
-            // already downloaded, report completion directly
-            downloadedPage(at: pageIndex, withError: nil)
-        }
-        else{
-            // record task in activeDownloads & startTask
-            activeDownloads[key] = downloadTask
-            downloadTask.resume()
-        }
+//        if let cachedImage = Manager.sharedMRImageManager.cachedImage(for: Request(url: key)){
+//            let pageIndex = urlToIndex[key]!
+//            let webpData = MRImageDataDecryptor.decrypt(data: try Data(contentsOf: location))
+//            try webpData.write(to: chapter.addressForPage(atIndex: pageIndex))
+//            // already downloaded, report completion directly
+//            downloadedPage(at: pageIndex, withError: nil)
+//        }
+//        else{
+//            // record task in activeDownloads & startTask
+//            activeDownloads[key] = downloadTask
+//            downloadTask.resume()
+//        }
     }
     
     // start next task in queue & returns if a new task has been started
@@ -211,8 +215,8 @@ extension MRChapterDownloader: URLSessionDownloadDelegate{
         let pageIndex = urlToIndex[key]!
         activeDownloads.removeValue(forKey: key)
         do{
-            let image = UIImage(mriData: try Data(contentsOf: location))!
-            image.writeHeicRepresentation(toURL: self.chapter.addressForPage(atIndex: pageIndex))
+            let webpData = MRImageDataDecryptor.decrypt(data: try Data(contentsOf: location))
+            try webpData.write(to: chapter.addressForPage(atIndex: pageIndex))
             try? FileManager.default.removeItem(at: location)
             urlsToDownload.delete(key)
             downloadedPage(at: pageIndex, withError: nil)

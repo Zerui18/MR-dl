@@ -97,6 +97,7 @@ class SerieSearchViewController: UITableViewController{
         // use local serie record as dataSource where possible
         let dataProvider: SerieDataProvider = LocalMangaDataSource.shared.getSerie(forOid: cell.serieMeta!.oid) ?? cell.serieMeta!
         let detailsCtr = SerieDetailsViewController(dataProvider: dataProvider)
+        tabBarController!.tabBar.isHidden = false
         navigationItem.searchController?.isActive = false
         navigationController!.pushViewController(detailsCtr, animated: true)
     }
@@ -104,6 +105,14 @@ class SerieSearchViewController: UITableViewController{
 }
 
 extension SerieSearchViewController: UISearchResultsUpdating, UISearchBarDelegate{
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        tabBarController!.tabBar.isHidden = true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        tabBarController!.tabBar.isHidden = false
+    }
     
     func updateSearchResults(for searchController: UISearchController) {
         resultUpdateTimer.invalidate()

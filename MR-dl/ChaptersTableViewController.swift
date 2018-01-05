@@ -100,7 +100,7 @@ extension ChaptersTableViewController{
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // no action if chaper is not downloaded & is local serie
-        if indexPath.row == 1 && serieDataProvider is MRSerie{
+        if indexPath.section == 1 && serieDataProvider is MRSerie{
             return
         }
         let viewChapterCtr = ChapterImagesPageViewController(dataProvider: serieDataProvider, atChapter: indexPath.row)

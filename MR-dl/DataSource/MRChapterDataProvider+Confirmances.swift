@@ -35,7 +35,10 @@ extension MRChapter: ChapterDataProvider{
     
     func fetchPage(atIndex index: Int, completion: @escaping (UIImage?) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            let image = UIImage(heicURL: self.addressForPage(atIndex: index))
+            var image: UIImage? = nil
+            if let data = try? Data(contentsOf: self.addressForPage(atIndex: index)){
+                image = UIImage(webPData: data)
+            }
             DispatchQueue.main.async {
                 completion(image)
             }

@@ -24,7 +24,6 @@
 		015C5B451FECE2DA00415F1B /* NVActivityIndicatorAnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015C5B441FECE2DA00415F1B /* NVActivityIndicatorAnimationDelegate.swift */; };
 		015C5B471FECEB1000415F1B /* ChapterImagesPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015C5B461FECEB1000415F1B /* ChapterImagesPageViewController.swift */; };
 		015C5B491FECEB2A00415F1B /* ChapterImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015C5B481FECEB2A00415F1B /* ChapterImageViewController.swift */; };
-		015DA87E1FFC8E8B0050F6DC /* UIImage+HEIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015DA87D1FFC8E8B0050F6DC /* UIImage+HEIF.swift */; };
 		015DA87F1FFC97780050F6DC /* ReactiveThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F9E1581FF1178700145D72 /* ReactiveThumbnailView.swift */; };
 		015DA8821FFC99FB0050F6DC /* Cache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01CC77DE1FEBFD4300C0128D /* Cache.framework */; };
 		015DA8831FFC9A550050F6DC /* Cache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01CC77DE1FEBFD4300C0128D /* Cache.framework */; };
@@ -237,6 +236,7 @@
 		01CC78071FEBFDDB00C0128D /* AsyncStorageAware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncStorageAware.swift; sourceTree = "<group>"; };
 		01CC78081FEBFDDB00C0128D /* AsyncStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncStorage.swift; sourceTree = "<group>"; };
 		01CC78091FEBFDDB00C0128D /* HybridStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HybridStorage.swift; sourceTree = "<group>"; };
+		01D6ED2D1FFCEA1400052395 /* MR-dl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "MR-dl.entitlements"; sourceTree = "<group>"; };
 		01DB84D21FED0CE600E32D22 /* MRClientPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MRClientPlayground.playground; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		01F206201FF276F200C13137 /* CancellationToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancellationToken.swift; sourceTree = "<group>"; };
 		01F206211FF276F200C13137 /* DataDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataDecoder.swift; sourceTree = "<group>"; };
@@ -486,6 +486,7 @@
 		222574271FE94523005D8865 /* MR-dl */ = {
 			isa = PBXGroup;
 			children = (
+				01D6ED2D1FFCEA1400052395 /* MR-dl.entitlements */,
 				222574281FE94523005D8865 /* AppDelegate.swift */,
 				2225742A1FE94523005D8865 /* SerieCollectionViewController.swift */,
 				22DC2C2E1FE9E512005F4407 /* SerieCollectionViewCell.swift */,
@@ -712,6 +713,9 @@
 							com.apple.BackgroundModes = {
 								enabled = 0;
 							};
+							com.apple.iCloud = {
+								enabled = 0;
+							};
 						};
 					};
 					224F48841FE950A3005F5A94 = {
@@ -871,7 +875,6 @@
 				0181715E1FF4DF7F00F60335 /* Progress+Extension.swift in Sources */,
 				01A34A871FEFAB040022E670 /* MRSerie.swift in Sources */,
 				01FB78AE1FF8E91E00360341 /* UITableView+Extension.swift in Sources */,
-				015DA87E1FFC8E8B0050F6DC /* UIImage+HEIF.swift in Sources */,
 				01BECC6B1FF8CDF200646438 /* SerieDataSource+Confirmances.swift in Sources */,
 				222574291FE94523005D8865 /* AppDelegate.swift in Sources */,
 				014AD9CD1FEE274100B3C1E0 /* UIImage+WebP.swift in Sources */,

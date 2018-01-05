@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ImageIO
 import AVFoundation
 
 fileprivate let heifSourceOptions = [kCGImageSourceTypeIdentifierHint:AVFileType.heif.rawValue as CFString] as CFDictionary
@@ -27,7 +28,7 @@ extension UIImage{
         guard let destination = CGImageDestinationCreateWithURL(url as CFURL, AVFileType.heic as CFString, 1, nil) else{
             return false
         }
-        CGImageDestinationAddImage(destination, cgImage!, nil)
+        CGImageDestinationAddImage(destination, cgImage!.copy()!, nil)
         CGImageDestinationFinalize(destination)
         return true
     }

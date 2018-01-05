@@ -20,7 +20,7 @@ class ThumbnailLoader{
     
     init(){
         cache = try! Storage(diskConfig: DiskConfig(name: "ThumbnailsLoaderCache", expiry: .never, maxSize: 1024*1024*100), memoryConfig: MemoryConfig(expiry: .never, countLimit: 200, totalCostLimit: 0))
-        imageLoaderManager = Manager(loader: Loader(loader: DataLoader(), decoder: MRIDataDecoder(decryptFunction: {$0}, decodeFunction: {UIImage(data: $0)})), cache: cache)
+        imageLoaderManager = Manager(loader: Loader(loader: DataLoader(), decoder: MRIDataDecoder(decryptFunction: {$0}, decodeFunction: UIImage.init)), cache: cache)
     }
     
     func loadImage(with url: URL, into target: AnyObject, handler: @escaping Manager.Handler){
