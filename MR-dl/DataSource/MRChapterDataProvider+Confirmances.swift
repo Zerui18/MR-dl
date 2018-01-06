@@ -37,7 +37,7 @@ extension MRChapter: ChapterDataProvider{
         DispatchQueue.global(qos: .userInitiated).async {
             var image: UIImage? = nil
             if let data = try? Data(contentsOf: self.addressForPage(atIndex: index)){
-                image = UIImage(webPData: data)
+                image = UIImage(data: data)
             }
             DispatchQueue.main.async {
                 completion(image)

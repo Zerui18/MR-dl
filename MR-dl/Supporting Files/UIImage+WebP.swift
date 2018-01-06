@@ -32,7 +32,7 @@ extension UIImage{
     }
     
     //MARK: WebP Decoder
-    class private func webPDataToCGImage(data: Data) -> CGImage? {
+    class func webPDataToCGImage(data: Data) -> CGImage? {
         
         var w: CInt = 0, h: CInt = 0
         

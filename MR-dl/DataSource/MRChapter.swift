@@ -81,7 +81,7 @@ class MRChapter: NSManagedObject{
 extension MRChapter{
     
     func addressForPage(atIndex index: Int)-> URL{
-        return directory.appendingPathComponent("\(index).webp")
+        return directory.appendingPathComponent("\(index).heic")
     }
     
     func hasDownloadedPage(ofIndex index: Int)-> Bool{

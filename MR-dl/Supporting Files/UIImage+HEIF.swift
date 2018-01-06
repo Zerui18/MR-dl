@@ -28,9 +28,20 @@ extension UIImage{
         guard let destination = CGImageDestinationCreateWithURL(url as CFURL, AVFileType.heic as CFString, 1, nil) else{
             return false
         }
-        CGImageDestinationAddImage(destination, cgImage!.copy()!, nil)
+        CGImageDestinationAddImage(destination, cgImage!, nil)
         CGImageDestinationFinalize(destination)
         return true
     }
     
+}
+
+extension CGImage{
+    @discardableResult
+    func writeHeicRepresentation(toURL url: URL)-> Bool{
+        guard let destination = CGImageDestinationCreateWithURL(url as CFURL, AVFileType.heic as CFString, 1, nil) else{
+            return false
+        }
+        CGImageDestinationAddImage(destination, self, nil)
+        return CGImageDestinationFinalize(destination)
+    }
 }

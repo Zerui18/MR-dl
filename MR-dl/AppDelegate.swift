@@ -43,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }))
         return true
     }
+
     
     func applicationWillResignActive(_ application: UIApplication) {
         CoreDataHelper.shared.tryToSave()

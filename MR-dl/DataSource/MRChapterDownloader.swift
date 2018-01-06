@@ -19,6 +19,7 @@ class MRChapterDownloader: NSObject{
     
     let chapter: MRChapter
     let maxConcurrentDownload: Int
+    let operationQueue: OperationQueue
     weak var delegate: MRChapterDownloaderDelegate?
     
     var urlSession: URLSession!
@@ -49,8 +50,11 @@ class MRChapterDownloader: NSObject{
         self.chapter = chapter
         self.maxConcurrentDownload = maxConcurrentDownload
         self.delegate = delegate
+        self.operationQueue = OperationQueue()
+        self.operationQueue.qualityOfService = .userInitiated
+        self.operationQueue.maxConcurrentOperationCount = 1
         super.init()
-        self.urlSession = URLSession(configuration: .background(withIdentifier: chapter.serie!.oid!+"-"+chapter.oid!), delegate: self, delegateQueue: nil)
+        self.urlSession = URLSession(configuration: .background(withIdentifier: chapter.serie!.oid!+"-"+chapter.oid!), delegate: self, delegateQueue: self.operationQueue)
     }
     
     
@@ -215,8 +219,8 @@ extension MRChapterDownloader: URLSessionDownloadDelegate{
         let pageIndex = urlToIndex[key]!
         activeDownloads.removeValue(forKey: key)
         do{
-            let webpData = MRImageDataDecryptor.decrypt(data: try Data(contentsOf: location))
-            try webpData.write(to: chapter.addressForPage(atIndex: pageIndex))
+            let image = UIImage(mriData: try Data(contentsOf: location))!
+            try UIImageJPEGRepresentation(image, 1)!.write(to: self.chapter.addressForPage(atIndex: pageIndex))
             try? FileManager.default.removeItem(at: location)
             urlsToDownload.delete(key)
             downloadedPage(at: pageIndex, withError: nil)

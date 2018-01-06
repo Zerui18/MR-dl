@@ -15,10 +15,24 @@ class SerieCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(serieAddedNotification), name: .serieAddedNotification, object: nil)
+        collectionView!.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressed(_:))))
     }
     
     @objc private func serieAddedNotification(){
         collectionView!.insertItems(at: [IndexPath(item: LocalMangaDataSource.shared.numberOfSeries-1, section: 0)])
+    }
+    
+    @objc private func longPressed(_ sender: UILongPressGestureRecognizer){
+        if sender.state == .began, let indexPath = collectionView!.indexPathForItem(at: sender.location(in: collectionView!)){
+            let serie = LocalMangaDataSource.shared.series[indexPath.item]
+            let alert = UIAlertController(title: "Actions", message: serie.name, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: {_ in
+                try! LocalMangaDataSource.shared.deleteSerie(serie)
+                self.collectionView!.deleteItems(at: [indexPath])
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            present(alert, animated: true)
+        }
     }
 
 }
