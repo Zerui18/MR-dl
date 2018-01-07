@@ -142,22 +142,23 @@ class MRChapterDownloader: NSObject{
     // start task and record it in activeDownloads
     private func startTask(_ downloadTask: URLSessionDownloadTask){
         let key = downloadTask.originalRequest!.url!
-        // record task in activeDownloads & startTask
-        activeDownloads[key] = downloadTask
-        downloadTask.resume()
         // check if image has already been cached
-//        if let cachedImage = Manager.sharedMRImageManager.cachedImage(for: Request(url: key)){
-//            let pageIndex = urlToIndex[key]!
-//            let webpData = MRImageDataDecryptor.decrypt(data: try Data(contentsOf: location))
-//            try webpData.write(to: chapter.addressForPage(atIndex: pageIndex))
-//            // already downloaded, report completion directly
-//            downloadedPage(at: pageIndex, withError: nil)
-//        }
-//        else{
-//            // record task in activeDownloads & startTask
-//            activeDownloads[key] = downloadTask
-//            downloadTask.resume()
-//        }
+        if let cachedImage = Manager.sharedMRImageManager.cachedImage(for: Request(url: key)){
+            let pageIndex = urlToIndex[key]!
+            // image already cached, report completion directly
+            do{
+                try UIImageJPEGRepresentation(cachedImage, 1)!.write(to: chapter.addressForPage(atIndex: pageIndex))
+                try! Manager.sharedMRImageManager.cache!.removeObject(forKey: key.absoluteString)
+            }
+            catch{
+                downloadedPage(at: pageIndex, withError: error)
+            }
+        }
+        else{
+            // record task in activeDownloads & startTask
+            activeDownloads[key] = downloadTask
+            downloadTask.resume()
+        }
     }
     
     // start next task in queue & returns if a new task has been started

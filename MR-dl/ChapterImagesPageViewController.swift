@@ -58,7 +58,7 @@ class ChapterImagesPageViewController: UIPageViewController {
     var chapterImageURLs: [URL]?{
         didSet{
             startPreheatingIfNecessary()
-            goto(pageIndex: shouldLoadReversed ? chapterImageURLs!.count-1:0)
+            goto(pageIndex: shouldLoadReversed ? chapterImageURLs!.count-1:0, isDifferentChapter: true)
             chapterIndexButon.isEnabled = true
         }
     }
@@ -166,21 +166,30 @@ class ChapterImagesPageViewController: UIPageViewController {
     }
     
     // animate flip to specified page index
-    private func goto(pageIndex: Int){
-        guard let urls = chapterImageURLs else{
+    private func goto(pageIndex: Int, isDifferentChapter: Bool = false){
+        guard chapterImageURLs != nil else{
             return
         }
-        var reversedDirection: UIPageViewControllerNavigationDirection = pageIndex >= currentPageIndex ? .reverse:.forward
-        // check for special cases
-        // next chapter, flip forward
-        if pageIndex == 0{
-            reversedDirection = .reverse
+        // page flip like physical manga!
+        let reversedFlipDirection: UIPageViewControllerNavigationDirection
+        
+        // if first flipping in new chapter, check for special cases
+        if isDifferentChapter{
+            // next chapter, flip forward
+            if pageIndex == 0{
+                reversedFlipDirection = .reverse
+            }
+                // last chapter, flip bakward
+            else{
+                reversedFlipDirection = .forward
+            }
         }
-            // last chapter, flip bakward
-        else if pageIndex == urls.count-1{
-            reversedDirection = .forward
+        else{
+            // flip forward if newIndex >= currentIndex
+            reversedFlipDirection = pageIndex >= currentPageIndex ? .reverse:.forward
         }
-        setViewControllers([ChapterImageViewController(dataProvider: chapterDataProvider, pageIndex: pageIndex, chapterIndex: chapterIndex)], direction: reversedDirection, animated: true)
+        
+        setViewControllers([ChapterImageViewController(dataProvider: chapterDataProvider, pageIndex: pageIndex, chapterIndex: chapterIndex)], direction: reversedFlipDirection, animated: true)
     }
 
 }
@@ -199,7 +208,15 @@ extension ChapterImagesPageViewController: UIPageViewControllerDataSource, UIPag
             let sourceIndex = (viewController as! ChapterImageViewController).pageIndex!
             if sourceIndex+1 >= chapterImageURLs!.count{
                 // load next chapter if exists
-                if chapterIndex+1 < serieDataProvider.numberOfChapters(ofState: .downloaded){
+                let isLastChapter: Bool
+                if serieDataProvider is MRSerie{
+                    isLastChapter = chapterIndex+1 == serieDataProvider.numberOfChapters(ofState: .downloaded)
+                }
+                else{
+                    isLastChapter = chapterIndex+1 == serieDataProvider[.chaptersCount]!
+                }
+                
+                if !isLastChapter{
                     shouldLoadReversed = false
                     fetchImageURLs(forChapterIndex: chapterIndex+1)
                 }
