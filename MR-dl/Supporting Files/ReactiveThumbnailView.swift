@@ -22,7 +22,7 @@ public class ReactiveThumbnailView: ZRImageView {
         setupLoadingIndicator()
     }
     
-    private func setupLoadingIndicator(){
+    private func setupLoadingIndicator() {
         backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         loadingIndicator = NVActivityIndicatorView(frame: .zero, type: .circles, color: #colorLiteral(red: 0, green: 0.4785608649, blue: 0.9994360805, alpha: 1))
         loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -38,13 +38,13 @@ public class ReactiveThumbnailView: ZRImageView {
     var imageURL: URL!
     var handler: ((UIImage)->Void)!
     
-    public func loadImage(fromURL url: URL, onSuccess handler:((UIImage)->Void)? = nil){
+    public func loadImage(fromURL url: URL, onSuccess handler:((UIImage)->Void)? = nil) {
         self.imageURL = url
         self.handler = handler
         loadingIndicator.startAnimating()
         ThumbnailLoader.shared.loadImage(with: url, into: self) { (result, _) in
             DispatchQueue.main.async {
-                if let image = result.value{
+                if let image = result.value {
                     self.image = image
                     handler?(image)
                 }
@@ -54,10 +54,10 @@ public class ReactiveThumbnailView: ZRImageView {
     }
 
     @objc override public func imageViewTapped() {
-        if image == nil{
+        if image == nil {
             loadImage(fromURL: imageURL, onSuccess: handler)
         }
-        else{
+        else {
             super.imageViewTapped()
         }
     }

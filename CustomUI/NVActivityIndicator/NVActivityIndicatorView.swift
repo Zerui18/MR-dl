@@ -10,7 +10,7 @@ import UIKit
 
 public final class NVActivityIndicatorView: UIView {
     
-    public enum AnimationType{
+    public enum AnimationType {
         case circles, balls
     }
     

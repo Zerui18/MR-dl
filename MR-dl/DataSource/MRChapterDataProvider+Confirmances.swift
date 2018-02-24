@@ -9,7 +9,7 @@
 import MRClient
 import ImageLoader
 
-extension MRChapterMeta: ChapterDataProvider{
+extension MRChapterMeta: ChapterDataProvider {
     
     var numberOfPages: Int? {
         return imageURLs?.count
@@ -21,13 +21,13 @@ extension MRChapterMeta: ChapterDataProvider{
         }
     }
     
-    subscript<ValueType>(property: ChapterProperty)-> ValueType?{
+    subscript<ValueType>(property: ChapterProperty)-> ValueType? {
         return value(forKey: property.rawValue) as? ValueType
     }
     
 }
 
-extension MRChapter: ChapterDataProvider{
+extension MRChapter: ChapterDataProvider {
     
     var numberOfPages: Int? {
         return remoteImageURLs?.count
@@ -36,7 +36,7 @@ extension MRChapter: ChapterDataProvider{
     func fetchPage(atIndex index: Int, completion: @escaping (UIImage?) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             var image: UIImage? = nil
-            if let data = try? Data(contentsOf: self.addressForPage(atIndex: index)){
+            if let data = try? Data(contentsOf: self.addressForPage(atIndex: index)) {
                 image = UIImage(data: data)
             }
             DispatchQueue.main.async {
@@ -45,7 +45,7 @@ extension MRChapter: ChapterDataProvider{
         }
     }
     
-    subscript<ValueType>(property: ChapterProperty)-> ValueType?{
+    subscript<ValueType>(property: ChapterProperty)-> ValueType? {
         return value(forKey: property.rawValue) as? ValueType
     }
     

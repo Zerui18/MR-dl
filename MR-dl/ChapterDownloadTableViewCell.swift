@@ -17,8 +17,8 @@ class ChapterDownloadTableViewCell: UITableViewCell {
     @IBOutlet weak var stateLabel: UILabel!
     
     
-    var chapter: MRChapter!{
-        didSet{
+    var chapter: MRChapter! {
+        didSet {
             titleLabel.text = chapter.name
             progressView.progress = Float(chapter.downloader.progress.fractionCompleted)
             stateLabel.text = chapter.downloader.progress.descriptionInUnit

@@ -10,11 +10,11 @@ import UIKit
 
 class HapticsController {
     
-    static func notificationFeedback(ofType type: UINotificationFeedbackType){
+    static func notificationFeedback(ofType type: UINotificationFeedbackType) {
         UINotificationFeedbackGenerator().notificationOccurred(type)
     }
     
-    static func selectionFeedback(ofType type: UISelectionFeedbackGenerator){
+    static func selectionFeedback(ofType type: UISelectionFeedbackGenerator) {
         UISelectionFeedbackGenerator().selectionChanged()
     }
     

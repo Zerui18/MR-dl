@@ -13,7 +13,7 @@ import CustomUI
 class ChapterImageViewController: UIViewController {
 
 
-    static func `init`(dataProvider: ChapterDataProvider, pageIndex: Int, chapterIndex: Int)-> ChapterImageViewController{
+    static func `init`(dataProvider: ChapterDataProvider, pageIndex: Int, chapterIndex: Int)-> ChapterImageViewController {
         let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: "chapterImageCtr") as! ChapterImageViewController
         ctr.dataProvider = dataProvider
         ctr.pageIndex = pageIndex
@@ -47,20 +47,20 @@ class ChapterImageViewController: UIViewController {
         view.backgroundColor = ChapterImagesPageViewController.shared!.isFocused ? .black:.white
     }
     
-    private func startLoadingImage(){
+    private func startLoadingImage() {
         loadingIndicator.startAnimating()
         dataProvider.fetchPage(atIndex: pageIndex) {[weak self] image in
-            guard let strongSelf = self else{
+            guard let strongSelf = self else {
                 return
             }
             strongSelf.loadingIndicator.stopAnimating()
-            if let image = image{
+            if let image = image {
                 strongSelf.image = image
                 strongSelf.imageView.image = image
                 strongSelf.view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(strongSelf.didHoldImageView(_:))))
             }
-            else{
-                UIView.animate(withDuration: defaultAnimationDuration){
+            else {
+                UIView.animate(withDuration: defaultAnimationDuration) {
                     strongSelf.errorLabel.alpha = 1
                     strongSelf.reloadButton.alpha = 1
                     strongSelf.reloadButton.isUserInteractionEnabled = true
@@ -71,13 +71,13 @@ class ChapterImageViewController: UIViewController {
     
     let focusGesturePlaceholderView = UIView(frame: .zero)
     
-    private func setupUI(){
+    private func setupUI() {
         view.backgroundColor = .white
         pageIndexLabel.text = String(pageIndex+1)
         scrollView.delegate = self
         
         // only setup loadingIndicator & retry controls if loading image from external source
-        if dataProvider is MRChapterMeta{
+        if dataProvider is MRChapterMeta {
             setupLoadingIndicator()
             reloadButton.addTarget(self, action: #selector(triggerImageReload), for: .touchUpInside)
         }
@@ -93,7 +93,7 @@ class ChapterImageViewController: UIViewController {
         focusGesturePlaceholderView.addGestureRecognizer(tapGesture)
     }
     
-    private func setupLoadingIndicator(){
+    private func setupLoadingIndicator() {
         loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loadingIndicator)
         loadingIndicator.widthAnchor.constraint(equalToConstant: 50).isActive = true
@@ -103,7 +103,7 @@ class ChapterImageViewController: UIViewController {
         view.layoutIfNeeded()
     }
     
-    @objc private func triggerImageReload(){
+    @objc private func triggerImageReload() {
         errorLabel.alpha = 0
         reloadButton.isUserInteractionEnabled = false
         reloadButton.alpha = 0
@@ -111,8 +111,8 @@ class ChapterImageViewController: UIViewController {
         startLoadingImage()
     }
 
-    @objc private func didHoldImageView(_ sender: UILongPressGestureRecognizer){
-        if sender.state == .began{
+    @objc private func didHoldImageView(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
             let saveActionSheet = UIAlertController(title: "Save image?", message: "", preferredStyle: .actionSheet)
             saveActionSheet.addAction(UIAlertAction(title: "Save", style: .default, handler: {_ in
                 UIImageWriteToSavedPhotosAlbum(self.image!, nil, nil, nil)
@@ -124,7 +124,7 @@ class ChapterImageViewController: UIViewController {
     
 }
 
-extension ChapterImageViewController: UIScrollViewDelegate{
+extension ChapterImageViewController: UIScrollViewDelegate {
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView

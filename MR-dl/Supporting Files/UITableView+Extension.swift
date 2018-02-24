@@ -8,16 +8,16 @@
 
 import UIKit
 
-extension UITableViewCell{
-    var indexPath: IndexPath?{
+extension UITableViewCell {
+    var indexPath: IndexPath? {
         return (superview as! UITableView).indexPath(for: self)
     }
 }
 
-extension UITableView{
+extension UITableView {
     
-    func visibleCell(forIndexPath indexPath: IndexPath)-> UITableViewCell?{
-        return visibleCells.first{
+    func visibleCell(forIndexPath indexPath: IndexPath)-> UITableViewCell? {
+        return visibleCells.first {
             $0.indexPath == indexPath
         }
     }

@@ -8,11 +8,11 @@
 
 import Foundation
 
-extension Sequence{
+extension Sequence {
     
-    func count(isIncluded criteria: (Iterator.Element)throws-> Bool)rethrows-> Int{
+    func count(isIncluded criteria: (Iterator.Element)throws-> Bool)rethrows-> Int {
         var cnt = 0
-        for element in self where try criteria(element){
+        for element in self where try criteria(element) {
             cnt += 1
         }
         return cnt
@@ -20,21 +20,21 @@ extension Sequence{
     
 }
 
-extension Array where Iterator.Element: Equatable{
+extension Array where Iterator.Element: Equatable {
     
     @discardableResult
-    mutating func delete(_ element: Iterator.Element)-> Iterator.Element?{
-        if let idx = index(of: element){
+    mutating func delete(_ element: Iterator.Element)-> Iterator.Element? {
+        if let idx = index(of: element) {
             return remove(at: idx)
         }
         return nil
     }
     
 }
-extension Array{
+extension Array {
     
-    mutating func sortUsingProperty<VariableType: Comparable>(atKeypath keypath: KeyPath<Iterator.Element, VariableType>, ascending: Bool = true){
-        sort{ascending ? $0[keyPath: keypath] < $1[keyPath: keypath] : $0[keyPath: keypath] > $1[keyPath: keypath]}
+    mutating func sortUsingProperty<VariableType: Comparable>(atKeypath keypath: KeyPath<Iterator.Element, VariableType>, ascending: Bool = true) {
+        sort {ascending ? $0[keyPath: keypath] < $1[keyPath: keypath] : $0[keyPath: keypath] > $1[keyPath: keypath]}
     }
     
 }

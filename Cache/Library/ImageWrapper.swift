@@ -2,20 +2,20 @@ import UIKit
 import AVFoundation
 
 
-//fileprivate extension UIImage{
+//fileprivate extension UIImage {
 //
 //    convenience init?(heicData: Data) {
-//        if let source = CGImageSourceCreateWithData(heicData as CFData, nil), let image = CGImageSourceCreateImageAtIndex(source, 0, nil){
+//        if let source = CGImageSourceCreateWithData(heicData as CFData, nil), let image = CGImageSourceCreateImageAtIndex(source, 0, nil) {
 //            self.init(cgImage: image)
 //        }
-//        else{
+//        else {
 //            return nil
 //        }
 //    }
 //
-//    func heicRepresentation()-> Data?{
+//    func heicRepresentation()-> Data? {
 //        let imageData = NSMutableData()
-//        if let destination = CGImageDestinationCreateWithData(imageData as CFMutableData, AVFileType.heic.rawValue as CFString, 1, nil){
+//        if let destination = CGImageDestinationCreateWithData(imageData as CFMutableData, AVFileType.heic.rawValue as CFString, 1, nil) {
 //            CGImageDestinationAddImage(destination, cgImage!, nil)
 //            CGImageDestinationFinalize(destination)
 //            return imageData as Data

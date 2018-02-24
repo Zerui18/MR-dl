@@ -8,13 +8,13 @@
 
 import Foundation
 
-public struct MRShortMeta: Codable{
+public struct MRShortMeta: Codable {
     
     public let name: String
     public let oid: String
     public let thumbnailURL: URL?
     
-    enum CodingKeys: String, CodingKey{
+    enum CodingKeys: String, CodingKey {
         case name, oid
         case thumbnailURL = "thumbnail"
     }

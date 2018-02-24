@@ -13,8 +13,8 @@ class ChapterTableViewCell: UITableViewCell {
     
     static let identifier = "chapterCell"
 
-    var chapterDataProvider: ChapterDataProvider!{
-        didSet{
+    var chapterDataProvider: ChapterDataProvider! {
+        didSet {
             titleLabel.text = chapterDataProvider[.name]
             lastUpdatedLabel.text = chapterDataProvider[.lastUpdatedDescription]
         }

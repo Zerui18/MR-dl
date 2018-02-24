@@ -16,18 +16,18 @@ private func freeWebPData(info: UnsafeMutableRawPointer?, data: UnsafeRawPointer
     free(UnsafeMutableRawPointer(mutating: data))
 }
 
-extension UIImage{
+extension UIImage {
     
     //MARK: Inits
     
     convenience init?(webPData data: Data) {
-        guard let decodedImage = UIImage.webPDataToCGImage(data: data) else{
+        guard let decodedImage = UIImage.webPDataToCGImage(data: data) else {
             return nil
         }
         self.init(cgImage: decodedImage)
     }
     
-    convenience init?(mriData: Data){
+    convenience init?(mriData: Data) {
         self.init(webPData: MRImageDataDecryptor.decrypt(data: mriData))
     }
     
@@ -37,7 +37,7 @@ extension UIImage{
         var w: CInt = 0, h: CInt = 0
         
         //Get image dimensions
-        guard getWebPInfo(data: data, width: &w, height: &h) else{
+        guard getWebPInfo(data: data, width: &w, height: &h) else {
             return nil
         }
         
@@ -70,15 +70,15 @@ extension UIImage{
     
     //MARK: UTILS
     //Get WebP image info (width and height)
-    static private func getWebPInfo(data: Data, width: UnsafeMutablePointer<CInt>, height: UnsafeMutablePointer<CInt>)-> Bool{
-        return [UInt8](data).withUnsafeBufferPointer({ptr in
+    static private func getWebPInfo(data: Data, width: UnsafeMutablePointer<CInt>, height: UnsafeMutablePointer<CInt>)-> Bool {
+        return [UInt8](data).withUnsafeBufferPointer( {ptr in
             return WebPGetInfo(ptr.baseAddress!, data.count, width, height) == 1
         })
     }
     
 //    private static let noAlphaCodes: [CGImageAlphaInfo] = [.none, .noneSkipLast, .noneSkipFirst]
 //
-//    public var hasAlpha: Bool{
+//    public var hasAlpha: Bool {
 //        let val = !UIImage.noAlphaCodes.contains(cgImage!.alphaInfo)
 //        return val
 //    }
@@ -86,7 +86,7 @@ extension UIImage{
 //    typealias WebPPictureImporter = (UnsafeMutablePointer<WebPPicture>, UnsafeMutablePointer<UInt8>, Int32) -> Int32
 //
 //    public func webPEncoded(withQuality quality: Float=100) -> Data? {
-//        guard let cgImage = cgImage else{
+//        guard let cgImage = cgImage else {
 //            return nil
 //        }
 //        let stride = cgImage.bytesPerRow

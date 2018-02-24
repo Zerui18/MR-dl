@@ -9,24 +9,24 @@
 import CoreData
 import MRClient
 
-class LocalMangaDataSource{
+class LocalMangaDataSource {
     
     static let shared = LocalMangaDataSource()
     var series: [MRSerie]
     
-    init(){
+    init() {
         series = try! CoreDataHelper.shared.fetchAllSeries()
     }
     
-    var numberOfSeries: Int{
+    var numberOfSeries: Int {
         return series.count
     }
 
-    func getSerie(forOid oid: String)-> MRSerie?{
-        return series.first{$0.oid == oid}
+    func getSerie(forOid oid: String)-> MRSerie? {
+        return series.first {$0.oid == oid}
     }
     
-    func createSerie(withMeta meta: MRSerieMeta)throws -> MRSerie{
+    func createSerie(withMeta meta: MRSerieMeta)throws -> MRSerie {
         let serieRecord = try MRSerie(fromMeta: meta)
         serieRecord.updateInfo(withMeta: meta)
         CoreDataHelper.shared.tryToSave()
@@ -44,7 +44,7 @@ class LocalMangaDataSource{
 }
 
 
-extension Notification.Name{
+extension Notification.Name {
     
     static let serieAddedNotification = Notification.Name("SerieDownloadedNotificationName")
     

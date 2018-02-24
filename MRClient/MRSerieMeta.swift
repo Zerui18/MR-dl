@@ -15,13 +15,13 @@ let dateFormatter: DateFormatter = {
 }()
 
 
-public class MRSerieMeta: NSObject, Codable{
+public class MRSerieMeta: NSObject, Codable {
     
-    @objc public var statusDescription: String{
+    @objc public var statusDescription: String {
         return (completed ? "Completed, ":"Ongoing, ") + "\(chaptersCount) chapters"
     }
     
-    @objc public var lastUpdatedDescription: String{
+    @objc public var lastUpdatedDescription: String {
         return dateFormatter.string(from: updated)
     }
     
@@ -39,7 +39,7 @@ public class MRSerieMeta: NSObject, Codable{
     
     public var chapters: [MRChapterMeta]!
     
-    enum CodingKeys: String, CodingKey{
+    enum CodingKeys: String, CodingKey {
         case oid, name, author, completed, chapters, alias
         case updated = "last_update", chaptersCount = "total_chapters", thumbnailURL = "thumbnail", coverURL = "cover", artworkURLs = "artworks", serieDescription = "description"
     }

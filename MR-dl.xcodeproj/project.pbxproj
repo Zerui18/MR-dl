@@ -184,7 +184,6 @@
 		0166FDA71FFA8348004B0FA2 /* WebP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebP.framework; sourceTree = "<group>"; };
 		016A77FE1FEBB133009BB0D5 /* ZRNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZRNavigationController.swift; sourceTree = "<group>"; };
 		016A78001FEBC2B9009BB0D5 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
-		016E77E31FFCBA7300BD51ED /* MRImageProcessingPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRImageProcessingPool.swift; sourceTree = "<group>"; };
 		017648871FEA033200B2B7F9 /* SerieSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerieSearchViewController.swift; sourceTree = "<group>"; };
 		017648891FEA038400B2B7F9 /* SerieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerieTableViewCell.swift; sourceTree = "<group>"; };
 		017E7F651FF0C7CD0014E5C5 /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
@@ -367,7 +366,6 @@
 				01BECC681FF8CC2B00646438 /* ChapterDataProvider.swift */,
 				01BECC701FF8D0AF00646438 /* MRChapterDataProvider+Confirmances.swift */,
 				01A34A841FEFA7590022E670 /* MRChapterDownloader.swift */,
-				016E77E31FFCBA7300BD51ED /* MRImageProcessingPool.swift */,
 				2225742F1FE94523005D8865 /* MR_dl.xcdatamodeld */,
 			);
 			path = DataSource;
@@ -1248,7 +1246,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Zerui.MR-dl";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/chenzerui/Desktop/MR-dl/MR-dl/Supporting Files/Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/MR-dl/Supporting Files/Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1279,7 +1277,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Zerui.MR-dl";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/chenzerui/Desktop/MR-dl/MR-dl/Supporting Files/Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/MR-dl/Supporting Files/Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";

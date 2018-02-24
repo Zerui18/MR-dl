@@ -15,7 +15,7 @@ let resultDecoder: JSONDecoder = {
     return d
 }()
 
-extension URLRequest{
+extension URLRequest {
     
     /**
      Fetch and decode a Codable object using the receiver.
@@ -24,16 +24,16 @@ extension URLRequest{
         - error: Optional error raised during the fetch
         - object: Optional fetched object which might be nil due to errors during the process
      */
-    func fetch<T: Codable>(completion:@escaping (_ error: Error?, _ object: T?)-> Void){
+    func fetch<T: Codable>(completion:@escaping (_ error: Error?, _ object: T?)-> Void) {
         URLSession.shared.dataTask(with: self) { (data, _, error) in
-            if error != nil{
+            if error != nil {
                 completion(error, nil)
             }
-            else{
-                do{
+            else {
+                do {
                     completion(nil, try resultDecoder.decode(T.self, from: data!))
                 }
-                catch let decodeError{
+                catch let decodeError {
                     completion(decodeError, nil)
                 }
             }

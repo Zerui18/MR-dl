@@ -21,7 +21,7 @@ public class ZRImageViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public var prefersStatusBarHidden: Bool{
+    override public var prefersStatusBarHidden: Bool {
         return true
     }
     
@@ -36,7 +36,7 @@ public class ZRImageViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
     }
-    private func setupUI(){
+    private func setupUI() {
         imageView.image = image
         scrollView.delegate = self
         
@@ -46,38 +46,38 @@ public class ZRImageViewController: UIViewController {
         shareButton.addTarget(self, action: #selector(share), for: .touchUpInside)
     }
     
-    @objc private func tapped(){
+    @objc private func tapped() {
         let shouldHide = closeButton.isUserInteractionEnabled
         
         UIView.animate(withDuration: 0.4, animations: {
-            if shouldHide{
+            if shouldHide {
                 self.scrollView.backgroundColor = .black
                 self.closeButton.alpha = 0
                 self.shareButton.alpha = 0
             }
-            else{
+            else {
                 self.scrollView.backgroundColor = .white
                 self.closeButton.alpha = 1
                 self.shareButton.alpha = 1
             }
-        }){_ in
+        }) {_ in
             self.closeButton.isUserInteractionEnabled = !shouldHide
             self.shareButton.isUserInteractionEnabled = !shouldHide
         }
     }
     
-    @objc private func close(){
+    @objc private func close() {
         dismiss(animated: true)
     }
     
-    @objc private func share(){
+    @objc private func share() {
         let ctr = UIActivityViewController(activityItems: [image], applicationActivities: nil)
         present(ctr, animated: true)
     }
 
 }
 
-extension ZRImageViewController: UIScrollViewDelegate{
+extension ZRImageViewController: UIScrollViewDelegate {
     
     public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView

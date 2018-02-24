@@ -22,13 +22,13 @@ let dateFormatter: DateFormatter = {
 }()
 
 @objc(MRSerie)
-class MRSerie: NSManagedObject{
+class MRSerie: NSManagedObject {
     
-    @objc var statusDescription: String{
+    @objc var statusDescription: String {
         return (completed ? "Completed, ":"Ongoing, ") + "\(chapters!.count) chapters"
     }
     
-    @objc var lastUpdatedDescription: String{
+    @objc var lastUpdatedDescription: String {
         return dateFormatter.string(from: lastUpdated!)
     }
     
@@ -58,18 +58,18 @@ class MRSerie: NSManagedObject{
         return seriesDirectory.appendingPathComponent(oid!)
     }()
     
-    @objc var artworkURLs: [URL]?{
-        get{
-            if _artworkURLs != nil{
+    @objc var artworkURLs: [URL]? {
+        get {
+            if _artworkURLs != nil {
                 return _artworkURLs
             }
-            else if let data = encodedArtworkURLs{
+            else if let data = encodedArtworkURLs {
                 return try? jsonDecoder.decode([URL].self, from: data)
             }
             return nil
         }
-        set{
-            if let newValue = newValue{
+        set {
+            if let newValue = newValue {
                 encodedArtworkURLs = try! jsonEncoder.encode(newValue)
                 _artworkURLs = newValue
             }
@@ -77,17 +77,17 @@ class MRSerie: NSManagedObject{
     }
     var _artworkURLs: [URL]?
     
-    func updateInfo(withMeta meta: MRSerieMeta){
+    func updateInfo(withMeta meta: MRSerieMeta) {
         self.chaptersCountRaw = Int64(meta.chaptersCount)
         self.completed = meta.completed
         let startIndex = chapters!.count
         let newChapterMetas = meta.chapters.suffix(from: startIndex)
-        for meta in newChapterMetas{
+        for meta in newChapterMetas {
             downloader.addChapter(MRChapter(fromMeta: meta, serie: self))
         }
     }
     
-    func chaptersAsArray()-> [MRChapter]{
+    func chaptersAsArray()-> [MRChapter] {
         return chapters!.array as! [MRChapter]
     }
     

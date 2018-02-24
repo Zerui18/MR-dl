@@ -16,8 +16,8 @@ class SerieCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var coverImageView: ReactiveThumbnailView!
     @IBOutlet weak var titleLabel: UILabel!
     
-    var serie: MRSerie!{
-        didSet{
+    var serie: MRSerie! {
+        didSet {
             titleLabel.text = serie.name
             coverImageView.loadImage(fromURL: serie.thumbnailURL!)
             coverImageView.isUserInteractionEnabled = false

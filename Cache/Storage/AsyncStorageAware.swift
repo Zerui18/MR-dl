@@ -64,7 +64,7 @@ public protocol AsyncStorageAware: class {
 public extension AsyncStorageAware {
   func object<T: Codable>(ofType type: T.Type, forKey key: String, completion: @escaping (Result<T>) -> Void) {
     entry(ofType: type, forKey: key, completion: { (result: Result<Entry<T>>) in
-      completion(result.map({ entry in
+      completion(result.map( { entry in
         return entry.object
       }))
     })
@@ -74,7 +74,7 @@ public extension AsyncStorageAware {
                                 forKey key: String,
                                 completion: @escaping (Result<Bool>) -> Void) {
     object(ofType: type, forKey: key, completion: { (result: Result<T>) in
-      completion(result.map({ _ in
+      completion(result.map( { _ in
         return true
       }))
     })

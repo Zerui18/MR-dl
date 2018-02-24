@@ -8,12 +8,12 @@
 
 import Foundation
 
-public struct MRAPIResponse<T: Codable>: Codable{
+public struct MRAPIResponse<T: Codable>: Codable {
     
     public let statusCode: Int
     public let data: T
     
-    enum CodingKeys: String, CodingKey{
+    enum CodingKeys: String, CodingKey {
         case data
         case statusCode = "code"
     }

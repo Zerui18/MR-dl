@@ -10,7 +10,7 @@ import UIKit
 
 fileprivate let bundle = Bundle(for: ZRPickerViewController.self)
 
-public class ZRPickerViewController: UIViewController{
+public class ZRPickerViewController: UIViewController {
     
     public init(options: [String], selected: Int) {
         self.originalSelection = selected
@@ -47,7 +47,7 @@ public class ZRPickerViewController: UIViewController{
     }
     
     @IBAction func completeSelection() {
-        dismiss(animated: true){
+        dismiss(animated: true) {
             self.onSelection?(self.selectedIndex)
         }
     }
@@ -58,7 +58,7 @@ public class ZRPickerViewController: UIViewController{
     
 }
 
-extension ZRPickerViewController: UIPickerViewDataSource, UIPickerViewDelegate{
+extension ZRPickerViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1

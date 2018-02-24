@@ -20,8 +20,8 @@ class SerieTableViewCell: UITableViewCell {
     @IBOutlet weak var lastUpdatedLabel: UILabel!
     @IBOutlet weak var shortDescriptionLabel: UILabel!
     
-    var oid: String = "placeholder"{
-        didSet{
+    var oid: String = "placeholder" {
+        didSet {
             thumbnailImageView.image = nil
             titleLabel.text = nil
             statusLabel.text = nil
@@ -33,9 +33,9 @@ class SerieTableViewCell: UITableViewCell {
         }
     }
     
-    func fetchSerieMeta(){
+    func fetchSerieMeta() {
         MRClient.getSerieMeta(forOid: oid) {[weak self] (error, response) in
-            if let `self` = self, let serieMeta = response?.data, serieMeta.oid == self.oid{
+            if let `self` = self, let serieMeta = response?.data, serieMeta.oid == self.oid {
                 DispatchQueue.main.async {
                     self.serieMeta = serieMeta
                 }
@@ -43,18 +43,18 @@ class SerieTableViewCell: UITableViewCell {
         }
     }
     
-    var shortMeta: MRShortMeta?{
-        didSet{
-            if let meta = shortMeta{
+    var shortMeta: MRShortMeta? {
+        didSet {
+            if let meta = shortMeta {
                 titleLabel.text = meta.name
                 thumbnailImageView.loadImage(fromURL: meta.thumbnailURL!)
             }
         }
     }
 
-    var serieMeta: MRSerieMeta?{
-        didSet{
-            if let meta = serieMeta{
+    var serieMeta: MRSerieMeta? {
+        didSet {
+            if let meta = serieMeta {
                 statusLabel.text = meta.statusDescription
                 lastUpdatedLabel.text = meta.lastUpdatedDescription
                 shortDescriptionLabel.text = meta.serieDescription

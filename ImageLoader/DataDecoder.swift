@@ -15,7 +15,7 @@ public struct MRIDataDecoder: DataDecoding {
     private let decryptFunction: DataDecryptFunction
     private let decodeFunction: ImageDecodeFunction
     
-    public init(decryptFunction:@escaping DataDecryptFunction, decodeFunction:@escaping ImageDecodeFunction){
+    public init(decryptFunction:@escaping DataDecryptFunction, decodeFunction:@escaping ImageDecodeFunction) {
         self.decryptFunction = decryptFunction
         self.decodeFunction = decodeFunction
     }
@@ -25,8 +25,8 @@ public struct MRIDataDecoder: DataDecoding {
     }
 }
 
-public struct ImageDataDecoder: DataDecoding{
-    public init(){}
+public struct ImageDataDecoder: DataDecoding {
+    public init() {}
     
     public func decode(data: Data, response: URLResponse) -> Image? {
         return UIImage(data: data)

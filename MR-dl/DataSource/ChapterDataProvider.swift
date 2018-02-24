@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum ChapterProperty: String{
+enum ChapterProperty: String {
     case oid, name, numberOfPages, imageURLs, lastUpdatedDescription
 }
 

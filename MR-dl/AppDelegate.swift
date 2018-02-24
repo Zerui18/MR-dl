@@ -21,9 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    var topViewController: UIViewController?{
-        if var topVC = window?.rootViewController{
-            while let presented = topVC.presentedViewController, !(presented is UIAlertController){
+    var topViewController: UIViewController? {
+        if var topVC = window?.rootViewController {
+            while let presented = topVC.presentedViewController, !(presented is UIAlertController) {
                 topVC = presented
             }
             return topVC
@@ -55,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // empty implementation for now
     }
     
-    func reportError(error: Error, ofCategory category: String){
+    func reportError(error: Error, ofCategory category: String) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: category+" Error", message: error.localizedDescription, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
@@ -63,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func simpleNotification(title: String, body: String){
+    func simpleNotification(title: String, body: String) {
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body

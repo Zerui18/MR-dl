@@ -8,18 +8,18 @@
 
 import Foundation
 
-protocol MRSerieDownloaderDelegate: class{
+protocol MRSerieDownloaderDelegate: class {
     func downloaderDidDownload(chapter: MRChapter, page: Int, error: Error?)
     func downloaderDidComplete(chapter: MRChapter, originalIndex: Int)
 }
 
-class MRSerieDownloader{
+class MRSerieDownloader {
     
     weak var delegate: MRSerieDownloaderDelegate?
     
     let serie: MRSerie
     let progress: Progress
-    var isFullyDownloaded: Bool{
+    var isFullyDownloaded: Bool {
         return progress.isFinished
     }
     
@@ -31,7 +31,7 @@ class MRSerieDownloader{
     // temporary variable to keep track if the current download was cancelled
     var isCancelled = false
     
-    init(serie: MRSerie){
+    init(serie: MRSerie) {
         self.serie = serie
         let allChapters = serie.chaptersAsArray()
         // initialize progress
@@ -39,45 +39,45 @@ class MRSerieDownloader{
         // new hack to prevent circular reference
         serie.downloader = self
         
-        for chapter in allChapters{
-            if chapter.downloader.state == .downloaded{
+        for chapter in allChapters {
+            if chapter.downloader.state == .downloaded {
                 downloadedChapters.append(chapter)
                 progress.completedUnitCount += 1
             }
-            else{
+            else {
                 notDownloadedChapters.append(chapter)
             }
         }
     }
 
     // add chapter to download queue (when serie is refreshed with the downloader already initialized)
-    func addChapter(_ chapter: MRChapter){
+    func addChapter(_ chapter: MRChapter) {
         progress.totalUnitCount += 1
-        if chapter.downloader.state == .downloaded{
+        if chapter.downloader.state == .downloaded {
             downloadedChapters.append(chapter)
             progress.completedUnitCount += 1
         }
-        else{
+        else {
             notDownloadedChapters.append(chapter)
         }
     }
 
     // begin downloading (in series) the downloadingChapters
-    func beginDownload(){
+    func beginDownload() {
         isCancelled = false
         notDownloadedChapters.first?.downloader.beginDownload()
     }
     
     // cancel download for current-downloading chapter and begin downloading the chapter at the specifed index in the downloadingChapters array
-    func beginDownload(forIndex index: Int){
+    func beginDownload(forIndex index: Int) {
         cancelDownload()
         notDownloadedChapters.insert(notDownloadedChapters.remove(at: index), at: 0)
         beginDownload()
     }
     
     // cancel download for the current-downloadin chapter (if applicable), then post notification regarding this cancellation event
-    func cancelDownload(){
-        if let firstChapter = notDownloadedChapters.first{
+    func cancelDownload() {
+        if let firstChapter = notDownloadedChapters.first {
             isCancelled = true
             firstChapter.downloader.cancelDownload()
         }
@@ -85,11 +85,11 @@ class MRSerieDownloader{
     
 }
 
-extension MRSerieDownloader: MRChapterDownloaderDelegate{
+extension MRSerieDownloader: MRChapterDownloaderDelegate {
 
     func downloaderDidDownload(pageAtIndex index: Int, forChapter chapter: MRChapter, withError error: Error?) {
-        if error == nil{
-            // no error, post notification about progress
+        if error == nil {
+            // no error, update delegate about progress
             delegate?.downloaderDidDownload(chapter: chapter, page: index, error: error)
         }
     }
@@ -98,29 +98,28 @@ extension MRSerieDownloader: MRChapterDownloaderDelegate{
     func downloaderDidComplete(chapter: MRChapter) {
         // do not perform any action if function called due to download cancellation
         // additionally check if chapter's already downloaded -> ignore cancellation and continue to update UI
-        if isCancelled && chapter.downloader.state == .notDownloaded{
-            return
-        }
-        if chapter.downloader.state != .downloaded{
+        guard chapter.downloader.state == .downloaded else {
             // chapter failed to download, cancel all pending chapter downloads
-            cancelDownload()
+            if !isCancelled {
+                cancelDownload()
+            }
             return
         }
         // download successful, update all related arrays & start downloading next chapter
-        guard let originalIndex = notDownloadedChapters.index(of: chapter) else{
+        guard let originalIndex = notDownloadedChapters.index(of: chapter) else {
             return
         }
         notDownloadedChapters.remove(at: originalIndex)
         downloadedChapters.append(chapter)
         downloadedChapters.sortUsingProperty(atKeypath: \.order)
         delegate?.downloaderDidComplete(chapter: chapter, originalIndex: originalIndex)
-        if let nextTask = notDownloadedChapters.first?.downloader{
+        if let nextTask = notDownloadedChapters.first?.downloader {
             nextTask.beginDownload()
         }
-        else{
-            // all download completed, notify serie download completion
-            
-        }
+//        else {
+//            // all download completed, notify serie download completion
+//
+//        }
     }
 
 }

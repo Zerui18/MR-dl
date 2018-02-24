@@ -9,10 +9,10 @@
 import Cache
 import Foundation
 
-public class MRClient{
+public class MRClient {
     
     // MARK: Constant declarations
-    public enum SearchCategory: String{
+    public enum SearchCategory: String {
         case series, character, author
     }
     
@@ -29,7 +29,7 @@ public class MRClient{
         - query: search query string
      - returns: the constructed URLRequest object
      */
-    static func getQuickSearchRequest(forQuery query: String)-> URLRequest{
+    static func getQuickSearchRequest(forQuery query: String)-> URLRequest {
         var request = URLRequest(url: quickSearchURL)
         request.httpMethod = "POST"
         request.httpBody = query.data(using: .utf8)
@@ -43,7 +43,7 @@ public class MRClient{
         - category: the category in which to lookup the query
      - returns: the constructed URLRequest object
      */
-    static func getCompleteSearchRequest(forQuery query: String, category: SearchCategory)-> URLRequest{
+    static func getCompleteSearchRequest(forQuery query: String, category: SearchCategory)-> URLRequest {
         var request = URLRequest(url: searchURL)
         request.httpMethod = "POST"
         let queryDict = ["type" : category.rawValue, "keywords" : query]
@@ -57,7 +57,7 @@ public class MRClient{
         - oids: array of oids to fetch meta for, which can be from a mix of different categories
      - returns: the constructed URLRequest object
      */
-    static func getMetasRequest(forOids oids: [String])-> URLRequest{
+    static func getMetasRequest(forOids oids: [String])-> URLRequest {
         var request = URLRequest(url: getMetasURL)
         request.httpMethod = "POST"
         request.httpBody = try! JSONSerialization.data(withJSONObject: oids, options: [])
@@ -70,7 +70,7 @@ public class MRClient{
         - oid: oid of the serie to fetch meta-data for
      - returns: the constructed URLRequest object
      */
-    static func getSerieMetaRequest(forOid oid: String)-> URLRequest{
+    static func getSerieMetaRequest(forOid oid: String)-> URLRequest {
         let url = URL(string: "https://api.mangarockhd.com/query/web400/info?oid=\(oid)&last=0&country=Singapore")!
         return URLRequest(url: url)
     }
@@ -81,7 +81,7 @@ public class MRClient{
         - oid: oid of the serie to fetch image-urls for
      - returns: the constructed URLRequest object
      */
-    static func getChapterImageUrlsRequest(forOid oid: String)-> URLRequest{
+    static func getChapterImageUrlsRequest(forOid oid: String)-> URLRequest {
         let url = URL(string: "https://api.mangarockhd.com/query/web400/pages?oid=\(oid)&country=Singapore")!
         return URLRequest(url: url)
     }
@@ -92,7 +92,7 @@ public class MRClient{
 //        - oid: oid of the character to fetch meta-data for
 //     - returns: the contructed URLRequest object
 //     */
-//    public static func getCharacterMetaRequest(forOid oid: String)-> URLRequest{
+//    public static func getCharacterMetaRequest(forOid oid: String)-> URLRequest {
 //        let url = URL(string: "https://api.mangarockhd.com/query/web400/character?oid=\(oid)")!
 //        return URLRequest(url: url)
 //    }
@@ -108,7 +108,7 @@ public class MRClient{
         - error: Optional error which might be encountered during fetch
         - response: Optional response which might be nil due to error during fetch
      */
-    public static func quickSearch(forQuery query: String, completion: @escaping (_ error: Error?, _ response: MRQuickSearchResponse?)-> Void){
+    public static func quickSearch(forQuery query: String, completion: @escaping (_ error: Error?, _ response: MRQuickSearchResponse?)-> Void) {
         getQuickSearchRequest(forQuery: query).fetch(completion: completion)
     }
     
@@ -121,7 +121,7 @@ public class MRClient{
         - error: Optional error which might be encountered during fetch
         - response: Optional response which might be nil due to error during fetch
      */
-    public static func completeSearch(forQuery query: String, category: SearchCategory, completion: @escaping (_ error: Error?, _ response: MRCompleteSearchResponse?)-> Void){
+    public static func completeSearch(forQuery query: String, category: SearchCategory, completion: @escaping (_ error: Error?, _ response: MRCompleteSearchResponse?)-> Void) {
         getCompleteSearchRequest(forQuery: query, category: category).fetch(completion: completion)
     }
     
@@ -133,30 +133,30 @@ public class MRClient{
         - error: Optional error which might be encountered during fetch
         - response: Optional response which might be nil due to error during fetch
      */
-    public static func getMetas(forOids oids: [String], completion: @escaping (_ error: Error?, _ response: MRShortMetasResponse?)-> Void){
+    public static func getMetas(forOids oids: [String], completion: @escaping (_ error: Error?, _ response: MRShortMetasResponse?)-> Void) {
         var oids = oids
         var metas = [String:MRShortMeta]()
         DispatchQueue.global(qos: .userInitiated).async {
-            for (index, oid) in oids.enumerated().reversed(){
-                if let meta = try? metaStorage.object(ofType: MRShortMeta.self, forKey: "meta-"+oid){
+            for (index, oid) in oids.enumerated().reversed() {
+                if let meta = try? metaStorage.object(ofType: MRShortMeta.self, forKey: "meta-"+oid) {
                     oids.remove(at: index)
                     metas[oid] = meta
                 }
             }
-            guard !oids.isEmpty else{
+            guard !oids.isEmpty else {
                 completion(nil, MRShortMetasResponse(statusCode: 0, data: metas))
                 return
             }
             getMetasRequest(forOids: oids).fetch(completion: { (error, response: MRShortMetasResponse?) in
-                if let newMetas = response?.data{
-                    for (oid, meta) in newMetas{
+                if let newMetas = response?.data {
+                    for (oid, meta) in newMetas {
                         try! metaStorage.setObject(meta, forKey: "meta-"+oid)
                     }
                     metas.merge(newMetas, uniquingKeysWith: {meta1, meta2 in
                         return meta1
                     })
                 }
-                else if metas.isEmpty{
+                else if metas.isEmpty {
                     completion(error, nil)
                     return
                 }
@@ -173,7 +173,7 @@ public class MRClient{
         - error: Optional error which might be encountered during fetch
         - response: Optional response which might be nil due to error during fetch
      */
-    public static func getSerieMeta(forOid oid: String, completion: @escaping (_ error: Error?, _ response: MRSerieMetaResponse?)-> Void){
+    public static func getSerieMeta(forOid oid: String, completion: @escaping (_ error: Error?, _ response: MRSerieMetaResponse?)-> Void) {
         getSerieMetaRequest(forOid: oid).fetch(completion: completion)
     }
     
@@ -185,7 +185,7 @@ public class MRClient{
         - error: Optional error which might be encountered during fetch
         - response: Optional response which might be nil due to error during fetch
      */
-    public static func getChapterImageURLs(forOid oid: String, completion: @escaping (_ error: Error?, _ response: MRSerieImageURLsResponse?)-> Void){
+    public static func getChapterImageURLs(forOid oid: String, completion: @escaping (_ error: Error?, _ response: MRSerieImageURLsResponse?)-> Void) {
         getChapterImageUrlsRequest(forOid: oid).fetch(completion: completion)
     }
     
@@ -197,7 +197,7 @@ public class MRClient{
 //        - error: Optional error which might be encountered during fetch
 //        - response: Optional response which might be nil due to error during fetch
 //     */
-//    public static func getCharacterMeta(forOid oid: String, completion: @escaping (_ error: Error?, _ response: MRCharacterMetaResponse?)-> Void){
+//    public static func getCharacterMeta(forOid oid: String, completion: @escaping (_ error: Error?, _ response: MRCharacterMetaResponse?)-> Void) {
 //        getCharacterMetaRequest(forOid: oid).fetch(completion: completion)
 //    }
     

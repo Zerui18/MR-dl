@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SerieProperty: String{
+enum SerieProperty: String {
     case oid, name, thumbnailURL, author, lastUpdated, coverURL, serieDescription, artworkURLs, completed, chaptersCount, statusDescription, lastUpdatedDescription
 }
 

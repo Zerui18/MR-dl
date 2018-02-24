@@ -64,7 +64,7 @@ class NVActivityIndicatorAnimationBallClipRotateMultiple: NVActivityIndicatorAni
     }
 }
 
-func ringTwoHalfVertical(size: CGSize, color: UIColor)-> CALayer{
+func ringTwoHalfVertical(size: CGSize, color: UIColor)-> CALayer {
     let layer: CAShapeLayer = CAShapeLayer()
     let path: UIBezierPath = UIBezierPath()
     let lineWidth: CGFloat = 2
@@ -93,7 +93,7 @@ func ringTwoHalfVertical(size: CGSize, color: UIColor)-> CALayer{
     return layer
 }
 
-func ringTwoHalfHorizontal(size: CGSize, color: UIColor)-> CALayer{
+func ringTwoHalfHorizontal(size: CGSize, color: UIColor)-> CALayer {
     let layer: CAShapeLayer = CAShapeLayer()
     let path: UIBezierPath = UIBezierPath()
     let lineWidth: CGFloat = 2

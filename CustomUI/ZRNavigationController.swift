@@ -11,80 +11,80 @@ import UIKit
 public class ZRNavigationController: UINavigationController {
     
 
-    public var isStatusBarHidden = false{
-        didSet{
+    public var isStatusBarHidden = false {
+        didSet {
             setNeedsStatusBarAppearanceUpdate()
         }
     }
     
-    public var statusBarStyleVar: UIStatusBarStyle = .default{
-        didSet{
+    public var statusBarStyleVar: UIStatusBarStyle = .default {
+        didSet {
             setNeedsStatusBarAppearanceUpdate()
         }
     }
     
-    public var isNavigationBarTransparent: Bool = false{
-        didSet{
-            if isNavigationBarTransparent{
+    public var isNavigationBarTransparent: Bool = false {
+        didSet {
+            if isNavigationBarTransparent {
                 navigationBar.setBackgroundImage(UIImage(), for: .default)
                 navigationBar.shadowImage = UIImage()
             }
-            else{
+            else {
                 navigationBar.setBackgroundImage(nil, for: .default)
                 navigationBar.shadowImage = nil
             }
         }
     }
     
-    override public var prefersStatusBarHidden: Bool{
+    override public var prefersStatusBarHidden: Bool {
         return isStatusBarHidden
     }
     
-    override public var preferredStatusBarUpdateAnimation: UIStatusBarAnimation{
+    override public var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .fade
     }
     
-    override public var preferredStatusBarStyle: UIStatusBarStyle{
+    override public var preferredStatusBarStyle: UIStatusBarStyle {
         return statusBarStyleVar
     }
     
 }
 
-public extension UIViewController{
+public extension UIViewController {
     
-    public var shouldHideStatusBar: Bool?{
-        get{
+    public var shouldHideStatusBar: Bool? {
+        get {
             return (navigationController as? ZRNavigationController)?.isStatusBarHidden
         }
-        set{
+        set {
             (navigationController as? ZRNavigationController)?.isStatusBarHidden = newValue!
         }
     }
     
-    public var isNavBarTransparent: Bool?{
-        get{
+    public var isNavBarTransparent: Bool? {
+        get {
             return (navigationController as? ZRNavigationController)?.isNavigationBarTransparent
         }
-        set{
+        set {
             (navigationController as? ZRNavigationController)?.isNavigationBarTransparent = newValue!
         }
     }
    
     
-    public var navBarItemsTintColor: UIColor?{
-        get{
+    public var navBarItemsTintColor: UIColor? {
+        get {
             return navigationController?.navigationBar.tintColor
         }
-        set{
+        set {
             navigationController?.navigationBar.tintColor = newValue
         }
     }
     
-    public var statusBarStyle: UIStatusBarStyle?{
-        get{
+    public var statusBarStyle: UIStatusBarStyle? {
+        get {
             return (navigationController as? ZRNavigationController)?.statusBarStyleVar
         }
-        set{
+        set {
             (navigationController as? ZRNavigationController)?.statusBarStyleVar = newValue!
         }
     }

@@ -8,13 +8,13 @@
 
 import UIKit
 
-public extension UIView{
+public extension UIView {
     
-    public var parentViewController: UIViewController?{
+    public var parentViewController: UIViewController? {
         var parentResponder: UIResponder? = self
-        while parentResponder != nil{
+        while parentResponder != nil {
             parentResponder = parentResponder!.next
-            if parentResponder! is UIViewController{
+            if parentResponder! is UIViewController {
                 break
             }
         }

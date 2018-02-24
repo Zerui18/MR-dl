@@ -114,14 +114,14 @@ public final class Manager: Loading {
     // MARK: Memory Cache Helpers
 
     public func cachedImage(for request: Request) -> Image? {
-        if let cache = cache{
+        if let cache = cache {
             return try? cache.object(ofType: ImageWrapper.self, forKey: request.urlRequest.url!.absoluteString).image
         }
         return nil
     }
 
     private func store(image: Image, for request: Request) {
-        if let cache = cache{
+        if let cache = cache {
             try? cache.setObject(ImageWrapper(image: image), forKey: request.urlRequest.url!.absoluteString, expiry: .never)
         }
     }

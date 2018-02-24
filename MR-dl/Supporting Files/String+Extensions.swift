@@ -8,9 +8,9 @@
 
 import UIKit
 
-extension String{
+extension String {
     
-    func height(forWidth width: CGFloat, font: UIFont)-> CGFloat{
+    func height(forWidth width: CGFloat, font: UIFont)-> CGFloat {
         let constrainedSize = CGSize(width: width, height: .greatestFiniteMagnitude)
         let boundingBox = (self as NSString).boundingRect(with: constrainedSize, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
         return ceil(boundingBox.height)

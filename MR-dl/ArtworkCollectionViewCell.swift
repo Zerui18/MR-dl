@@ -15,8 +15,8 @@ class ArtworkCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: ReactiveThumbnailView!
     
-    var artworkURL: URL!{
-        didSet{
+    var artworkURL: URL! {
+        didSet {
             imageView.image = nil
             imageView.loadImage(fromURL: artworkURL)
         }

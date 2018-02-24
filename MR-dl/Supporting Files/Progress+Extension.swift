@@ -8,9 +8,9 @@
 
 import Foundation
 
-extension Progress{
+extension Progress {
     
-    var descriptionInUnit: String{
+    var descriptionInUnit: String {
         return "\(completedUnitCount)/\(totalUnitCount)"
     }
     

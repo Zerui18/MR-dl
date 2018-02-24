@@ -10,11 +10,11 @@ import ImageLoader
 import CustomUI
 import MRClient
 
-class SerieDetailsViewController: UIViewController{
+class SerieDetailsViewController: UIViewController {
     
     static let storyboardID = "serieDetailsCtr"
     
-    static func `init`(dataProvider: SerieDataProvider)-> SerieDetailsViewController{
+    static func `init`(dataProvider: SerieDataProvider)-> SerieDetailsViewController {
         let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: storyboardID) as! SerieDetailsViewController
         ctr.serieDataProvider = dataProvider
         return ctr
@@ -52,7 +52,7 @@ class SerieDetailsViewController: UIViewController{
     
     var serieDataProvider: SerieDataProvider!
     
-    var isLocalSource: Bool{
+    var isLocalSource: Bool {
         return serieDataProvider is MRSerie
     }
     
@@ -95,7 +95,7 @@ class SerieDetailsViewController: UIViewController{
     }
     
     
-    private func setupUI(){
+    private func setupUI() {
         scrollView.delegate = self
         refreshControl.tintColor = .white
         refreshControl.translatesAutoresizingMaskIntoConstraints = false
@@ -122,25 +122,25 @@ class SerieDetailsViewController: UIViewController{
         loadCoverImage(fromURL: coverURL)
         
         let artworkURLs: [URL] = serieDataProvider[.artworkURLs]!
-        if !artworkURLs.isEmpty{
+        if !artworkURLs.isEmpty {
             artworksPreheater.startPreheating(with: artworkURLs.map(Request.init))
             artworksCollectionView.dataSource = self
         }
-        else{
+        else {
             artworksLabel.removeFromSuperview()
             artworksCollectionView.removeFromSuperview()
         }
         
-        if isLocalSource{
+        if isLocalSource {
             saveBarButton.isEnabled = false
         }
-        else{
+        else {
             saveBarButton.target = self
             saveBarButton.action = #selector(saveSerie)
         }
     }
     
-    private func loadCoverImage(fromURL url: URL){
+    private func loadCoverImage(fromURL url: URL) {
         coverImageView.loadImage(fromURL: url) { (image) in
             self.coverImageAspectRatioConstraint.isActive = false
             self.placeholderViewAspectRatioConstraint.isActive = false
@@ -151,25 +151,25 @@ class SerieDetailsViewController: UIViewController{
         }
     }
     
-    @objc private func refreshSerie(){
+    @objc private func refreshSerie() {
         MRClient.getSerieMeta(forOid: serieDataProvider[.oid]!) {[weak self] (error, response) in
-            guard let strongSelf = self else{
+            guard let strongSelf = self else {
                 return
             }
             DispatchQueue.main.async {
-                if let meta = response?.data{
+                if let meta = response?.data {
                     let dataProvider = strongSelf.serieDataProvider!
-                    if let serie = dataProvider as? MRSerie{
+                    if let serie = dataProvider as? MRSerie {
                         serie.updateInfo(withMeta: meta)
                     }
-                    else{
+                    else {
                         strongSelf.serieDataProvider = meta
                     }
                     strongSelf.statusLabel.text = dataProvider[.statusDescription]
                     strongSelf.updateDateLabel.text = dataProvider[.lastUpdatedDescription]
                     CoreDataHelper.shared.tryToSave()
                 }
-                else{
+                else {
                     AppDelegate.shared.reportError(error: error!, ofCategory: "Load Serie")
                 }
                 strongSelf.refreshControl.endRefreshing()
@@ -177,33 +177,33 @@ class SerieDetailsViewController: UIViewController{
         }
     }
     
-    @objc private func saveSerie(){
-        do{
+    @objc private func saveSerie() {
+        do {
             let localSerie = try LocalMangaDataSource.shared.createSerie(withMeta: serieDataProvider as! MRSerieMeta)
             serieDataProvider = localSerie
             saveBarButton.isEnabled = false
         }
-        catch{
+        catch {
             AppDelegate.shared.reportError(error: error, ofCategory: "Save Serie")
         }
         
     }
 
-    @objc private func showChaptersTable(){
+    @objc private func showChaptersTable() {
         let chaptersTableCtr = ChaptersTableViewController(dataProvider: serieDataProvider)
-        if navigationController!.navigationBar.isHidden{
+        if navigationController!.navigationBar.isHidden {
             navigationController?.setNavigationBarHidden(false, animated: true)
         }
         navigationController?.pushViewController(chaptersTableCtr, animated: true)
     }
     
-    @objc private func toggleCollapse(){
+    @objc private func toggleCollapse() {
         UIView.animate(withDuration: defaultAnimationDuration) {
-            if self.descriptionHeightConstraint.isActive{
+            if self.descriptionHeightConstraint.isActive {
                 self.toggleCollapseButton.transform = CGAffineTransform(rotationAngle: -.pi)
                 self.descriptionHeightConstraint.isActive = false
             }
-            else{
+            else {
                 self.toggleCollapseButton.transform = CGAffineTransform(rotationAngle: 0)
                 self.descriptionHeightConstraint.isActive = true
             }
@@ -213,7 +213,7 @@ class SerieDetailsViewController: UIViewController{
     
 }
 
-extension SerieDetailsViewController: UICollectionViewDataSource{
+extension SerieDetailsViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return artworkURLs.count
@@ -227,14 +227,14 @@ extension SerieDetailsViewController: UICollectionViewDataSource{
     
 }
 
-extension SerieDetailsViewController: UIScrollViewDelegate{
+extension SerieDetailsViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let shouldShowNavigationBar = scrollView.contentOffset.y < 50
-        if shouldShowNavigationBar && (navigationController?.isNavigationBarHidden ?? false){
+        if shouldShowNavigationBar && (navigationController?.isNavigationBarHidden ?? false) {
             navigationController?.setNavigationBarHidden(false, animated: true)
         }
-        else if !shouldShowNavigationBar && !(navigationController?.isNavigationBarHidden ?? true){
+        else if !shouldShowNavigationBar && !(navigationController?.isNavigationBarHidden ?? true) {
             navigationController?.setNavigationBarHidden(true, animated: true)
         }
     }

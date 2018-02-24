@@ -11,26 +11,26 @@ import UIKit
 @IBDesignable
 public class ZRBorderedButton: UIButton {
     
-    @IBInspectable public var borderColor: UIColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1){
-        didSet{
+    @IBInspectable public var borderColor: UIColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+        didSet {
             layer.borderColor = borderColor.cgColor
         }
     }
     
-    @IBInspectable public var borderWidth: CGFloat = 1{
-        didSet{
+    @IBInspectable public var borderWidth: CGFloat = 1 {
+        didSet {
             layer.borderWidth = borderWidth
         }
     }
     
-    @IBInspectable public var cornerRadius: CGFloat = 10{
-        didSet{
+    @IBInspectable public var cornerRadius: CGFloat = 10 {
+        didSet {
             layer.cornerRadius = cornerRadius
         }
     }
 
-    override public var isHighlighted: Bool{
-        didSet{
+    override public var isHighlighted: Bool {
+        didSet {
             self.layer.borderColor = isHighlighted ? titleColor(for: .highlighted)!.cgColor:self.borderColor.cgColor
         }
     }

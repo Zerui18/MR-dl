@@ -8,14 +8,14 @@
 
 import Foundation
 
-public class MRImageDataDecryptor{
+public class MRImageDataDecryptor {
     
-    public static func decrypt(data: Data)-> Data{
+    public static func decrypt(data: Data)-> Data {
         var array = [UInt8](data)
         
         var newArray = [UInt8](repeating: 0, count: array.count + 15)
         
-        if array[0] == 69{
+        if array[0] == 69 {
             
             let n = array.count + 7
             newArray[0] = 82
@@ -33,7 +33,7 @@ public class MRImageDataDecryptor{
             newArray[12] = 86
             newArray[13] = 80
             newArray[14] = 56
-            for i in 0..<array.count{
+            for i in 0..<array.count {
                 newArray[i + 15] = 101 ^ array[i]
             }
             

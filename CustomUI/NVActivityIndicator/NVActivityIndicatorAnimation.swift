@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NVActivityIndicatorAnimationBallTrianglePath: NVActivityIndicatorAnimationDelegate{
+class NVActivityIndicatorAnimationBallTrianglePath: NVActivityIndicatorAnimationDelegate {
     
     func setUpAnimation(in layer: CALayer, size: CGSize, color: UIColor) {
         let circleSize = size.width / 5
@@ -31,7 +31,7 @@ class NVActivityIndicatorAnimationBallTrianglePath: NVActivityIndicatorAnimation
         // Top-center circle
         let topCenterCircle = ring(size: CGSize(width: circleSize, height: circleSize), color: color)
         
-        changeAnimation(animation, values: ["{0,0}", "{hx,fy}", "{-hx,fy}", "{0,0}"], deltaX: deltaX, deltaY: deltaY)
+        changeAnimation(animation, values: [" {0,0}", " {hx,fy}", " {-hx,fy}", " {0,0}"], deltaX: deltaX, deltaY: deltaY)
         topCenterCircle.frame = CGRect(x: x + size.width / 2 - circleSize / 2, y: y, width: circleSize, height: circleSize)
         topCenterCircle.add(animation, forKey: "animation")
         layer.addSublayer(topCenterCircle)
@@ -39,7 +39,7 @@ class NVActivityIndicatorAnimationBallTrianglePath: NVActivityIndicatorAnimation
         // Bottom-left circle
         let bottomLeftCircle = ring(size: CGSize(width: circleSize, height: circleSize), color: color)
         
-        changeAnimation(animation, values: ["{0,0}", "{hx,-fy}", "{fx,0}", "{0,0}"], deltaX: deltaX, deltaY: deltaY)
+        changeAnimation(animation, values: [" {0,0}", " {hx,-fy}", " {fx,0}", " {0,0}"], deltaX: deltaX, deltaY: deltaY)
         bottomLeftCircle.frame = CGRect(x: x, y: y + size.height - circleSize, width: circleSize, height: circleSize)
         bottomLeftCircle.add(animation, forKey: "animation")
         layer.addSublayer(bottomLeftCircle)
@@ -48,7 +48,7 @@ class NVActivityIndicatorAnimationBallTrianglePath: NVActivityIndicatorAnimation
         
         let bottomRightCircle = ring(size: CGSize(width: circleSize, height: circleSize), color: color)
         
-        changeAnimation(animation, values: ["{0,0}", "{-fx,0}", "{-hx,-fy}", "{0,0}"], deltaX: deltaX, deltaY: deltaY)
+        changeAnimation(animation, values: [" {0,0}", " {-fx,0}", " {-hx,-fy}", " {0,0}"], deltaX: deltaX, deltaY: deltaY)
         bottomRightCircle.frame = CGRect(x: x + size.width - circleSize, y: y + size.height - circleSize, width: circleSize, height: circleSize)
         bottomRightCircle.add(animation, forKey: "animation")
         layer.addSublayer(bottomRightCircle)
@@ -83,7 +83,7 @@ class NVActivityIndicatorAnimationBallTrianglePath: NVActivityIndicatorAnimation
     }
 }
 
-fileprivate func ring(size: CGSize, color: UIColor)-> CALayer{
+fileprivate func ring(size: CGSize, color: UIColor)-> CALayer {
     let layer: CAShapeLayer = CAShapeLayer()
     let path: UIBezierPath = UIBezierPath()
     let lineWidth: CGFloat = 2

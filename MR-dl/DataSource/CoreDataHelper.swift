@@ -8,7 +8,7 @@
 
 import CoreData
 
-class CoreDataHelper{
+class CoreDataHelper {
     
     static let shared = CoreDataHelper()
     
@@ -17,39 +17,39 @@ class CoreDataHelper{
        return persistentContainer.viewContext
     }()
     
-    init(){
+    init() {
         persistentContainer = NSPersistentContainer(name: "MR_dl")
         persistentContainer.loadPersistentStores { (_, error) in
             assert(error == nil, "Error initializing CoreData stack : \(error!)")
         }
     }
     
-    func tryToSave(){
+    func tryToSave() {
         mainMOC.perform {
-            do{
+            do {
                 try self.mainMOC.save()
             }
-            catch{
+            catch {
                 print("Error saving CoreData main context!")
             }
         }
     }
         
-    func deleteObject(_ object: NSManagedObject){
+    func deleteObject(_ object: NSManagedObject) {
         mainMOC.performAndWait {
             self.mainMOC.delete(object)
         }
     }
     
-    func fetchAllSeries()throws -> [MRSerie]{
+    func fetchAllSeries()throws -> [MRSerie] {
         return try mainMOC.fetch(MRSerie.fetchRequest())
     }
     
 }
 
-extension NSManagedObjectContext{
+extension NSManagedObjectContext {
     
-    static var main: NSManagedObjectContext{
+    static var main: NSManagedObjectContext {
         return CoreDataHelper.shared.mainMOC
     }
     

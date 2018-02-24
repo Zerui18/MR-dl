@@ -18,12 +18,12 @@ class SerieCollectionViewController: UICollectionViewController {
         collectionView!.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressed(_:))))
     }
     
-    @objc private func serieAddedNotification(){
+    @objc private func serieAddedNotification() {
         collectionView!.insertItems(at: [IndexPath(item: LocalMangaDataSource.shared.numberOfSeries-1, section: 0)])
     }
     
-    @objc private func longPressed(_ sender: UILongPressGestureRecognizer){
-        if sender.state == .began, let indexPath = collectionView!.indexPathForItem(at: sender.location(in: collectionView!)){
+    @objc private func longPressed(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == .began, let indexPath = collectionView!.indexPathForItem(at: sender.location(in: collectionView!)) {
             let serie = LocalMangaDataSource.shared.series[indexPath.item]
             let alert = UIAlertController(title: "Actions", message: serie.name, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: {_ in
@@ -37,7 +37,7 @@ class SerieCollectionViewController: UICollectionViewController {
 
 }
 
-extension SerieCollectionViewController{
+extension SerieCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return LocalMangaDataSource.shared.numberOfSeries

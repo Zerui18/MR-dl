@@ -9,7 +9,7 @@
 import Foundation
 
 @objcMembers
-public class MRCharacterMeta: Codable{
+public class MRCharacterMeta: Codable {
     
     public var oid: String!
     public var name: String!
@@ -17,7 +17,7 @@ public class MRCharacterMeta: Codable{
     public var thumbnailURL: URL!
     public var artworkURLs: [URL]!
     
-    enum CodingKeys: String, CodingKey{
+    enum CodingKeys: String, CodingKey {
         case oid, name
         case bioMarkup = "bio", thumbnailURL = "thumbnail", artworkURLs = "artworks"
     }

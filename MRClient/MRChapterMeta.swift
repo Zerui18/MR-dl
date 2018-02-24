@@ -8,9 +8,9 @@
 
 import UIKit
 
-public class MRChapterMeta: NSObject, Codable{
+public class MRChapterMeta: NSObject, Codable {
     
-    @objc public var lastUpdatedDescription: String{
+    @objc public var lastUpdatedDescription: String {
         return dateFormatter.string(from: lastUpdated)
     }
     
@@ -21,16 +21,16 @@ public class MRChapterMeta: NSObject, Codable{
     
     @objc public var imageURLs: [URL]?
     
-    enum CodingKeys: String, CodingKey{
+    enum CodingKeys: String, CodingKey {
         case oid, order, name, imageURLs
         case lastUpdated = "updatedAt"
     }
     
-    public func fetchImageURLs(completion:@escaping ([URL]?)-> Void){
-        if imageURLs != nil{
+    public func fetchImageURLs(completion:@escaping ([URL]?)-> Void) {
+        if imageURLs != nil {
             completion(imageURLs)
         }
-        else{
+        else {
             MRClient.getChapterImageURLs(forOid: oid) { (_, response) in
                 self.imageURLs = response?.data
                 completion(response?.data)
