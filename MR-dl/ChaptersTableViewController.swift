@@ -64,6 +64,19 @@ class ChaptersTableViewController: UITableViewController {
         }
     }
     
+    func selectChapter(index: Int) {
+        let rowIndex: Int
+        
+        if let serie = localSerie {
+            rowIndex = serie.downloader.downloadedChapters.index(where: {$0.order == index})!
+        }
+        else{
+            rowIndex = (serieDataProvider as! MRSerieMeta).chapters.index(where: {$0.order == index})!
+        }
+        
+        tableView.selectRow(at: IndexPath(row: rowIndex, section: 0), animated: false, scrollPosition: .middle)
+    }
+    
 }
 
 

@@ -124,12 +124,19 @@ class ChapterImagesPageViewController: UIPageViewController {
     
     // fetch image urls for current chapter
     private func fetchImageURLs(forChapterIndex index: Int) {
+        
+        func updateSelectedRow(){
+            let tableCtr = navigationController!.viewControllers[navigationController!.viewControllers.count-2] as! ChaptersTableViewController
+            tableCtr.selectChapter(index: chapterIndex)
+        }
+        
         let oldIndex = chapterIndex
         chapterIndex = index
         
         // set chapterImageURLs right away for local source
         if let localChapter = chapterDataProvider as? MRChapter {
             chapterImageURLs = localChapter.sortedLocalImageURLs()
+            updateSelectedRow()
         }
         else {
             // load-from-remote style
@@ -140,6 +147,7 @@ class ChapterImagesPageViewController: UIPageViewController {
                     if urls != nil {
                         blockingAlert.dismiss(animated: true)
                         self.chapterImageURLs = urls
+                        updateSelectedRow()
                     }
                     else {
                         self.chapterIndex = oldIndex
