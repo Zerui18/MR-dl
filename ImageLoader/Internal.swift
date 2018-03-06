@@ -13,8 +13,8 @@ internal final class Lock {
 
     deinit {
         pthread_mutex_destroy(mutex)
-        mutex.deinitialize()
-        mutex.deallocate(capacity: 1)
+        mutex.deinitialize(count: 1)
+        mutex.deallocate()
     }
 
     func sync<T>(_ closure: () -> T) -> T {

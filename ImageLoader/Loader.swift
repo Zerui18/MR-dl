@@ -162,7 +162,7 @@ public final class Loader: Loading {
 
     private func _progress(completed: Int64, total: Int64, task: DeduplicatedTask) {
         queue.async {
-            let handlers = task.handlers.flatMap { $0.progress }
+            let handlers = task.handlers.compactMap { $0.progress }
             guard !handlers.isEmpty else { return }
             DispatchQueue.main.async { handlers.forEach { $0(completed, total) } }
         }

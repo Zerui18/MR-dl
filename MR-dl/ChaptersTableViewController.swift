@@ -74,7 +74,7 @@ class ChaptersTableViewController: UITableViewController {
             rowIndex = (serieDataProvider as! MRSerieMeta).chapters.index(where: {$0.order == index})!
         }
         
-        tableView.selectRow(at: IndexPath(row: rowIndex, section: 0), animated: false, scrollPosition: .middle)
+        tableView.selectRow(at: IndexPath(row: rowIndex, section: (serieDataProvider is MRSerie) ? 0:1), animated: false, scrollPosition: .middle)
     }
     
 }
