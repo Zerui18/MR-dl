@@ -81,6 +81,11 @@ class MRSerie: NSManagedObject {
         self.chaptersCountRaw = Int64(meta.chaptersCount)
         self.completed = meta.completed
         let startIndex = chapters!.count
+        
+        guard startIndex < meta.chapters.count else {
+            return
+        }
+        
         let newChapterMetas = meta.chapters.suffix(from: startIndex)
         for meta in newChapterMetas {
             downloader.addChapter(MRChapter(fromMeta: meta, serie: self))

@@ -28,6 +28,7 @@
 		015DA8821FFC99FB0050F6DC /* Cache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01CC77DE1FEBFD4300C0128D /* Cache.framework */; };
 		015DA8831FFC9A550050F6DC /* Cache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01CC77DE1FEBFD4300C0128D /* Cache.framework */; };
 		0166FDA81FFA8348004B0FA2 /* WebP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0166FDA71FFA8348004B0FA2 /* WebP.framework */; };
+		016842512052530B00ADD01F /* MRClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016842502052530B00ADD01F /* MRClientTests.swift */; };
 		016A77FF1FEBB133009BB0D5 /* ZRNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016A77FE1FEBB133009BB0D5 /* ZRNavigationController.swift */; };
 		016A78011FEBC2B9009BB0D5 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016A78001FEBC2B9009BB0D5 /* String+Extensions.swift */; };
 		017648881FEA033200B2B7F9 /* SerieSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017648871FEA033200B2B7F9 /* SerieSearchViewController.swift */; };
@@ -122,6 +123,13 @@
 			remoteGlobalIDString = 015A598B1FEA940D0014941E;
 			remoteInfo = CustomUI;
 		};
+		016842532052530B00ADD01F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2225741D1FE94523005D8865 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 222574241FE94523005D8865;
+			remoteInfo = "MR-dl";
+		};
 		01CC77E31FEBFD4300C0128D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2225741D1FE94523005D8865 /* Project object */;
@@ -182,6 +190,9 @@
 		015C5B481FECEB2A00415F1B /* ChapterImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterImageViewController.swift; sourceTree = "<group>"; };
 		015DA87D1FFC8E8B0050F6DC /* UIImage+HEIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+HEIF.swift"; sourceTree = "<group>"; };
 		0166FDA71FFA8348004B0FA2 /* WebP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebP.framework; sourceTree = "<group>"; };
+		0168424E2052530B00ADD01F /* MRClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MRClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		016842502052530B00ADD01F /* MRClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRClientTests.swift; sourceTree = "<group>"; };
+		016842522052530B00ADD01F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		016A77FE1FEBB133009BB0D5 /* ZRNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZRNavigationController.swift; sourceTree = "<group>"; };
 		016A78001FEBC2B9009BB0D5 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		017648871FEA033200B2B7F9 /* SerieSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerieSearchViewController.swift; sourceTree = "<group>"; };
@@ -282,6 +293,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0168424B2052530B00ADD01F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		01CC77DA1FEBFD4300C0128D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -349,6 +367,15 @@
 				015A59831FEA6B290014941E /* NVActivityIndicatorView.swift */,
 			);
 			path = NVActivityIndicator;
+			sourceTree = "<group>";
+		};
+		0168424F2052530B00ADD01F /* MRClientTests */ = {
+			isa = PBXGroup;
+			children = (
+				016842502052530B00ADD01F /* MRClientTests.swift */,
+				016842522052530B00ADD01F /* Info.plist */,
+			);
+			path = MRClientTests;
 			sourceTree = "<group>";
 		};
 		017648861FEA030C00B2B7F9 /* DataSource */ = {
@@ -462,6 +489,7 @@
 				015A598D1FEA940D0014941E /* CustomUI */,
 				01CC77DF1FEBFD4300C0128D /* Cache */,
 				01F9E1601FF1184C00145D72 /* ImageLoader */,
+				0168424F2052530B00ADD01F /* MRClientTests */,
 				222574261FE94523005D8865 /* Products */,
 				22740E6E1FE94B9600B04454 /* Frameworks */,
 			);
@@ -475,6 +503,7 @@
 				015A598C1FEA940D0014941E /* CustomUI.framework */,
 				01CC77DE1FEBFD4300C0128D /* Cache.framework */,
 				01F9E15F1FF1184C00145D72 /* ImageLoader.framework */,
+				0168424E2052530B00ADD01F /* MRClientTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -603,6 +632,24 @@
 			productReference = 015A598C1FEA940D0014941E /* CustomUI.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		0168424D2052530B00ADD01F /* MRClientTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 016842572052530B00ADD01F /* Build configuration list for PBXNativeTarget "MRClientTests" */;
+			buildPhases = (
+				0168424A2052530B00ADD01F /* Sources */,
+				0168424B2052530B00ADD01F /* Frameworks */,
+				0168424C2052530B00ADD01F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				016842542052530B00ADD01F /* PBXTargetDependency */,
+			);
+			name = MRClientTests;
+			productName = MRClientTests;
+			productReference = 0168424E2052530B00ADD01F /* MRClientTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		01CC77DD1FEBFD4300C0128D /* Cache */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 01CC77E91FEBFD4300C0128D /* Build configuration list for PBXNativeTarget "Cache" */;
@@ -685,13 +732,18 @@
 		2225741D1FE94523005D8865 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0920;
+				LastSwiftUpdateCheck = 0930;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Chen Zerui";
 				TargetAttributes = {
 					015A598B1FEA940D0014941E = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+					};
+					0168424D2052530B00ADD01F = {
+						CreatedOnToolsVersion = 9.3;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 222574241FE94523005D8865;
 					};
 					01CC77DD1FEBFD4300C0128D = {
 						CreatedOnToolsVersion = 9.2;
@@ -739,6 +791,7 @@
 				015A598B1FEA940D0014941E /* CustomUI */,
 				01CC77DD1FEBFD4300C0128D /* Cache */,
 				01F9E15E1FF1184C00145D72 /* ImageLoader */,
+				0168424D2052530B00ADD01F /* MRClientTests */,
 			);
 		};
 /* End PBXProject section */
@@ -751,6 +804,13 @@
 				01B6D6C31FED362F00D8A273 /* Assets.xcassets in Resources */,
 				015C5B3A1FECC60500415F1B /* ZRImageViewController.xib in Resources */,
 				018A01071FEE9F4B00191D2A /* ZRPickerViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0168424C2052530B00ADD01F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -803,6 +863,14 @@
 				015A59B01FEAAB480014941E /* ZRImageView.swift in Sources */,
 				015A59AC1FEA94630014941E /* ZRGradientOverlayView.swift in Sources */,
 				015C5B451FECE2DA00415F1B /* NVActivityIndicatorAnimationDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0168424A2052530B00ADD01F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				016842512052530B00ADD01F /* MRClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -915,6 +983,11 @@
 			target = 015A598B1FEA940D0014941E /* CustomUI */;
 			targetProxy = 015A599F1FEA940D0014941E /* PBXContainerItemProxy */;
 		};
+		016842542052530B00ADD01F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 222574241FE94523005D8865 /* MR-dl */;
+			targetProxy = 016842532052530B00ADD01F /* PBXContainerItemProxy */;
+		};
 		01CC77E41FEBFD4300C0128D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 01CC77DD1FEBFD4300C0128D /* Cache */;
@@ -1003,6 +1076,42 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		016842552052530B00ADD01F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 789MW96BQB;
+				INFOPLIST_FILE = MRClientTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Zerui.MRClientTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MR-dl.app/MR-dl";
+			};
+			name = Debug;
+		};
+		016842562052530B00ADD01F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 789MW96BQB;
+				INFOPLIST_FILE = MRClientTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Zerui.MRClientTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MR-dl.app/MR-dl";
 			};
 			name = Release;
 		};
@@ -1240,7 +1349,7 @@
 					"$(PROJECT_DIR)/MR-dl/Supporting\\ Files",
 					"$(PROJECT_DIR)/MR-dl/Supporting\\ Files",
 				);
-				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "$(SRCROOT)/MR-dl/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1248,7 +1357,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Zerui.MR-dl";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/MR-dl/Supporting Files/Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1368,6 +1477,15 @@
 			buildConfigurations = (
 				015A59A31FEA940D0014941E /* Debug */,
 				015A59A41FEA940D0014941E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		016842572052530B00ADD01F /* Build configuration list for PBXNativeTarget "MRClientTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				016842552052530B00ADD01F /* Debug */,
+				016842562052530B00ADD01F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
