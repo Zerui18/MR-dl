@@ -11,7 +11,7 @@ import MRClient
 
 class ChaptersTableViewController: UITableViewController {
     
-    static func `init`(dataProvider: SerieDataProvider)-> ChaptersTableViewController {
+    static func initialise(dataProvider: SerieDataProvider)-> ChaptersTableViewController {
         let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: "chapterDownloadsCtr") as! ChaptersTableViewController
         ctr.serieDataProvider = dataProvider
         return ctr
@@ -99,7 +99,7 @@ extension ChaptersTableViewController {
         }
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: ChapterDownloadTableViewCell.identifier) as! ChapterDownloadTableViewCell
-            cell.chapter = serieDataProvider.chapter(atIndex: indexPath.row, forState: .notDownloaded) as! MRChapter
+            cell.chapter = (serieDataProvider.chapter(atIndex: indexPath.row, forState: .notDownloaded) as! MRChapter)
             return cell
         }
     }
@@ -116,7 +116,7 @@ extension ChaptersTableViewController {
         if indexPath.section == 1 && serieDataProvider is MRSerie {
             return
         }
-        let viewChapterCtr = ChapterImagesPageViewController(dataProvider: serieDataProvider, atChapter: indexPath.row)
+        let viewChapterCtr = ChapterImagesPageViewController.initialise(dataProvider: serieDataProvider, atChapter: indexPath.row)
         navigationController?.pushViewController(viewChapterCtr, animated: true)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }

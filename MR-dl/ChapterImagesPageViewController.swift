@@ -16,7 +16,7 @@ class ChapterImagesPageViewController: UIPageViewController {
     var imagePreheater: Preheater?
     var imageLoadingManager: Manager?
     
-    static func `init`(dataProvider: SerieDataProvider, atChapter chapterIndex: Int)-> ChapterImagesPageViewController {
+    static func initialise(dataProvider: SerieDataProvider, atChapter chapterIndex: Int)-> ChapterImagesPageViewController {
         let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: "chapterImagesCtr") as! ChapterImagesPageViewController
         ctr.serieDataProvider = dataProvider
         ctr.chapterIndex = chapterIndex
@@ -179,7 +179,7 @@ class ChapterImagesPageViewController: UIPageViewController {
             return
         }
         // page flip like physical manga!
-        let reversedFlipDirection: UIPageViewControllerNavigationDirection
+        let reversedFlipDirection: UIPageViewController.NavigationDirection
         
         // if first flipping in new chapter, check for special cases
         if isDifferentChapter {
@@ -197,7 +197,9 @@ class ChapterImagesPageViewController: UIPageViewController {
             reversedFlipDirection = pageIndex >= currentPageIndex ? .reverse:.forward
         }
         
-        setViewControllers([ChapterImageViewController(dataProvider: chapterDataProvider, pageIndex: pageIndex, chapterIndex: chapterIndex)], direction: reversedFlipDirection, animated: true)
+        setViewControllers([
+            ChapterImageViewController.initialise(dataProvider: chapterDataProvider, pageIndex: pageIndex, chapterIndex: chapterIndex)
+            ], direction: reversedFlipDirection, animated: true)
     }
 
 }
@@ -235,7 +237,7 @@ extension ChapterImagesPageViewController: UIPageViewControllerDataSource, UIPag
             }
             else {
                 // load next page
-                return ChapterImageViewController(dataProvider: chapterDataProvider, pageIndex: sourceIndex+1, chapterIndex: chapterIndex)
+                return ChapterImageViewController.initialise(dataProvider: chapterDataProvider, pageIndex: sourceIndex+1, chapterIndex: chapterIndex)
             }
         }
         return nil
@@ -258,7 +260,7 @@ extension ChapterImagesPageViewController: UIPageViewControllerDataSource, UIPag
             }
             else {
                 // load prev page
-                return ChapterImageViewController(dataProvider: chapterDataProvider, pageIndex: sourceIndex-1, chapterIndex: chapterIndex)
+                return ChapterImageViewController.initialise(dataProvider: chapterDataProvider, pageIndex: sourceIndex-1, chapterIndex: chapterIndex)
             }
         }
         return nil

@@ -84,6 +84,7 @@
 		01CC78211FEBFF1400C0128D /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CC77FC1FEBFDDB00C0128D /* Date+Extensions.swift */; };
 		01CC78221FEBFF1800C0128D /* DiskConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CC77FE1FEBFDDB00C0128D /* DiskConfig.swift */; };
 		01CC78231FEBFF1800C0128D /* MemoryConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CC77FF1FEBFDDB00C0128D /* MemoryConfig.swift */; };
+		01E9BB8C208B0C8100C556FB /* Array+Deduplicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E9BB8B208B0C8100C556FB /* Array+Deduplicate.swift */; };
 		01F206231FF276F200C13137 /* CancellationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F206201FF276F200C13137 /* CancellationToken.swift */; };
 		01F206241FF276F200C13137 /* DataDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F206211FF276F200C13137 /* DataDecoder.swift */; };
 		01F206251FF276F200C13137 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F206221FF276F200C13137 /* DataLoader.swift */; };
@@ -247,6 +248,7 @@
 		01CC78081FEBFDDB00C0128D /* AsyncStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncStorage.swift; sourceTree = "<group>"; };
 		01CC78091FEBFDDB00C0128D /* HybridStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HybridStorage.swift; sourceTree = "<group>"; };
 		01D6ED2D1FFCEA1400052395 /* MR-dl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "MR-dl.entitlements"; sourceTree = "<group>"; };
+		01E9BB8B208B0C8100C556FB /* Array+Deduplicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Deduplicate.swift"; sourceTree = "<group>"; };
 		01F206201FF276F200C13137 /* CancellationToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancellationToken.swift; sourceTree = "<group>"; };
 		01F206211FF276F200C13137 /* DataDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataDecoder.swift; sourceTree = "<group>"; };
 		01F206221FF276F200C13137 /* DataLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataLoader.swift; sourceTree = "<group>"; };
@@ -386,6 +388,7 @@
 				017E7F691FF0EC890014E5C5 /* LocalMangaDataSource.swift */,
 				22DC2C341FE9EF4F005F4407 /* MRSerie.swift */,
 				01BECC661FF8CBC100646438 /* SerieDataProvider.swift */,
+				01E9BB8B208B0C8100C556FB /* Array+Deduplicate.swift */,
 				01BECC6A1FF8CDF200646438 /* SerieDataSource+Confirmances.swift */,
 				01A92F9A1FF3DD74009D0A6F /* MRSerieDownloader.swift */,
 				22DC2C361FE9EFFE005F4407 /* MRChapter.swift */,
@@ -733,29 +736,33 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Chen Zerui";
 				TargetAttributes = {
 					015A598B1FEA940D0014941E = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
 					0168424D2052530B00ADD01F = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 222574241FE94523005D8865;
 					};
 					01CC77DD1FEBFD4300C0128D = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
 					01F9E15E1FF1184C00145D72 = {
 						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
 					222574241FE94523005D8865 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -768,7 +775,7 @@
 					};
 					224F48841FE950A3005F5A94 = {
 						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -949,6 +956,7 @@
 				01B6D6C51FED4E7400D8A273 /* ThumbnailLoader.swift in Sources */,
 				01A92F951FF3CF29009D0A6F /* DownloadState.swift in Sources */,
 				01A34A851FEFA7590022E670 /* MRChapterDownloader.swift in Sources */,
+				01E9BB8C208B0C8100C556FB /* Array+Deduplicate.swift in Sources */,
 				0191295F1FEB5E9D00AF890E /* ArtworkCollectionViewCell.swift in Sources */,
 				016A78011FEBC2B9009BB0D5 /* String+Extensions.swift in Sources */,
 				0191295D1FEB5E8000AF890E /* SerieDetailsViewController.swift in Sources */,
@@ -1045,7 +1053,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Zerui.CustomUI;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1072,7 +1080,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Zerui.CustomUI;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1091,7 +1099,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Zerui.MRClientTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MR-dl.app/MR-dl";
 			};
@@ -1109,7 +1117,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Zerui.MRClientTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MR-dl.app/MR-dl";
 			};
@@ -1135,7 +1143,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Zerui.Cache;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1162,7 +1170,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Zerui.Cache;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1189,7 +1197,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1215,7 +1223,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Zerui.ImageLoader;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1358,7 +1366,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/MR-dl/Supporting Files/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -1388,8 +1396,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Zerui.MR-dl";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/MR-dl/Supporting Files/Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 4.0;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -1424,7 +1432,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -1460,7 +1468,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = "armv7 armv7s arm64";

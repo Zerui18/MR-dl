@@ -13,7 +13,7 @@ import CustomUI
 class ChapterImageViewController: UIViewController {
 
 
-    static func `init`(dataProvider: ChapterDataProvider, pageIndex: Int, chapterIndex: Int)-> ChapterImageViewController {
+    static func initialise(dataProvider: ChapterDataProvider, pageIndex: Int, chapterIndex: Int)-> ChapterImageViewController {
         let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: "chapterImageCtr") as! ChapterImageViewController
         ctr.dataProvider = dataProvider
         ctr.pageIndex = pageIndex
@@ -79,7 +79,7 @@ class ChapterImageViewController: UIViewController {
         // only setup loadingIndicator & retry controls if loading image from external source
         if dataProvider is MRChapterMeta {
             setupLoadingIndicator()
-            reloadButton.addTarget(self, action: #selector(triggerImageReload), for: .touchUpInside)
+            reloadButton.addTarget(self, action: #selector(triggerImageReload), for: UIControl.Event.touchUpInside)
         }
         
         focusGesturePlaceholderView.translatesAutoresizingMaskIntoConstraints = false

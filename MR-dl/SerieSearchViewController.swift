@@ -96,7 +96,7 @@ class SerieSearchViewController: UITableViewController {
         
         // use local serie record as dataSource where possible
         let dataProvider: SerieDataProvider = LocalMangaDataSource.shared.getSerie(forOid: cell.serieMeta!.oid) ?? cell.serieMeta!
-        let detailsCtr = SerieDetailsViewController(dataProvider: dataProvider)
+        let detailsCtr = SerieDetailsViewController.initialise(dataProvider: dataProvider)
         tabBarController!.tabBar.isHidden = false
         navigationItem.searchController?.isActive = false
         navigationController!.pushViewController(detailsCtr, animated: true)

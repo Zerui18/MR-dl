@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var storyBoard: UIStoryboard!
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         AppDelegate.shared = self
         storyBoard = window!.rootViewController!.storyboard!
         Loader.sharedMRILoader = Loader(loader: DataLoader(), decoder: MRIDataDecoder(decryptFunction: {

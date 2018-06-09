@@ -48,7 +48,7 @@ public struct ImageWrapper: Codable {
 
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
-    guard let data = UIImageJPEGRepresentation(image, 1) else {
+    guard let data = image.jpegData(compressionQuality: 1) else {
         throw StorageError.encodingFailed
     }
 

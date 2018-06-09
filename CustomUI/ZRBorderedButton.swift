@@ -31,7 +31,7 @@ public class ZRBorderedButton: UIButton {
 
     override public var isHighlighted: Bool {
         didSet {
-            self.layer.borderColor = isHighlighted ? titleColor(for: .highlighted)!.cgColor:self.borderColor.cgColor
+            self.layer.borderColor = isHighlighted ? titleColor(for: UIControl.State.highlighted)!.cgColor:self.borderColor.cgColor
         }
     }
 }

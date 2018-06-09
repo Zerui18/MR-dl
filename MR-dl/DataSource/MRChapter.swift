@@ -60,7 +60,7 @@ class MRChapter: NSManagedObject {
     func fetchImageURLs(completion:@escaping ([URL]?)->Void) {
         MRClient.getChapterImageURLs(forOid: oid!) { (_, response) in
             if let urls = response?.data {
-                self.remoteImageURLs = urls
+                self.remoteImageURLs = urls.deduplicated()
                 CoreDataHelper.shared.tryToSave()
             }
             completion(response?.data)

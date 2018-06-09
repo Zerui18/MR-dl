@@ -42,8 +42,8 @@ public class ZRImageViewController: UIViewController {
         
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
         
-        closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
-        shareButton.addTarget(self, action: #selector(share), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(close), for: UIControl.Event.touchUpInside)
+        shareButton.addTarget(self, action: #selector(share), for: UIControl.Event.touchUpInside)
     }
     
     @objc private func tapped() {

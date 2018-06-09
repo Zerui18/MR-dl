@@ -14,7 +14,7 @@ class SerieDetailsViewController: UIViewController {
     
     static let storyboardID = "serieDetailsCtr"
     
-    static func `init`(dataProvider: SerieDataProvider)-> SerieDetailsViewController {
+    static func initialise(dataProvider: SerieDataProvider)-> SerieDetailsViewController {
         let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: storyboardID) as! SerieDetailsViewController
         ctr.serieDataProvider = dataProvider
         return ctr
@@ -190,7 +190,7 @@ class SerieDetailsViewController: UIViewController {
     }
 
     @objc private func showChaptersTable() {
-        let chaptersTableCtr = ChaptersTableViewController(dataProvider: serieDataProvider)
+        let chaptersTableCtr = ChaptersTableViewController.initialise(dataProvider: serieDataProvider)
         if navigationController!.navigationBar.isHidden {
             navigationController?.setNavigationBarHidden(false, animated: true)
         }

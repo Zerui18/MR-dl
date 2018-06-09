@@ -75,6 +75,7 @@ class MRChapterDownloader: NSObject {
         guard let imageURLs = chapter.remoteImageURLs else {
             return
         }
+        
         urlToIndex = Dictionary(uniqueKeysWithValues: imageURLs.enumerated().map {($0.1, $0.0)})
         _progress.totalUnitCount = Int64(imageURLs.count)
         for (index, url) in imageURLs.enumerated() {
@@ -145,7 +146,7 @@ class MRChapterDownloader: NSObject {
             let pageIndex = urlToIndex[key]!
             // image already cached, report completion directly
             do {
-                try UIImageJPEGRepresentation(cachedImage, 1)!.write(to: chapter.addressForPage(atIndex: pageIndex))
+                try cachedImage.jpegData(compressionQuality: 1)!.write(to: chapter.addressForPage(atIndex: pageIndex))
                 try! Manager.sharedMRImageManager.cache!.removeObject(forKey: key.absoluteString)
                 downloadedPage(at: pageIndex, withError: nil)
             }
@@ -221,7 +222,7 @@ extension MRChapterDownloader: URLSessionDownloadDelegate {
         activeDownloads.removeValue(forKey: key)
         do {
             let image = UIImage(mriData: try Data(contentsOf: location))!
-            try UIImageJPEGRepresentation(image, 1)!.write(to: self.chapter.addressForPage(atIndex: pageIndex))
+            try image.jpegData(compressionQuality: 1)!.write(to: self.chapter.addressForPage(atIndex: pageIndex))
             try? FileManager.default.removeItem(at: location)
             urlsToDownload.delete(key)
             downloadedPage(at: pageIndex, withError: nil)

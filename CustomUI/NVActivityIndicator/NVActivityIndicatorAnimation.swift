@@ -17,7 +17,7 @@ class NVActivityIndicatorAnimationBallTrianglePath: NVActivityIndicatorAnimation
         let x = (layer.bounds.size.width - size.width) / 2
         let y = (layer.bounds.size.height - size.height) / 2
         let duration: CFTimeInterval = 2
-        let timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        let timingFunction = CAMediaTimingFunction(name: convertToCAMediaTimingFunctionName(convertFromCAMediaTimingFunctionName(CAMediaTimingFunctionName.easeInEaseOut)))
         
         // Animation
         let animation = CAKeyframeAnimation(keyPath: "transform")
@@ -58,7 +58,7 @@ class NVActivityIndicatorAnimationBallTrianglePath: NVActivityIndicatorAnimation
         let values = NSMutableArray(capacity: 5)
         
         for rawValue in rawValues {
-            let point = CGPointFromString(translateString(rawValue, deltaX: deltaX, deltaY: deltaY))
+            let point = NSCoder.cgPoint(for: translateString(rawValue, deltaX: deltaX, deltaY: deltaY))
             
             values.add(NSValue(caTransform3D: CATransform3DMakeTranslation(point.x, point.y, 0)))
         }
@@ -100,4 +100,14 @@ fileprivate func ring(size: CGSize, color: UIColor)-> CALayer {
     layer.path = path.cgPath
     layer.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     return layer
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToCAMediaTimingFunctionName(_ input: String) -> CAMediaTimingFunctionName {
+	return CAMediaTimingFunctionName(rawValue: input)
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCAMediaTimingFunctionName(_ input: CAMediaTimingFunctionName) -> String {
+	return input.rawValue
 }
