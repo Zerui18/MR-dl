@@ -16,8 +16,8 @@ extension MRChapterMeta: ChapterDataProvider {
     }
     
     func fetchPage(atIndex index: Int, completion: @escaping (UIImage?) -> Void) {
-        Manager.sharedMRImageManager.loadImage(with: imageURLs![index]) { result in
-            completion(result.value)
+        ImagePipeline.sharedMRI.loadImage(with: imageURLs![index]) { response, _ in
+            completion(response?.image)
         }
     }
     

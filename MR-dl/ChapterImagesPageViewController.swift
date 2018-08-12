@@ -13,8 +13,7 @@ import ImageLoader
 
 class ChapterImagesPageViewController: UIPageViewController {
     
-    var imagePreheater: Preheater?
-    var imageLoadingManager: Manager?
+    var imagePreheater: ImagePreheater?
     
     static func initialise(dataProvider: SerieDataProvider, atChapter chapterIndex: Int)-> ChapterImagesPageViewController {
         let ctr = AppDelegate.shared.storyBoard.instantiateViewController(withIdentifier: "chapterImagesCtr") as! ChapterImagesPageViewController
@@ -23,8 +22,7 @@ class ChapterImagesPageViewController: UIPageViewController {
         
         if dataProvider is MRSerieMeta {
             // loading from remote source, enable preheating with MRImage support
-            ctr.imageLoadingManager = .sharedMRImageManager
-            ctr.imagePreheater = Preheater(manager: .sharedMRImageManager, maxConcurrentRequestCount: 4)
+            ctr.imagePreheater = ImagePreheater(pipeline: .sharedMRI, maxConcurrentRequestCount: 4)
         }
         return ctr
     }
@@ -66,7 +64,7 @@ class ChapterImagesPageViewController: UIPageViewController {
     // start preheating chapters images in the 'correct' order only ig preheater exists (when loading from remote source)
     func startPreheatingIfNecessary() {
         if let preheater = imagePreheater {
-            let requests = chapterImageURLs!.map {Request(url: $0)}
+            let requests = chapterImageURLs!.map(ImageRequest.init)
             preheater.stopPreheating()
             preheater.startPreheating(with: shouldLoadReversed ? requests.reversed():requests)
         }

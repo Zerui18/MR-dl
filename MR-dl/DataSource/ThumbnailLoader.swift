@@ -6,25 +6,17 @@
 //  Copyright © 2017 Chen Zerui. All rights reserved.
 //
 
-import CustomUI
-import Cache
+import Foundation
 import ImageLoader
-
 
 class ThumbnailLoader {
     
     static let shared = ThumbnailLoader()
     
-    let cache: Storage
-    let imageLoaderManager: Manager
-    
-    init() {
-        cache = try! Storage(diskConfig: DiskConfig(name: "ThumbnailsLoaderCache", expiry: .never, maxSize: 1024*1024*100), memoryConfig: MemoryConfig(expiry: .never, countLimit: 200, totalCostLimit: 0))
-        imageLoaderManager = Manager(loader: Loader(loader: DataLoader(), decoder: MRIDataDecoder(decryptFunction: {$0}, decodeFunction: UIImage.init)), cache: cache)
-    }
-    
-    func loadImage(with url: URL, into target: AnyObject, handler: @escaping Manager.Handler) {
-        imageLoaderManager.loadImage(with: url, into: target, handler: handler)
+    func loadImage(with url: URL, into target: ImageDisplayingView, completion: @escaping ImageTask.Completion) {
+        var options = ImageLoadingOptions(transition: .fadeIn(duration: 0.3))
+        options.pipeline = .shared
+        ImageLoader.loadImage(with: url, options: options, into: target, progress: nil, completion: completion)
     }
     
 }

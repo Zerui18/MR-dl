@@ -141,13 +141,16 @@ class MRChapterDownloader: NSObject {
     // start task and record it in activeDownloads
     private func startTask(_ downloadTask: URLSessionDownloadTask) {
         let key = downloadTask.originalRequest!.url!
+        
+        let request = ImageRequest(url: key)
+        let imageCache = ImagePipeline.sharedMRI.configuration.imageCache!
         // check if image has already been cached
-        if let cachedImage = Manager.sharedMRImageManager.cachedImage(for: Request(url: key)) {
+        if let cachedImage = imageCache.cachedResponse(for: request)?.image {
             let pageIndex = urlToIndex[key]!
             // image already cached, report completion directly
             do {
                 try cachedImage.jpegData(compressionQuality: 1)!.write(to: chapter.addressForPage(atIndex: pageIndex))
-                try! Manager.sharedMRImageManager.cache!.removeObject(forKey: key.absoluteString)
+                imageCache.removeResponse(for: request)
                 downloadedPage(at: pageIndex, withError: nil)
             }
             catch {

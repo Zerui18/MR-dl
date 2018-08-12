@@ -44,7 +44,7 @@ public class ReactiveThumbnailView: ZRImageView {
         loadingIndicator.startAnimating()
         ThumbnailLoader.shared.loadImage(with: url, into: self) { (result, _) in
             DispatchQueue.main.async {
-                if let image = result.value {
+                if let image = result?.image {
                     self.image = image
                     handler?(image)
                 }

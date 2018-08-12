@@ -88,7 +88,7 @@ class ChapterImageViewController: UIViewController {
         focusGesturePlaceholderView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         focusGesturePlaceholderView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
         focusGesturePlaceholderView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.4).isActive = true
-        let tapGesture = UITapGestureRecognizer(target: ChapterImagesPageViewController.shared!, action: #selector(ChapterImagesPageViewController.shared!.toggleFocus))
+        let tapGesture = UITapGestureRecognizer(target: ChapterImagesPageViewController.shared!,action: #selector(ChapterImagesPageViewController.shared!.toggleFocus))
         tapGesture.cancelsTouchesInView = false
         focusGesturePlaceholderView.addGestureRecognizer(tapGesture)
     }

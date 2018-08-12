@@ -36,11 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         AppDelegate.shared = self
         storyBoard = window!.rootViewController!.storyboard!
-        Loader.sharedMRILoader = Loader(loader: DataLoader(), decoder: MRIDataDecoder(decryptFunction: {
-            MRImageDataDecryptor.decrypt(data: $0)
-        }, decodeFunction: {
-            UIImage(webPData: $0)
-        }))
+        ImagePipeline.sharedMRI = ImagePipeline {
+            $0.imageDecoder = {_ in MRIDataDecoder(decryptFunction: MRImageDataDecryptor.decrypt, decodeFunction: UIImage.init(webPData:))}
+        }
         return true
     }
 

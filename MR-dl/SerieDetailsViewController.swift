@@ -48,7 +48,7 @@ class SerieDetailsViewController: UIViewController {
     lazy var artworkURLs: [URL] = {
         return serieDataProvider[.artworkURLs]!
     }()
-    let artworksPreheater = Preheater(manager: ThumbnailLoader.shared.imageLoaderManager, maxConcurrentRequestCount: 4)
+    let artworksPreheater = ImagePreheater(pipeline: .shared, maxConcurrentRequestCount: 4)
     
     var serieDataProvider: SerieDataProvider!
     
@@ -86,7 +86,7 @@ class SerieDetailsViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let artworkURLs: [URL] = serieDataProvider[.artworkURLs]!
-        artworksPreheater.stopPreheating(with: artworkURLs.map(Request.init))
+        artworksPreheater.stopPreheating(with: artworkURLs.map(ImageRequest.init))
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -123,7 +123,7 @@ class SerieDetailsViewController: UIViewController {
         
         let artworkURLs: [URL] = serieDataProvider[.artworkURLs]!
         if !artworkURLs.isEmpty {
-            artworksPreheater.startPreheating(with: artworkURLs.map(Request.init))
+            artworksPreheater.startPreheating(with: artworkURLs.map(ImageRequest.init))
             artworksCollectionView.dataSource = self
         }
         else {
