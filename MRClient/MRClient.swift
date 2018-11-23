@@ -16,8 +16,8 @@ public class MRClient {
         case series, character, author
     }
     
-    static let quickSearchURL = URL(string: "https://api.mangarockhd.com/query/web400/mrs_quick_search?country=Singapore")!
-    static let searchURL = URL(string: "https://api.mangarockhd.com/query/web400/mrs_search?country=Singapore")!
+    static let quickSearchURL = URL(string: "https://api.mangarockhd.com/query/web401/mrs_quick_search?country=Singapore")!
+    static let searchURL = URL(string: "https://api.mangarockhd.com/query/web401/mrs_search?country=Singapore")!
     static let getMetasURL = URL(string: "https://api.mangarockhd.com/meta")!
 
     static let metaStorage = try! Storage(diskConfig: DiskConfig(name: "Meta", expiry: .date(Date(timeIntervalSinceNow: 7*24*3600)), maxSize: 1024*1024*100), memoryConfig: MemoryConfig(expiry: .never, countLimit: 200, totalCostLimit: 0))
@@ -71,7 +71,7 @@ public class MRClient {
      - returns: the constructed URLRequest object
      */
     static func getSerieMetaRequest(forOid oid: String)-> URLRequest {
-        let url = URL(string: "https://api.mangarockhd.com/query/web400/info?oid=\(oid)&last=0&country=Singapore")!
+        let url = URL(string: "https://api.mangarockhd.com/query/web401/info?oid=\(oid)&last=0&country=Singapore")!
         return URLRequest(url: url)
     }
     
@@ -82,7 +82,7 @@ public class MRClient {
      - returns: the constructed URLRequest object
      */
     static func getChapterImageUrlsRequest(forOid oid: String)-> URLRequest {
-        let url = URL(string: "https://api.mangarockhd.com/query/web400/pages?oid=\(oid)&country=Singapore")!
+        let url = URL(string: "https://api.mangarockhd.com/query/web401/pages?oid=\(oid)&country=Singapore")!
         return URLRequest(url: url)
     }
     
@@ -93,7 +93,7 @@ public class MRClient {
 //     - returns: the contructed URLRequest object
 //     */
 //    public static func getCharacterMetaRequest(forOid oid: String)-> URLRequest {
-//        let url = URL(string: "https://api.mangarockhd.com/query/web400/character?oid=\(oid)")!
+//        let url = URL(string: "https://api.mangarockhd.com/query/web401/character?oid=\(oid)")!
 //        return URLRequest(url: url)
 //    }
 
